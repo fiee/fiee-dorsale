@@ -83,7 +83,7 @@ Author(s)
 * contains code from the Django project and other sources (as indicated in the code)
 
 
-.. _LICENSE: ./fiee-dorsale/blob/master/LICENSE
+.. _LICENSE: ./fiee-dorsale/raw/master/LICENSE
 .. _dorsale.models.DorsaleBaseModel: ./fiee-dorsale/blob/master/dorsale/models/models.py
 .. _dorsale.models.managers.DorsaleSiteManager: ./fiee-dorsale/blob/master/dorsale/models/managers.py
 .. _dorsale.models.managers.DorsaleGroupSiteManager: ./fiee-dorsale/blob/master/dorsale/models/managers.py
