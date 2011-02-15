@@ -25,13 +25,12 @@ What and how
 * Use dorsale.models.DorsaleBaseModel_ as base for your own models, 
   and you get for free:
   
-** "created by / on" and "last changed by / on"
-** "deleted" marker (no real deletion anymore)
-** "site" ID
-** "objects.all()" returns only not-deleted objects of the current site 
-   (see dorsale.models.managers.DorsaleSiteManager_)
-** some metadata methods for your templates
-
+  * "created by / on" and "last changed by / on"
+  * "deleted" marker (no real deletion anymore)
+  * "site" ID
+  * "objects.all()" returns only not-deleted objects of the current site 
+     (see dorsale.models.managers.DorsaleSiteManager_)
+  * some metadata methods for your templates
   
 * Use dorsale.models.managers.DorsaleSiteManager_ and 
   dorsale.models.managers.DorsaleGroupSiteManager_
@@ -40,8 +39,8 @@ What and how
   
 * Use siteprofile_ ...
 
-** to change your application’s view by site
-** to restrict parts of your application (modules) by site
+  * to change your application’s view by site
+  * to restrict parts of your application (modules) by site
 
 See the code for more information!
 
@@ -56,13 +55,13 @@ Dependencies
 
 * Django 1.2 (may work with 1.1.) with included contributions
 * django-registration (or compatible)
-* Templates and widgets use YUI-CSS, jQuery and jQuery-UI
+* Templates and widgets use YUI_grids_css_, jQuery and jQuery-UI
 
 
 Known Issues
 ------------
 
-* uses the deprecated user.message_set.create instead of the messages framework 
+* uses the deprecated user.message_set.create_ instead of the messages_framework_ 
   in situations where there’s no request object
 * admin site doesn’t work completely
 * No proper permission checks (but user-group-ownership checks)
@@ -73,7 +72,7 @@ Known Issues
 License
 -------
 
-BSD, like Django itself, see LICENSE
+BSD, like Django itself, see LICENSE_
 (may not entirely be allowed, must still check licenses of used code)
 
 
@@ -84,8 +83,12 @@ Author(s)
 * contains code from the Django project and other sources (as indicated in the code)
 
 
+.. _LICENSE: ./fiee-dorsale/blob/master/LICENSE
 .. _dorsale.models.DorsaleBaseModel: ./fiee-dorsale/blob/master/dorsale/models/models.py
 .. _dorsale.models.managers.DorsaleSiteManager: ./fiee-dorsale/blob/master/dorsale/models/managers.py
 .. _dorsale.models.managers.DorsaleGroupSiteManager: ./fiee-dorsale/blob/master/dorsale/models/managers.py
 .. _dorsale.colors: ./fiee-dorsale/tree/master/dorsale/colors/
 .. _siteprofile: ./fiee-dorsale/tree/master/siteprofile/
+.. _user.message_set.create: http://docs.djangoproject.com/en/1.2/topics/auth/#messages
+.. _messages_framework: http://docs.djangoproject.com/en/1.2/ref/contrib/messages/
+.. _YUI_grids_css: http://developer.yahoo.com/yui/grids/
