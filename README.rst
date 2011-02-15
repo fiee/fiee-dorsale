@@ -29,7 +29,7 @@ What and how
   * "deleted" marker (no real deletion anymore)
   * "site" ID
   * "objects.all()" returns only not-deleted objects of the current site 
-     (see dorsale.models.managers.DorsaleSiteManager_)
+    (see dorsale.models.managers.DorsaleSiteManager_)
   * some metadata methods for your templates
   
 * Use dorsale.models.managers.DorsaleSiteManager_ and 
@@ -54,14 +54,14 @@ Dependencies
 ------------
 
 * Django 1.2 (may work with 1.1.) with included contributions
-* django-registration (or compatible)
-* Templates and widgets use YUI_grids_css_, jQuery and jQuery-UI
+* django-registration_ (or compatible)
+* Templates and widgets use `YUI grids css`_, jQuery_ and `jQuery UI`_
 
 
 Known Issues
 ------------
 
-* uses the deprecated user.message_set.create_ instead of the messages_framework_ 
+* uses the deprecated user.message_set.create_ instead of the `messages framework`_ 
   in situations where there’s no request object
 * admin site doesn’t work completely
 * No proper permission checks (but user-group-ownership checks)
@@ -90,5 +90,8 @@ Author(s)
 .. _dorsale.colors: ./fiee-dorsale/tree/master/dorsale/colors/
 .. _siteprofile: ./fiee-dorsale/tree/master/siteprofile/
 .. _user.message_set.create: http://docs.djangoproject.com/en/1.2/topics/auth/#messages
-.. _messages_framework: http://docs.djangoproject.com/en/1.2/ref/contrib/messages/
-.. _YUI_grids_css: http://developer.yahoo.com/yui/grids/
+.. _messages framework: http://docs.djangoproject.com/en/1.2/ref/contrib/messages/
+.. _django-registration: https://bitbucket.org/ubernostrum/django-registration/
+.. _YUI grids css: http://developer.yahoo.com/yui/grids/
+.. _jQuery: http://docs.jquery.com/
+.. _jQuery UI: http://jqueryui.com/demos/
