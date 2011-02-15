@@ -24,20 +24,26 @@ What and how
 
 * Use dorsale.models.DorsaleBaseModel_ as base for your own models, 
   and you get for free:
+  
 ** "created by / on" and "last changed by / on"
 ** "deleted" marker (no real deletion anymore)
 ** "site" ID
 ** "objects.all()" returns only not-deleted objects of the current site 
    (see dorsale.models.managers.DorsaleSiteManager_)
 ** some metadata methods for your templates
-  See the code for more information!
+
+  
 * Use dorsale.models.managers.DorsaleSiteManager_ and 
   dorsale.models.managers.DorsaleGroupSiteManager_
   to restrict "objects.all()" like above or even to items 
   that belong to a Group the current User belongs to.
-* Use siteprofile 
+  
+* Use siteprofile_ ...
+
 ** to change your application’s view by site
 ** to restrict parts of your application (modules) by site
+
+See the code for more information!
 
 Goodies
 -------
@@ -78,7 +84,8 @@ Author(s)
 * contains code from the Django project and other sources (as indicated in the code)
 
 
-.. _dorsale.models.DorsaleBaseModel: ./blob/master/dorsale/models/models.py
-.. _dorsale.models.managers.DorsaleSiteManager: ./blob/master/dorsale/models/managers.py
-.. _dorsale.models.managers.DorsaleGroupSiteManager: ./blob/master/dorsale/models/managers.py
-.. _dorsale.colors: ./tree/master/dorsale/colors/
+.. _dorsale.models.DorsaleBaseModel: ./fiee-dorsale/blob/master/dorsale/models/models.py
+.. _dorsale.models.managers.DorsaleSiteManager: ./fiee-dorsale/blob/master/dorsale/models/managers.py
+.. _dorsale.models.managers.DorsaleGroupSiteManager: ./fiee-dorsale/blob/master/dorsale/models/managers.py
+.. _dorsale.colors: ./fiee-dorsale/tree/master/dorsale/colors/
+.. _siteprofile: ./fiee-dorsale/tree/master/siteprofile/
