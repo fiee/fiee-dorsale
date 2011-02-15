@@ -1,0 +1,49 @@
+{% extends "root.html" %}
+{% load i18n guardian_tags %}
+
+{% if app_name in site_profile.modlist %}
+
+{% block title %}{% trans item.classname %} {{ item.name }}{% endblock %}
+
+{% block extra_head %}
+{% include "sticky/head.html" %}
+{% endblock %}
+
+{% block extra_jquery %}
+$('input, select').attr('readonly', true);
+$('input[type=text], textarea').each(function(){
+  $(this).after($(this).val()).remove();
+});
+$('select').each(function(){
+  $(this).after($(this).find('option:selected').text()).remove();
+});
+$('input[type=file], input[type=password]').remove();
+$('#sticky_add').remove();
+{% endblock %}
+
+{% endif %}
+
+{% block module_content %}
+{#% get_obj_perms request.user for item as "item_perms" %#}
+{#% if "view_item" in item_perms %#}
+<p></p>
+<h2>{% trans item.classname %} <q>{{ item.name }}</q></h2>
+{% include "sticky/notes.html" %}
+
+{% include "snippets/form_readonly.html" %}
+
+{#% if "edit_item" in item_perms %#}
+<p class="field_wrapper">
+  <span class="label">
+    <a href="../" class="button"><span class="ui-icon ui-icon-arrowthick-1-w"></span> {% trans "Back" %} </a>
+  </span>
+  <span class="field">
+    <a href="delete/" class="button"><span class="ui-icon ui-icon-trash"></span> {% trans "Delete" %} </a>
+    <a class="button" href="{{ item.get_absolute_url }}edit/"><span class="ui-icon ui-icon-pencil"></span> {% trans "Edit" %} </a>
+  </span>
+</p>
+{#% endif %#}
+{#% else %#}
+{#% trans "You must not see this item!" %#}
+{#% endif %#}
+{% endblock %}

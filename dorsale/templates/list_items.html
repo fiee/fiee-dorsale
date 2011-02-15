@@ -1,0 +1,42 @@
+{% extends "root.html" %}
+{% load i18n guardian_tags %}
+
+{% if app_name in site_profile.modlist %}
+
+{% block title %}{% trans object_example.classname_plural %}{% endblock %}
+
+{% endif %}
+
+{% block module_content %}
+<h2>{% block pagetitle %}{{ object_list.paginator.count }} {% trans object_example.classname_plural %}{% endblock %}</h2>
+
+{% include "snippets/pagination.html" %}
+
+<table class="itemtable">
+{% for item in page_obj.object_list %}
+  {% if forloop.counter0 == 0 %}
+    <thead>
+      <tr>
+        {% for fn in item.fields %}
+          <th title="{{ fn.help_text }}"><a href="?page={{ page_obj.number }}&orderby={{ fn.name }}">{% trans fn.verbose_name %}</a></th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+  {% endif %}
+  <tr>
+    {% for fv in item.fieldvalues %}
+      {% if forloop.counter0 < 2 %} {# and "edit_item" in item_perms %#}
+      <td><a href="{{ item.get_absolute_url }}">{{ fv }}</a></td>
+      {% else %}
+      <td>{{ fv }}</td>
+      {% endif %}
+    {% endfor %}
+  </tr>
+{% endfor %}
+  </tbody>
+</table>
+
+{% include "snippets/pagination.html" %}
+
+{% endblock %}

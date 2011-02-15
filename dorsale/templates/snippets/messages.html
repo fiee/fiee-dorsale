@@ -1,0 +1,24 @@
+{% load i18n %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}">
+    {% if "error" in message.tags %}<span class="ui-icon ui-icon-alert"></span>{% endif %}
+    {% if "warning" in message.tags %}<span class="ui-icon ui-icon-info"></span>{% endif %}
+    {% if "success" in message.tags %}<span class="ui-icon ui-icon-check"></span>{% endif %}
+    {% if "info" in message.tags %}<span class="ui-icon ui-icon-notice"></span>{% endif %}
+    {% else %}>{% endif %}{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if form.errors %}
+<dl class="messages">
+  {% for field, errors in form.errors.iteritems %}
+  <dt class="error">{% trans field %}</dt>
+    {% for error in errors %}
+    <dd class="error">{{ error }}</dd>
+    {% endfor %}
+  {% endfor %}
+</dl>
+{% endif %}

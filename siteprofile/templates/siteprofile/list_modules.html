@@ -1,0 +1,36 @@
+{% extends "root.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Modules" %}{% endblock %}
+
+{% block main_content %}
+<h2>{% block pagetitle %}{% trans "Modules" %}{% endblock %}</h2>
+
+{% include "snippets/pagination.html" %}
+
+<table class="itemtable">
+  <thead>
+    <tr>
+      <th>{% trans "Module" %}</th>
+      <th>{% trans "Description" %}</th>
+      <th>{% trans "Availability" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for item in page_obj.object_list %}
+    <tr>
+        {% if item.code in site_profile.modlist %}
+        <td><a href="/{{ item.code }}/">{{ item.name }}</a></td>
+        {% else %}
+        <td>{{ item.name }}</td>
+        {% endif %}
+        <td>{{ item.description }}</td>
+        <td>{% trans item.availability %}</td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+
+{% include "snippets/pagination.html" %}
+
+{% endblock %}
