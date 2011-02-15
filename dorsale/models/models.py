@@ -31,6 +31,8 @@ class DorsaleBaseModel(models.Model):
             date of last change
        :deleted: bool
             you can't delete our objects any more, they just get marked as deleted
+       :site:
+            Site this object belongs to
     
     2) additional meta info methods/properties for generic view:
     
