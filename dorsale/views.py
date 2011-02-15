@@ -11,7 +11,7 @@ from django.contrib.sites.models import Site
 from django.core.exceptions import FieldError, ObjectDoesNotExist
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.utils.translation import ugettext_lazy as _
-#from siteprofile.models import SiteProfile
+from siteprofile.models import SiteProfile
 from dorsale.forms import ModelFormFactory
 #from sticky.models import Note
 
@@ -33,12 +33,12 @@ def render_404(request, params):
 
 @login_required
 def home(request, **kwargs):
-    #site = Site.objects.get_current()
-    #profile = SiteProfile.objects.get(pk=site)
-    #if profile and profile.homeurl and profile.homeurl != '/':
-    #    return redirect(profile.homeurl)
-    #else:
-    return render_to_response('root.html', {}, context_instance=RequestContext(request)) 
+    site = Site.objects.get_current()
+    profile = SiteProfile.objects.get(pk=site)
+    if profile and profile.homeurl and profile.homeurl != '/':
+        return redirect(profile.homeurl)
+    else:
+        return render_to_response('root.html', {}, context_instance=RequestContext(request)) 
 
 @login_required
 def list_items(request, app_name='', model_name='', template='list_items.html'):
