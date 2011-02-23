@@ -175,7 +175,7 @@ def delete_item(request, app_name='', model_name='', object_id=None, title='', t
             return HttpResponse(status=404)
         if request.method == 'POST':
             if hasattr(item, 'notes'):
-                item.notes.delete()
+                item.notes.all().delete()
             item.delete() # no big deal, since we only mark as deleted
             messages.success(request, _(u"%(model_name)s %(model_id)s deleted.") % {'model_name':object_model._meta.verbose_name, 'model_id':object_id})
             return HttpResponseRedirect('/%s/%s/' % (app_name, model_name))
