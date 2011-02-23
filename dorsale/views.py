@@ -13,7 +13,7 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.utils.translation import ugettext_lazy as _
 from siteprofile.models import SiteProfile
 from dorsale.forms import ModelFormFactory
-#from sticky.models import Note
+#from adhesive.models import Note
 
 def get_model(app_name, model_name):
     """
@@ -138,13 +138,6 @@ def edit_item(request, app_name='', model_name='', object_id=None, title='', tem
         if request.method == 'POST':
             form = ModelFormFactory(object_model, request.POST, request.FILES, user=request.user, instance=item)
             if form.is_valid():
-                if not 'note' in form.cleaned_data and 'note' in request.POST:
-                    n, isnew = Note.objects.get_or_create(content_type=item_type, object_id=object_id)
-                    if isnew:
-                        n.createdby = request.user
-                    n.note = request.POST['note']
-                    n.lastchangedby = request.user
-                    n.save()
                 form.save()
                 messages.success(request, _(u"%(model_name)s %(model_id)s saved.") % {'model_name':object_model._meta.verbose_name, 'model_id':object_id})
                 return HttpResponseRedirect(request.path)
@@ -174,8 +167,6 @@ def delete_item(request, app_name='', model_name='', object_id=None, title='', t
         except ObjectDoesNotExist:
             return HttpResponse(status=404)
         if request.method == 'POST':
-            if hasattr(item, 'notes'):
-                item.notes.all().delete()
             item.delete() # no big deal, since we only mark as deleted
             messages.success(request, _(u"%(model_name)s %(model_id)s deleted.") % {'model_name':object_model._meta.verbose_name, 'model_id':object_id})
             return HttpResponseRedirect('/%s/%s/' % (app_name, model_name))
