@@ -36,6 +36,8 @@ class DorsaleBaseModel(models.Model):
     
     2) additional meta info methods/properties for generic view:
     
+       :field_info: dict
+            dict of fields, independent of `list_display` and thus without methods
        :fields(): generator
             list of fields, influenced by `list_display`
        :fieldnames_verbose(): generator
@@ -172,22 +174,28 @@ class DorsaleBaseModel(models.Model):
         #for related in self._meta.get_all_related_objects():
         #    for o in related.model.objects.all(): # ALL objects?? couldn't find appropriate filter
         #        o.delete()
-        
+    
+    def field_info(self):
+        """
+        dictionary of the model’s fields (independent of `list_display`, thus without methods)
+        """
+        try:
+            return self._field_info
+        except:
+            self._field_info = {}
+            for n in self._meta.fields:
+                if hasattr(n, 'name'):
+                    self._field_info[n.name] = n
+            return self._field_info
     
     def fields(self):
         """
         generator of the model’s (editable) fields, as defined by its `list_display` attribute
         """
         if self.list_display:
-            fd = {}
-            for n in self._meta.fields:
-                if hasattr(n, 'name'):
-                    fd[n.name] = n
-                #elif hasattr(n, 'verbose_name'):
-                #    fd[n.verbose_name] = n
             for n in self.list_display:
-                if n in fd:
-                    yield fd[n]
+                if n in self.field_info():
+                    yield self.field_info()[n]
                 else:
                     yield getattr(self, n, '')
         else:
