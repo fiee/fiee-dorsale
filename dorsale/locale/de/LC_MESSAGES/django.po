@@ -1,0 +1,211 @@
+# fiëé dorsale.
+# Copyright (C) 2011 fiëé visuëlle
+# This file is distributed under the same license as the dorsale package.
+# Henning Hraban Ramm <hraban@fiee.net>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: fiëé dorsale\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-03-09 19:51+0100\n"
+"PO-Revision-Date: 2011-03-09 19:59+0100\n"
+"Last-Translator: Henning Hraban Ramm <hraban@fiee.net>\n"
+"Language-Team: fiëé visuëlle <hraban@fiee.net>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: __init__.py:5
+#: __init__.py:6
+msgid "fiëé dorsale"
+msgstr "fiëé dorsale"
+
+#: settings.py:10
+msgid "German"
+msgstr "Deutsch"
+
+#: settings.py:11
+msgid "English"
+msgstr "Englisch"
+
+#: validators.py:12
+msgid "This is not a valid year (between 1900 and 2100)."
+msgstr "Das ist kein gültiges Jahr (zwischen 1900 und 2100)."
+
+#: validators.py:25
+msgid "This is not a valid page range (divisible by 4)."
+msgstr "Das ist kein gültiger Seitenumfang (teilbar durch 4)."
+
+#: views.py:130
+#, python-format
+msgid "Edit %s"
+msgstr "%s bearbeiten"
+
+#: views.py:142
+#, python-format
+msgid "%(model_name)s %(model_id)s saved."
+msgstr "%(model_name)s %(model_id)s wurde gespeichert."
+
+#: views.py:163
+#, python-format
+msgid "Delete %s"
+msgstr "Lösche %s"
+
+#: views.py:171
+#, python-format
+msgid "%(model_name)s %(model_id)s deleted."
+msgstr "%(model_name)s %(model_id)s wurde gelöscht."
+
+#: views.py:196
+#, python-format
+msgid "New %s"
+msgstr "%s erzeugen"
+
+#: views.py:207
+#, python-format
+msgid "This %s already exists!"
+msgstr "%s existiert bereits!"
+
+#: views.py:213
+#, python-format
+msgid "New %s saved."
+msgstr "%s gespeichert."
+
+#: colors/validators.py:11
+msgid "This is an invalid color code. It must be a html hex color code e.g. #000000"
+msgstr "Dieser Farbcode ist ungültig. Zulässig sind nur hexadezimale HTML-Farbcodes, z.B. #000000"
+
+#: colors/validators.py:25
+#: colors/validators.py:28
+msgid "This is not a valid CMYK color code. Please use percent values e.g. 0,100,100,0"
+msgstr "Dieser Farbcode ist ungültig. Bitte geben Sie CMYK-Prozentwerte ein, z.B. 0,100,100,0"
+
+#: models/managers.py:87
+msgid "You do not yet belong to any groups. Ask your administrator to add you to one."
+msgstr "Sie gehören noch zu keiner Arbeitsgruppe. Bitten Sie Ihren Administrator, Sie zu einer hinzuzufügen."
+
+#: models/managers.py:88
+#, python-format
+msgid "User %s doesn't belong to any group!"
+msgstr "Benutzer %s gehört zu keiner Gruppe!"
+
+#: models/models.py:69
+msgid "created by"
+msgstr "Angelegt von"
+
+#: models/models.py:73
+msgid "user that was logged in when this item was created"
+msgstr "Der Benutzer, der beim Anlegen dieses Eintrags angemeldet war"
+
+#: models/models.py:76
+msgid "created on"
+msgstr "Angelegt am"
+
+#: models/models.py:78
+msgid "date and time when this item was created"
+msgstr "Datum und Uhrzeit, wann dieser Eintrag angelegt wurde"
+
+#: models/models.py:81
+msgid "last changed by"
+msgstr "zuletzt geändert von"
+
+#: models/models.py:86
+msgid "user that was logged in when this item was changed last time"
+msgstr "Der Benutzer, der beider letzten Änderung dieses Eintrags angemeldet war"
+
+#: models/models.py:89
+msgid "deleted?"
+msgstr "gelöscht?"
+
+#: models/models.py:92
+msgid "Is this item marked as deleted?"
+msgstr "Ist dieser Eintrag als gelöscht markiert?"
+
+#: models/models.py:95
+msgid "last changed on"
+msgstr "zuletzt geändert am"
+
+#: models/models.py:97
+msgid "date and time when this item was changed last time"
+msgstr "Datum und Uhrzeit der letzten Änderung dieses Eintrags"
+
+#: models/models.py:100
+msgid "tenant’s site"
+msgstr "Kunden-Site"
+
+#: models/models.py:103
+msgid "site of the related customer/project/team"
+msgstr "Site des betreffenden Kunden/Projektes/Teams"
+
+#: templates/404.html:4
+#: templates/404.html.py:7
+msgid "Error 404: Page Not Found"
+msgstr "Fehler 404: Seite nicht gefunden"
+
+#: templates/500.html:4
+#: templates/500.html.py:7
+msgid "Error 500: Server Error"
+msgstr "Fehler 500: Server-Fehler"
+
+#: templates/500.html:8
+msgid "Sorry, this page is temporalily unavailable due to a server misconfiguration."
+msgstr "Entschuldigung, diese Seite ist wegen eines Serverproblems vorübergehend nicht erreichbar."
+
+#: templates/delete_item.html:23
+msgid "Do you really want to delete this item?"
+msgstr "Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?"
+
+#: templates/delete_item.html:30
+#: templates/edit_item.html:30
+#: templates/show_item.html:38
+msgid "Back"
+msgstr "Zurück"
+
+#: templates/delete_item.html:33
+#: templates/edit_item.html:37
+#: templates/show_item.html:41
+msgid "Delete"
+msgstr "Löschen"
+
+#: templates/edit_item.html:39
+#: templates/edit_item.html.py:40
+msgid "Save"
+msgstr "Sichern"
+
+#: templates/edit_item.html:46
+msgid "You must not edit this item!"
+msgstr "Sie dürfen diesen Eintrag nicht bearbeiten!"
+
+#: templates/show_item.html:42
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: templates/snippets/languageselect.html:12
+msgid "Change language"
+msgstr "Sprache ändern"
+
+#: templates/snippets/pagination.html:7
+msgid "First"
+msgstr "Anfang"
+
+#: templates/snippets/pagination.html:8
+msgid "Previous"
+msgstr "Zurück"
+
+#: templates/snippets/pagination.html:14
+msgid "Next"
+msgstr "Weiter"
+
+#: templates/snippets/pagination.html:15
+msgid "Last"
+msgstr "Ende"
+
+#: templates/snippets/pagination.html:20
+msgid "New Item"
+msgstr "Neuer Eintrag"
+

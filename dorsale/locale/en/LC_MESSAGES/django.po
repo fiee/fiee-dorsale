@@ -1,0 +1,211 @@
+# fiëé dorsale.
+# Copyright (C) 2011 fiëé visuëlle
+# This file is distributed under the same license as the dorsale package.
+# Henning Hraban Ramm <hraban@fiee.net>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: fiëé dorsale\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-03-09 19:51+0100\n"
+"PO-Revision-Date: 2011-03-09 20:00+0100\n"
+"Last-Translator: Henning Hraban Ramm <hraban@fiee.net>\n"
+"Language-Team: fiëé visuëlle <hraban@fiee.net>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: __init__.py:5
+#: __init__.py:6
+msgid "fiëé dorsale"
+msgstr "fiëé dorsale"
+
+#: settings.py:10
+msgid "German"
+msgstr "German"
+
+#: settings.py:11
+msgid "English"
+msgstr "English"
+
+#: validators.py:12
+msgid "This is not a valid year (between 1900 and 2100)."
+msgstr "This is not a valid year (between 1900 and 2100)."
+
+#: validators.py:25
+msgid "This is not a valid page range (divisible by 4)."
+msgstr "This is not a valid page range (divisible by 4)."
+
+#: views.py:130
+#, python-format
+msgid "Edit %s"
+msgstr "Edit %s"
+
+#: views.py:142
+#, python-format
+msgid "%(model_name)s %(model_id)s saved."
+msgstr "%(model_name)s %(model_id)s saved."
+
+#: views.py:163
+#, python-format
+msgid "Delete %s"
+msgstr "Delete %s"
+
+#: views.py:171
+#, python-format
+msgid "%(model_name)s %(model_id)s deleted."
+msgstr "%(model_name)s %(model_id)s deleted."
+
+#: views.py:196
+#, python-format
+msgid "New %s"
+msgstr "New %s"
+
+#: views.py:207
+#, python-format
+msgid "This %s already exists!"
+msgstr "This %s already exists!"
+
+#: views.py:213
+#, python-format
+msgid "New %s saved."
+msgstr "New %s saved."
+
+#: colors/validators.py:11
+msgid "This is an invalid color code. It must be a html hex color code e.g. #000000"
+msgstr "This is an invalid color code. It must be a html hex color code e.g. #000000"
+
+#: colors/validators.py:25
+#: colors/validators.py:28
+msgid "This is not a valid CMYK color code. Please use percent values e.g. 0,100,100,0"
+msgstr "This is not a valid CMYK color code. Please use percent values e.g. 0,100,100,0"
+
+#: models/managers.py:87
+msgid "You do not yet belong to any groups. Ask your administrator to add you to one."
+msgstr "You do not yet belong to any groups. Ask your administrator to add you to one."
+
+#: models/managers.py:88
+#, python-format
+msgid "User %s doesn't belong to any group!"
+msgstr "User %s doesn't belong to any group!"
+
+#: models/models.py:69
+msgid "created by"
+msgstr "created by"
+
+#: models/models.py:73
+msgid "user that was logged in when this item was created"
+msgstr "user that was logged in when this item was created"
+
+#: models/models.py:76
+msgid "created on"
+msgstr "created on"
+
+#: models/models.py:78
+msgid "date and time when this item was created"
+msgstr "date and time when this item was created"
+
+#: models/models.py:81
+msgid "last changed by"
+msgstr "last changed by"
+
+#: models/models.py:86
+msgid "user that was logged in when this item was changed last time"
+msgstr "user that was logged in when this item was changed last time"
+
+#: models/models.py:89
+msgid "deleted?"
+msgstr "deleted?"
+
+#: models/models.py:92
+msgid "Is this item marked as deleted?"
+msgstr "Is this item marked as deleted?"
+
+#: models/models.py:95
+msgid "last changed on"
+msgstr "last changed on"
+
+#: models/models.py:97
+msgid "date and time when this item was changed last time"
+msgstr "date and time when this item was changed last time"
+
+#: models/models.py:100
+msgid "tenant’s site"
+msgstr "tenant’s site"
+
+#: models/models.py:103
+msgid "site of the related customer/project/team"
+msgstr "site of the related customer/project/team"
+
+#: templates/404.html:4
+#: templates/404.html.py:7
+msgid "Error 404: Page Not Found"
+msgstr "Error 404: Page Not Found"
+
+#: templates/500.html:4
+#: templates/500.html.py:7
+msgid "Error 500: Server Error"
+msgstr "Error 500: Server Error"
+
+#: templates/500.html:8
+msgid "Sorry, this page is temporalily unavailable due to a server misconfiguration."
+msgstr "Sorry, this page is temporalily unavailable due to a server misconfiguration."
+
+#: templates/delete_item.html:23
+msgid "Do you really want to delete this item?"
+msgstr "Do you really want to delete this item?"
+
+#: templates/delete_item.html:30
+#: templates/edit_item.html:30
+#: templates/show_item.html:38
+msgid "Back"
+msgstr "Back"
+
+#: templates/delete_item.html:33
+#: templates/edit_item.html:37
+#: templates/show_item.html:41
+msgid "Delete"
+msgstr "Delete"
+
+#: templates/edit_item.html:39
+#: templates/edit_item.html.py:40
+msgid "Save"
+msgstr "Save"
+
+#: templates/edit_item.html:46
+msgid "You must not edit this item!"
+msgstr "You must not edit this item!"
+
+#: templates/show_item.html:42
+msgid "Edit"
+msgstr "Edit"
+
+#: templates/snippets/languageselect.html:12
+msgid "Change language"
+msgstr "Change language"
+
+#: templates/snippets/pagination.html:7
+msgid "First"
+msgstr "First"
+
+#: templates/snippets/pagination.html:8
+msgid "Previous"
+msgstr "Previous"
+
+#: templates/snippets/pagination.html:14
+msgid "Next"
+msgstr "Next"
+
+#: templates/snippets/pagination.html:15
+msgid "Last"
+msgstr "Last"
+
+#: templates/snippets/pagination.html:20
+msgid "New Item"
+msgstr "New Item"
+
