@@ -113,7 +113,7 @@ class DorsaleBaseModel(models.Model):
     class Meta:
         abstract = True
         #permissions = [
-        #    ('view_item', _(u'View Item')),
+        #    ('view_item', _(u'Can view item')),
         #]
         
     def save(self, *args, **kwargs):
