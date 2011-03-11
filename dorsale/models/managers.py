@@ -18,6 +18,7 @@ class DorsaleSiteManager(CurrentSiteManager):
     
     with `mine(userid)`:
     - user <> -1 (i.e. a user is logged in, like `is_authenticated`)
+    - user exists and is active
 
     `site_field_name` is the name of the model’s field that's a foreign key to `django.contrib.sites.models.Site`
     """
@@ -34,15 +35,22 @@ class DorsaleSiteManager(CurrentSiteManager):
     
     def mine(self, userid):
         """
-        Filter by authenticated user,
+        Filter by authenticated (existing, active) user,
         return an empty queryset if not authenticated.
-        Requires user ID < 0 for unauthenticated users (e.g. `django-registration`).
         
-        We can't expect a request object and take the user from there, 
-        since `mine` is also called in creation of forms 
-        (at the moment just via `getIssues`, but anyway).
+        Requires user ID < 0 for unauthenticated users (e.g. from `django-registration`).
+        
+        We can’t expect a request object and take the user from there, 
+        since `mine` might also get called in creation of forms.
+        
+        If you inherit this method, you can access `self.user` (`contrib.auth.models.User` or `None`).
         """
-        if userid < 0:
+        try:
+            self.user = User.objects.get(pk=userid)
+        except:
+            logger.error(_(u'User #%d doesn’t exist!') % userid)
+            self.user = None
+        if userid < 0 or not self.user or not self.user.is_active():
             return QuerySet(self.model).none()
         return self.get_query_set()
 
@@ -75,19 +83,21 @@ class DorsaleGroupSiteManager(DorsaleSiteManager):
         This filters by the user's group
         """
         qs = super(DorsaleGroupSiteManager, self).mine(userid) #: queryset
-        user = User.objects.get(pk=userid)
+        if not self.user:
+            return qs
+        #user = User.objects.get(pk=userid)
         # check the group field
-        if not user.is_superuser and qs.count()>0 and self.__group_field_name:
+        if self.user.is_active and not self.user.is_superuser and qs.count()>0 and self.__group_field_name:
             if not self.__group_is_checked:
                 # We don't check if group_field exists to allow chains like 'product__group'
-                group_count = user.groups.count()
-                if group_count == 0 and hasattr(user, 'message_set'):
+                group_count = self.user.groups.count()
+                if group_count == 0 and hasattr(self.user, 'message_set'):
                     # This is deprecated, but we can't use the messages framework, since we don't have a request object
                     user.message_set.create(
                         message=_(u"You do not yet belong to any groups. Ask your administrator to add you to one."))
-                    logger.error(_(u"User %s doesn't belong to any group!") % user.username)
+                    logger.error(_(u"User %s doesn’t belong to any group!") % self.user.username)
                 self.__group_is_checked = True
             # filter on the user's groups
-            qs = qs.filter(**{self.__group_field_name+'__in':user.groups.all()})
+            qs = qs.filter(**{self.__group_field_name+'__in':self.user.groups.all()})
         return qs
 
