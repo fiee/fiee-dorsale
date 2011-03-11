@@ -50,7 +50,7 @@ class DorsaleSiteManager(CurrentSiteManager):
         except:
             logger.error(_(u'User #%d doesn’t exist!') % userid)
             self.user = None
-        if userid < 0 or not self.user or not self.user.is_active():
+        if userid < 0 or not self.user or not self.user.is_active:
             return QuerySet(self.model).none()
         return self.get_query_set()
 
