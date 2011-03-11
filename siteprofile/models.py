@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.auth.models import Group
 from django.contrib.sites.models import Site
 
+# TODO: lookup table? if it makes sense at all...
 AVAILABILITY = (
     ('avail',  _(u'available')),
     ('custom', _(u'available, but customer specific')),
@@ -38,7 +39,7 @@ class Module(models.Model):
 class SiteProfile(models.Model):
     site = models.OneToOneField(Site, primary_key=True, verbose_name=_(u'Site'), help_text=_(u'Tenant’s site'))
     code = models.SlugField(verbose_name=_(u'Code'), max_length=31, unique=True, help_text=_(u'Server name of site (www for www.example.com). This is used as the template name of the menu, base page of CMS pages and perhaps additional CSS.'))
-    baselanguage = models.CharField(verbose_name=_(u'Base Language'), max_length=7, choices=settings.LANGUAGES, default='de', help_text=_(u'Base language of this site'))
+    baselanguage = models.CharField(verbose_name=_(u'Base Language'), max_length=7, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE, help_text=_(u'Base language of this site'))
     admingroup = models.ForeignKey(Group, verbose_name=_(u'Admin Group'), help_text=_(u'Members of this group are admins of this site.'))
     ownstyle = models.BooleanField(verbose_name=_(u'Use own style?'), default=False, help_text=_(u'Should the look differ from the main site’s? Use an additional CSS? Name of the CSS must be the code!'))
     homeurl = models.CharField(verbose_name=_(u'Start URL'), max_length=31, blank=True, help_text=_(u'URL of base view of this site. Same as code if empty!'))
