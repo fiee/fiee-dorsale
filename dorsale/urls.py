@@ -1,5 +1,5 @@
 #from django.conf import settings
-#from django.conf.urls.defaults import url, include, patterns
+from django.conf.urls.defaults import url, include, patterns
 #from django.conf.urls.defaults import * # * needed for 404 handler
 #from django.views.generic import create_update #, list_detail
 #from django.contrib import admin
