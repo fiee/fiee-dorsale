@@ -65,7 +65,7 @@ class DorsaleBaseModel(models.Model):
        :really_all_objects: `models.Manager`
             former default manager, returning all objects
     """
-    createdby = ForeignKey(User, 
+    createdby = models.ForeignKey(User, 
                     verbose_name=_('created by'), 
                     related_name="%(app_label)s_%(class)s_createdset", 
                     manager_name='creator', 
@@ -77,7 +77,7 @@ class DorsaleBaseModel(models.Model):
                     null=True, editable=False, 
                     help_text=_(u'date and time when this item was created')
                     )
-    lastchangedby = ForeignKey(User, 
+    lastchangedby = models.ForeignKey(User, 
                     verbose_name=_('last changed by'), 
                     related_name="%(app_label)s_%(class)s_changedset", 
                     manager_name='lastchanger', 
@@ -96,7 +96,7 @@ class DorsaleBaseModel(models.Model):
                     null=True, editable=False, 
                     help_text=_(u'date and time when this item was changed last time')
                     )
-    site = ForeignKey(Site, 
+    site = models.ForeignKey(Site, 
                     verbose_name=_(u'tenant’s site'), 
                     editable=False, 
                     default=settings.SITE_ID, 
