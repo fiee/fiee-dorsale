@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import datetime
 import types
-from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
@@ -11,6 +10,7 @@ from django.db.models.fields.related import RECURSIVE_RELATIONSHIP_CONSTANT
 from django.db.models.query_utils import CollectedObjects, CyclicDependency
 from django.utils.translation import ugettext_lazy as _
 #from south.modelsinspector import add_introspection_rules
+from dorsale.conf import settings
 from managers import DorsaleSiteManager, DorsaleGroupSiteManager
 
 class DorsaleBaseModel(models.Model):
@@ -68,8 +68,8 @@ class DorsaleBaseModel(models.Model):
     createdby = models.ForeignKey(User, 
                     verbose_name=_('created by'), 
                     related_name="%(app_label)s_%(class)s_createdset", 
-                    manager_name='creator', 
-                    editable=False, default=settings.ANONYMOUS_USER_ID, 
+                    editable=False, 
+                    default=settings.ANONYMOUS_USER_ID, 
                     help_text=_(u'user that was logged in when this item was created')
                     )
     createdon = models.DateTimeField(
@@ -80,7 +80,6 @@ class DorsaleBaseModel(models.Model):
     lastchangedby = models.ForeignKey(User, 
                     verbose_name=_('last changed by'), 
                     related_name="%(app_label)s_%(class)s_changedset", 
-                    manager_name='lastchanger', 
                     editable=False, 
                     default=settings.ANONYMOUS_USER_ID, 
                     help_text=_(u'user that was logged in when this item was changed last time')

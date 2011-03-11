@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from django.conf import settings
+from conf import settings
 from django.shortcuts import render_to_response, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
@@ -65,7 +65,7 @@ def list_items(request, app_name='', model_name='', template='list_items.html'):
         except FieldError, e:
             orderby = 'id'
 
-        paginator = Paginator(qs, int(getattr(object_model, 'items_per_page', getattr(settings, 'ITEMS_PER_PAGE', 10))), orphans=2)
+        paginator = Paginator(qs, int(getattr(object_model, 'items_per_page', getattr(settings, 'DORSALE_ITEMS_PER_PAGE', 10))), orphans=2)
         # check if a valid number was requested as page, otherwise 1
         try:
             page = int(request.GET.get('page', '1'))

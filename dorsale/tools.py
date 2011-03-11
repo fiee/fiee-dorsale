@@ -5,7 +5,7 @@ import os
 import re
 import hashlib
 import unicodedata
-#from django.conf import settings
+#from dorsale.conf import settings
 
 def get_hash_path(instance, source_filename, target_filename=''):
     """
