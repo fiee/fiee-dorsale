@@ -54,7 +54,7 @@ Dependencies
 ------------
 
 * Django 1.2 (may work with 1.1.) with included contributions
-* django-registration_ (or compatible)
+* django-registration_ (or compatible; beware: use the source version, the one in PyPI is broken!)
 * Templates and widgets use `YUI grids css`_, jQuery_ and `jQuery UI`_
 
 

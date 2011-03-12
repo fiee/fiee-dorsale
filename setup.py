@@ -47,4 +47,5 @@ setup(name='fiee-dorsale',
                    'Topic :: Utilities',
                    'Natural Language :: English',
                    'Natural Language :: German'],
+      install_requires=['Django>=1.2', 'django-registration'],
       )
