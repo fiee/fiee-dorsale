@@ -3,7 +3,7 @@
 {% for field in form.visible_fields %}
     <p class="field_wrapper">
       <span class="label">{% trans field.label %}:</span>
-      <span class="field_help">{% trans field.help_text %}</span>
+      {% if field.help_text %}<span class="field_help">{% trans field.help_text %}</span>{% endif %}
       <span class="field">{{ field }}</span>
       {% if field.errors %}<span class="field_errors">{{ field.errors.as_ul }}</span>{% endif %}
     </p>
