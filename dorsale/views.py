@@ -41,7 +41,7 @@ def home(request, **kwargs):
         return render_to_response('root.html', {}, context_instance=RequestContext(request)) 
 
 @login_required
-def list_items(request, app_name='', model_name='', template='list_items.html'):
+def list_items(request, app_name='', model_name='', template='dorsale/list_items.html'):
     """
     This view lists all (allowed) items of `app_name.model_name` (e.g. edition.issue), with pagination.
     Renders 404 if model doesn't exist. Allows customization by `template`.
@@ -84,7 +84,7 @@ def list_items(request, app_name='', model_name='', template='list_items.html'):
         return render_404(request, locals())
 
 @login_required
-def show_item(request, app_name='', model_name='', object_id=None, template='show_item.html', _c=0):
+def show_item(request, app_name='', model_name='', object_id=None, template='dorsale/show_item.html', _c=0):
     """
     This view displays one object: `app_name.model_name(id=object_id)`.
     Renders 404 if object is not available. Allows customization by `template`.
@@ -114,7 +114,7 @@ def show_item(request, app_name='', model_name='', object_id=None, template='sho
 
 
 @login_required
-def edit_item(request, app_name='', model_name='', object_id=None, title='', template='edit_item.html'):
+def edit_item(request, app_name='', model_name='', object_id=None, title='', template='dorsale/edit_item.html'):
     """
     This view lets you edit one object: `app_name.model_name(id=object_id)`.
     
@@ -149,7 +149,7 @@ def edit_item(request, app_name='', model_name='', object_id=None, title='', tem
 
 
 @login_required
-def delete_item(request, app_name='', model_name='', object_id=None, title='', template='delete_item.html'):
+def delete_item(request, app_name='', model_name='', object_id=None, title='', template='dorsale/delete_item.html'):
     """
     This view lets you delete one object: `app_name.model_name(id=object_id)`.
     
@@ -175,7 +175,7 @@ def delete_item(request, app_name='', model_name='', object_id=None, title='', t
         return HttpResponse(status=404)  
 
 @login_required
-def new_item(request, app_name='', model_name='', title='', unique_fields=[], postprocess=None, template='edit_item.html'):
+def new_item(request, app_name='', model_name='', title='', unique_fields=[], postprocess=None, template='dorsale/edit_item.html'):
     """
     generate a new object of app_name.model_name and redirect to its single view
     
