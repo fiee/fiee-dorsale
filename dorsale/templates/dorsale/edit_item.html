@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}colorpicker/colorPicker.css" />   
 <script src="{{ MEDIA_URL }}colorpicker/jquery.colorPicker.js" type="text/javascript"></script> 
 <script type="text/javascript">window.__admin_media_prefix__ = "{% filter escapejs %}{{ admin_media_prefix }}{% endfilter %}";</script>
-{% include "sticky/head.html" %}
+{% include "adhesive/head.html" %}
 {% endblock %}
 
 {% endif %}
@@ -19,11 +19,11 @@
 {% if user.is_authenticated %}
 <h2>{{ title }}</h2>
 
-{% include "sticky/notes.html" %}
+{% include "adhesive/notes.html" %}
 
 <form action="{{ action }}" id="{{ action }}" method="post" {% if form.is_multipart %}enctype="multipart/form-data" {% endif %}>
 
-{% include "snippets/form_edit.html" %}
+{% include "dorsale/snippets/form_edit.html" %}
 <p class="field_wrapper">
   <span class="label">
   {% if "/edit/" in action %}

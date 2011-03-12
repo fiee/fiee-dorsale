@@ -6,7 +6,7 @@
 {% block title %}{% trans item.classname %} {{ item.name }}{% endblock %}
 
 {% block extra_head %}
-{% include "sticky/head.html" %}
+{% include "adhesive/head.html" %}
 {% endblock %}
 
 {% block extra_jquery %}
@@ -28,9 +28,9 @@ $('#sticky_add').remove();
 {#% if "view_item" in item_perms %#}
 <p></p>
 <h2>{% trans item.classname %} <q>{{ item.name }}</q></h2>
-{% include "sticky/notes.html" %}
+{% include "adhesive/notes.html" %}
 
-{% include "snippets/form_readonly.html" %}
+{% include "dorsale/snippets/form_readonly.html" %}
 
 {#% if "edit_item" in item_perms %#}
 <p class="field_wrapper">

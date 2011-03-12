@@ -10,7 +10,7 @@
 {% block module_content %}
 <h2>{% block pagetitle %}{{ object_list.paginator.count }} {% trans object_example.classname_plural %}{% endblock %}</h2>
 
-{% include "snippets/pagination.html" %}
+{% include "dorsale/snippets/pagination.html" %}
 
 <table class="itemtable">
 {% for item in page_obj.object_list %}
@@ -37,6 +37,6 @@
   </tbody>
 </table>
 
-{% include "snippets/pagination.html" %}
+{% include "dorsale/snippets/pagination.html" %}
 
 {% endblock %}
