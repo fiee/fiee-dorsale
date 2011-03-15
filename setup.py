@@ -5,7 +5,7 @@ import os
 
 setup(name='fiee-dorsale',
       version='0.0.3a1',
-      description=u'fiëé’s Django base classes handle management data like site, creation & change date & user',
+      description=u'Django base classes to handle management data like site, creation & change date & user',
       keywords='site group owner changed created mine',
       author='Henning Hraban Ramm',
       author_email='hraban@fiee.net',
