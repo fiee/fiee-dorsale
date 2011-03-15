@@ -1,40 +1,24 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-from distutils.core import setup
+from setuptools import setup, find_packages
 import os
 
-# Compile the list of packages available, because distutils doesn't have
-# an easy way to do this.
-packages, data_files = [], []
-root_dir = os.path.dirname(__file__)
-if root_dir:
-    os.chdir(root_dir)
-
-for dirpath, dirnames, filenames in os.walk('dorsale'):
-    # Ignore dirnames that start with '.'
-    for i, dirname in enumerate(dirnames):
-        if dirname.startswith('.'): del dirnames[i]
-    if '__init__.py' in filenames:
-        pkg = dirpath.replace(os.path.sep, '.')
-        if os.path.altsep:
-            pkg = pkg.replace(os.path.altsep, '.')
-        packages.append(pkg)
-    elif filenames:
-        prefix = dirpath[13:] # Strip "registration/" or "registration\"
-        for f in filenames:
-            data_files.append(os.path.join(prefix, f))
-
-
 setup(name='fiee-dorsale',
-      version='0-0-2',
+      version='0.0.3a1',
       description=u'fiëé’s Django base classes handle management data like site, creation & change date & user',
+      keywords='site group owner changed created mine',
       author='Henning Hraban Ramm',
       author_email='hraban@fiee.net',
+      license='BSD',
       url='https://github.com/fiee/fiee-dorsale',
       download_url='https://github.com/fiee/fiee-dorsale/tarball/master',
-      package_dir={'dorsale': 'dorsale'},
-      packages=packages,
-      package_data={'dorsale': data_files},
+      package_dir={
+                   'dorsale': 'dorsale', 
+                   'siteprofile': 'siteprofile',
+                   },
+      packages=find_packages(),
+      include_package_data = True,
+      package_data = {'': ['*.rst', 'locale/*/LC_MESSAGES/*.*', 'templates/*/*.*', 'templates/*/*/*.*', ]},
       # see http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=['Development Status :: 3 - Alpha',
                    'Environment :: Web Environment',
@@ -46,6 +30,7 @@ setup(name='fiee-dorsale',
                    'Topic :: Software Development :: Libraries :: Python Modules',
                    'Topic :: Utilities',
                    'Natural Language :: English',
-                   'Natural Language :: German'],
-      install_requires=['Django>=1.2', 'django-registration'],
+                   'Natural Language :: German',],
+      install_requires=['Django>=1.2', 'django-registration',],
+      zip_safe=False,
       )
