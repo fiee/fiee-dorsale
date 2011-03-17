@@ -11,7 +11,7 @@ from django.db.models.query_utils import CollectedObjects, CyclicDependency
 from django.utils.translation import ugettext_lazy as _
 #from south.modelsinspector import add_introspection_rules
 from dorsale.conf import settings
-from managers import DorsaleSiteManager, DorsaleGroupSiteManager
+from dorsale.managers import DorsaleSiteManager, DorsaleGroupSiteManager
 
 class DorsaleBaseModel(models.Model):
     """
