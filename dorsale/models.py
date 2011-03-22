@@ -120,6 +120,8 @@ class DorsaleBaseModel(models.Model):
         Automatically save time of creation and change;
         can’t save the user, you must do that in your view
         (or use dorsale’s generic views)
+        
+        calls `super`
         """
         if not self.id:
             self.createdon = datetime.datetime.now()
@@ -134,12 +136,16 @@ class DorsaleBaseModel(models.Model):
     def original_save(self, *args, **kwargs):
         """
         original save method, for cases where there’s no current Site, like in celery tasks
+        
+        just calls `super`
         """
         super(DorsaleBaseModel, self).save(*args, **kwargs)
         
     def delete(self, using=None, *args, **kwargs):
         """
         mark this instance as deleted and call delete() on all related objects
+        
+        doesn’t call `super`!
         """
         self.deleted = True
         self.save(*args, **kwargs)
@@ -253,7 +259,8 @@ class DorsaleBaseModel(models.Model):
         """
         link to dorsale’s generic `show_item` view
         """
-        mo = ContentType.model_class(self)
+        #mo = ContentType.model_class(self)
+        mo = ContentType.objects.get_for_model(self)
         #return '/%s/%s/%d/' % (mo.app_label, mo.model, self.id)
         return ('dorsale.views.show_item', (), {
             'app_name'  : mo.app_label,
