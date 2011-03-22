@@ -42,6 +42,10 @@ What and how
   * to change your application’s view by site
   * to restrict parts of your application (modules) by site
 
+* Use dorsale.mptt_ ...
+
+  * to get hierarchical dorsale models
+
 See the code for more information!
 
 Goodies
@@ -56,6 +60,7 @@ Dependencies
 * Django 1.2 (may work with 1.1.) with included contributions
 * django-registration_ (or compatible; beware: use the source version, the one in PyPI is broken!)
 * Templates and widgets use `YUI grids css`_, jQuery_ and `jQuery UI`_
+* django-mptt_ (current github version, not the old one from googlecode) for dorsale.mptt_
 
 
 Known Issues
@@ -80,6 +85,7 @@ Author(s)
 ---------
 
 * fiëé visuëlle, Henning Hraban Ramm, <hraban@fiee.net>, http://www.fiee.net
+* contains code from django-mptt_ by Jonathan Buchanan et.al.
 * contains code from the Django project and other sources (as indicated in the code)
 
 
@@ -88,10 +94,12 @@ Author(s)
 .. _dorsale.models.managers.DorsaleSiteManager: ./fiee-dorsale/blob/master/dorsale/models/managers.py
 .. _dorsale.models.managers.DorsaleGroupSiteManager: ./fiee-dorsale/blob/master/dorsale/models/managers.py
 .. _dorsale.colors: ./fiee-dorsale/tree/master/dorsale/colors/
+.. _dorsale.mptt: ./fiee-dorsale/tree/master/dorsale/mptt/
 .. _siteprofile: ./fiee-dorsale/tree/master/siteprofile/
 .. _user.message_set.create: http://docs.djangoproject.com/en/1.2/topics/auth/#messages
 .. _messages framework: http://docs.djangoproject.com/en/1.2/ref/contrib/messages/
 .. _django-registration: https://bitbucket.org/ubernostrum/django-registration/
+.. _django-mptt: https://github.com/django-mptt/django-mptt/
 .. _YUI grids css: http://developer.yahoo.com/yui/grids/
 .. _jQuery: http://docs.jquery.com/
 .. _jQuery UI: http://jqueryui.com/demos/
