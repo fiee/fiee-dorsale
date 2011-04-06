@@ -2,16 +2,21 @@
 # -*- coding: utf-8 -*-
 import datetime
 import types
+from operator import attrgetter
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.db import models, router
+from django.db.models import signals, sql
 from django.db.models.fields.related import RECURSIVE_RELATIONSHIP_CONSTANT
-from django.db.models.query_utils import CollectedObjects, CyclicDependency
+from django.db.models.deletion import Collector
 from django.utils.translation import ugettext_lazy as _
 #from south.modelsinspector import add_introspection_rules
 from dorsale.conf import settings
 from dorsale.managers import DorsaleSiteManager, DorsaleGroupSiteManager
+import logging
+logger = logging.getLogger(settings.PROJECT_NAME) #__name__)
 
 class DorsaleBaseModel(models.Model):
     """
@@ -147,6 +152,7 @@ class DorsaleBaseModel(models.Model):
         
         doesn’t call `super`!
         """
+        logger.info('DELETE %s' % self)
         self.deleted = True
         self.save(*args, **kwargs)
         
@@ -156,25 +162,83 @@ class DorsaleBaseModel(models.Model):
         assert self._get_pk_val() is not None, "%s object can't be deleted because its %s attribute is set to None." % (self._meta.object_name, self._meta.pk.attname)
 
         # Find all the related objects than need to be deleted.
-        seen_objs = CollectedObjects()
-        self._collect_sub_objects(seen_objs)
+        collector = Collector(using=using) 
+        collector.collect([self])
+        # remove self from deletion collection
+        myself_and_friends = collector.data[type(self)].remove(self)
+        if myself_and_friends:
+            collector.data[type(self)] = myself_and_friends
+        else:
+            del collector.data[type(self)]
         
-        # the following is copied from django.db.models.query.delete_objects()
+        # Problem: collector.delete() doesn’t call object’s delete method, but deletes!
         
-        try:
-            ordered_classes = seen_objs.keys()
-        except CyclicDependency:
-            # If there is a cyclic dependency, we cannot in general delete the
-            # objects.  However, if an appropriate transaction is set up, or if the
-            # database is lax enough, it will succeed. So for now, we go ahead and
-            # try anyway.
-            ordered_classes = seen_objs.unordered_keys()
+        # The following is copied from collector.delete()
 
-        for cls in ordered_classes:
-            items = seen_objs[cls].items()
-            for no, ob in items:
-                if not ob is self:
-                    ob.delete()
+        # sort instance collections
+        for model, instances in collector.data.items():
+            collector.data[model] = sorted(instances, key=attrgetter("pk"))
+
+        # if possible, bring the models in an order suitable for databases that
+        # don't support transactions or cannot defer contraint checks until the
+        # end of a transaction.
+        collector.sort()
+
+        # send pre_delete signals
+        for model, obj in collector.instances_with_model():
+            if not model._meta.auto_created:
+                signals.pre_delete.send(
+                    sender=model, instance=obj, using=collector.using
+                )
+
+        # update fields
+        for model, instances_for_fieldvalues in collector.field_updates.iteritems():
+            query = sql.UpdateQuery(model)
+            for (field, value), instances in instances_for_fieldvalues.iteritems():
+                query.update_batch([obj.pk for obj in instances],
+                                   {field.name: value}, collector.using)
+
+        # reverse instance collections
+        for instances in collector.data.itervalues():
+            instances.reverse()
+
+        # delete batches
+        for model, batches in collector.batches.iteritems():
+            if not issubclass(model, CerebraleBaseModel):
+                # handle non-cerebrale models as usual
+                query = sql.DeleteQuery(model)
+                for field, instances in batches.iteritems():
+                    query.delete_batch([obj.pk for obj in instances], collector.using, field)
+            else:
+                # don’t know what to do
+                pass
+
+        # delete instances
+        for model, instances in collector.data.iteritems():
+            if not issubclass(model, CerebraleBaseModel):
+                # handle non-cerebrale models as usual
+                query = sql.DeleteQuery(model)
+                pk_list = [obj.pk for obj in instances]
+                query.delete_batch(pk_list, collector.using)
+            else:
+                for inst in instances:
+                    inst.delete() # expensive operation!
+
+        # send post_delete signals
+        for model, obj in collector.instances_with_model():
+            if not model._meta.auto_created:
+                signals.post_delete.send(
+                    sender=model, instance=obj, using=collector.using
+                )
+
+        # update collected instances
+        for model, instances_for_fieldvalues in collector.field_updates.iteritems():
+            for (field, value), instances in instances_for_fieldvalues.iteritems():
+                for obj in instances:
+                    setattr(obj, field.attname, value)
+        for model, instances in collector.data.iteritems():
+            for instance in instances:
+                setattr(instance, model._meta.pk.attname, None)
         
         #for related in self._meta.get_all_related_objects():
         #    for o in related.model.objects.all(): # ALL objects?? couldn't find appropriate filter
@@ -259,8 +323,8 @@ class DorsaleBaseModel(models.Model):
         """
         link to dorsale’s generic `show_item` view
         """
-        #mo = ContentType.model_class(self)
-        mo = ContentType.objects.get_for_model(self)
+        mo = ContentType.model_class(self)
+        #mo = ContentType.objects.get_for_model(self)
         #return '/%s/%s/%d/' % (mo.app_label, mo.model, self.id)
         return ('dorsale.views.show_item', (), {
             'app_name'  : mo.app_label,
