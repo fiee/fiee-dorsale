@@ -116,6 +116,7 @@ class DorsaleBaseModel(models.Model):
     
     class Meta:
         abstract = True
+        get_latest_by = 'createdon'
         #permissions = [
         #    ('view_item', _(u'Can view item')),
         #]
