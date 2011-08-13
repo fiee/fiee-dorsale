@@ -93,7 +93,7 @@ class DorsaleGroupSiteManager(DorsaleSiteManager):
                 group_count = self.user.groups.count()
                 if group_count == 0 and hasattr(self.user, 'message_set'):
                     # This is deprecated, but we can't use the messages framework, since we don't have a request object
-                    user.message_set.create(
+                    self.user.message_set.create(
                         message=_(u"You do not yet belong to any groups. Ask your administrator to add you to one."))
                     logger.error(_(u"User %s doesn’t belong to any group!") % self.user.username)
                 self.__group_is_checked = True
