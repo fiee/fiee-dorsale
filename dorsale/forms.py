@@ -48,7 +48,7 @@ def ModelFormFactory(some_model, *args, **kwargs):
     Create a ModelForm for some_model
     
     DateField and dorsale’s HtmlColorCodeField get their own widgets assigned,
-    if ther’s NO keyword arg 'disabled'.
+    if there’s NO keyword argument 'disabled'.
     
     see also http://stackoverflow.com/questions/297383/dynamically-update-modelforms-meta-class
     """
