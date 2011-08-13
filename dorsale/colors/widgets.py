@@ -12,6 +12,8 @@ class ColorPickerWidget(forms.TextInput):
     http://www.web2media.net/laktek/2008/10/27/really-simple-color-picker-in-jquery/
     http://github.com/laktek/really-simple-color-picker
     """
+    input_type = 'color' # HTML 5, Opera only
+    
     class Media:
         extend = True
         css = {
