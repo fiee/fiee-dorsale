@@ -48,6 +48,7 @@ What and how
 
 See the code for more information!
 
+
 Goodies
 -------
 
@@ -71,7 +72,16 @@ Known Issues
 * admin site doesn’t work completely
 * No proper permission checks (but user-group-ownership checks)
 * Still too much dependencies on internal asumptions and other non-public fiee projects (commented code)
+* No tests (must finally learn to write them)
 * lotsa...
+
+
+Ideas
+-----
+
+* Use Django 1.3’s class based views
+* Try to extract base model stuff to a mixin to ease inheritance, have a look at https://github.com/bmihelac/ (django-site-permissions and django-sites-ext)
+* Add Sphinx docs and setup.py
 
 
 License
