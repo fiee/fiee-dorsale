@@ -11,9 +11,10 @@ from django.utils.encoding import force_unicode
 
 class LazyJSONEncoder(simplejson.JSONEncoder):
     """
-    a JSONEncoder subclass that handle querysets and models objects. 
+    A JSONEncoder subclass that handle querysets and models objects.
+    
     Add your code about how to handle your type of object here to use
-    when dumping json"""
+    when dumping JSON."""
     def default(self, o):
         # this handles querysets and other iterable types
         try:
@@ -35,12 +36,12 @@ class LazyJSONEncoder(simplejson.JSONEncoder):
  
 def serialize_to_json(obj, *args, **kwargs):
     """
-    A wrapper for simplejson.dumps with defaults as:
+    Wrap simplejson.dumps with defaults as:
  
     :ensure_ascii: False
     :cls: LazyJSONEncoder
  
-    All arguments can be added via kwargs
+    All arguments can be added via kwargs.
     """
     kwargs['ensure_ascii'] = kwargs.get('ensure_ascii',False)
     kwargs['cls'] = kwargs.get('cls',LazyJSONEncoder)
@@ -53,11 +54,12 @@ class JSONResponse(HttpResponse):
     """
     def __init__(self, content='', json_opts={}, mimetype="application/json", *args, **kwargs):
         """
-        This returns a object that we send as json content using 
-        serialize_to_json, that is a wrapper to simplejson.dumps
-        method using a custom class to handle models and querysets. Put your
-        options to serialize_to_json in json_opts, other options are used by
-        response.
+        Return an response object with JSON content 
+        using `serialize_to_json`, that is a wrapper to `simplejson.dumps`
+        method using a custom class to handle models and querysets.
+
+        Put your options to `serialize_to_json` in `json_opts`, 
+        other options are used by response.
         """
         if content:
             content = serialize_to_json(content, **json_opts)

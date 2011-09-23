@@ -4,6 +4,13 @@ from django.contrib.sites.models import Site
 from siteprofile.models import SiteProfile
 
 def info(request):
+    """Add some information to the context:
+    
+    :site: site ID of current site
+    :site_profile: `dorsale.siteprofile.models.SiteProfile` of current site
+    :MEDIA_URL: `settings.MEDIA_URL`
+    :admin_media_prefix: `settings.ADMIN_MEDIA_PREFIX`
+    """
     site = Site.objects.get_current()
     return {
         'site': site,

@@ -3,9 +3,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
     
 def is_year(year):
-    """
-    Checks that field_data is valid year.
-    """
+    """Check that `year` is a year between 1900 and 2100, otherwise raise ValidationError."""
     try:
         year = int(year)
         if not year in range(1900,2100):
@@ -15,9 +13,7 @@ def is_year(year):
     return True
     
 def is_page_range(pages):
-    """
-    Checks that field_data is valid page range of a printed product (divisible by 4).
-    """
+    """Check if `pages` is a valid page range of a printed product (divisible by 4), otherwise raise ValidationError."""
     if not pages: return
     try:
         pages = int(pages)

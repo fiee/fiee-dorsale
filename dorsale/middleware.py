@@ -4,7 +4,7 @@ from django.contrib.sites.models import Site
 
 class MultiSiteMiddleware: 
     """
-    changes SITE_ID according to the calling host
+    Change SITE_ID according to the calling host.
 
     from http://groups.google.de/group/django-users/msg/157d6d1334a2e72b?pli=1
     """

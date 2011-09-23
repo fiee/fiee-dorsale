@@ -7,7 +7,7 @@ from django.template import RequestContext
 
 def list_modules(request, *args):
     """
-    This view lists all modules, with pagination.
+    List all modules, with pagination.
     
     Available variables in the template:
     :paginator: Paginator object

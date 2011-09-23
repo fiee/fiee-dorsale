@@ -17,7 +17,7 @@ from dorsale.forms import ModelFormFactory
 
 def get_model(app_name, model_name):
     """
-    Find a Model or ModelForm (not a view)
+    Find a Model or ModelForm (not a view).
     
     :app_name: name of the application, e.g. 'edition' for dorsale.edition
     :model_name: name of the model, e.g. 'Issue' for dorsale.edition.models.Issue
@@ -25,7 +25,7 @@ def get_model(app_name, model_name):
     return ContentType.objects.get(app_label=app_name.lower(), model=model_name.lower()).model_class()
 
 def render_404(request, params):
-    """return a 404 error with my template"""
+    """Return a 404 error with my own template."""
     params['path'] = request.get_full_path()
     response = render_to_response('404.html', params, context_instance=RequestContext(request))
     response.status_code=404
@@ -33,6 +33,7 @@ def render_404(request, params):
 
 @login_required
 def home(request, **kwargs):
+    """Render an index view with the root.html template."""
     site = Site.objects.get_current()
     profile = SiteProfile.objects.get(pk=site)
     if profile and profile.homeurl and profile.homeurl != '/':
@@ -43,8 +44,8 @@ def home(request, **kwargs):
 @login_required
 def list_items(request, app_name='', model_name='', template='dorsale/list_items.html'):
     """
-    This view lists all (allowed) items of `app_name.model_name` (e.g. edition.issue), with pagination.
-    Renders 404 if model doesn't exist. Allows customization by `template`.
+    List all (allowed) items of `app_name.model_name` (e.g. edition.issue), with pagination.
+    Render 404 if model doesn't exist. Allow customization by `template`.
     
     Available variables in the template:
     :object_example: empty object of the requested type (e.g. for table titles)
@@ -86,8 +87,8 @@ def list_items(request, app_name='', model_name='', template='dorsale/list_items
 @login_required
 def show_item(request, app_name='', model_name='', object_id=None, template='dorsale/show_item.html', _c=0):
     """
-    This view displays one object: `app_name.model_name(id=object_id)`.
-    Renders 404 if object is not available. Allows customization by `template`.
+    Display one object: `app_name.model_name(id=object_id)`.
+    Render 404 if object is not available. Allow customization by `template`.
     
     Available variables in the template:
     :item: the requested object
@@ -116,7 +117,7 @@ def show_item(request, app_name='', model_name='', object_id=None, template='dor
 @login_required
 def edit_item(request, app_name='', model_name='', object_id=None, title='', template='dorsale/edit_item.html'):
     """
-    This view lets you edit one object: `app_name.model_name(id=object_id)`.
+    Allow to edit one object: `app_name.model_name(id=object_id)`.
     
     Available variables in the template:
     :item: the requested object
@@ -151,7 +152,7 @@ def edit_item(request, app_name='', model_name='', object_id=None, title='', tem
 @login_required
 def delete_item(request, app_name='', model_name='', object_id=None, title='', template='dorsale/delete_item.html'):
     """
-    This view lets you delete one object: `app_name.model_name(id=object_id)`.
+    Allow to delete one object: `app_name.model_name(id=object_id)`.
     
     Available variables in the template:
     :item: the requested object
@@ -177,7 +178,7 @@ def delete_item(request, app_name='', model_name='', object_id=None, title='', t
 @login_required
 def new_item(request, app_name='', model_name='', title='', unique_fields=[], postprocess=None, template='dorsale/edit_item.html'):
     """
-    generate a new object of app_name.model_name and redirect to its single view
+    Generate a new object of app_name.model_name and redirect to its single view.
     
     :title: (str) form title (defaults to "New model_name")
     :unique_fields: (list of str) check if an object with the same fields exists

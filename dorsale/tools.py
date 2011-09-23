@@ -9,7 +9,7 @@ import unicodedata
 
 def get_hash_path(instance, source_filename, target_filename=''):
     """
-    Create a hashed path for a file - no real security, just hard to guess
+    Create a hashed path for a file - no real security, just hard to guess.
     """
     if hasattr(instance, 'pk'):
         id = str(instance.pk)
@@ -22,6 +22,7 @@ def get_hash_path(instance, source_filename, target_filename=''):
     return path
 
 def slugify(text):
+    """Convert `text` to a harmless, URL-ready, lowercase ASCII string."""
     if type(text) is str:
         text = unicode(text, 'utf-8')
     text = unicodedata.normalize('NFKD', text.lower()).encode('ASCII', 'ignore')
@@ -30,6 +31,8 @@ def slugify(text):
 
 def assert_on_exception(fn):
     """
+    This decorator cares that exceptions raised by the wrapped widget won’t get swallowed by Django.
+    
     In custom Django widgets or admin list_display callable functions you have probably run into this: 
     Everything looks ok, except the place where your widget should be is just blank. 
     Nothing. No traceback or any clue as to what went wrong.
