@@ -1,3 +1,8 @@
+2011-10-07
+==========
+* modularized DorsaleBaseModel into Mixins
+* extracted color stuff (widgets etc) to own project "fiëé colorée"
+
 2011-02-15
 ==========
 * project start

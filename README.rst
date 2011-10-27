@@ -5,7 +5,7 @@ fiëé dorsale
 Rationale
 ---------
 
-In most of my projects I need some of the same features of Django models,
+In most of my projects I need some of the same features of Django_ models,
 e.g. management data like owner and change date. You don’t want to handle
 that for every model in every view again.
 
@@ -32,6 +32,14 @@ What and how
     (see dorsale.models.managers.DorsaleSiteManager_)
   * some metadata methods for your templates
   
+  Functionality of DorsaleBaseModel comes from mixins that you can also use on their own:
+  
+  * AuthorMixin: created and last changed information
+  * SiteMixin: site ID
+  * AuthorSiteMixin: combined AuthorMixin and SiteMixin (since both override `save`)
+  * FakeDeleteMixin: "deleted" marker
+  * FieldInfoMixin: metadata methods
+  
 * Use dorsale.models.managers.DorsaleSiteManager_ and 
   dorsale.models.managers.DorsaleGroupSiteManager_
   to restrict "objects.all()" like above or even to items 
@@ -49,16 +57,11 @@ What and how
 See the code for more information!
 
 
-Goodies
--------
-
-* Widgets and tools for RGB and CMYK colors: see dorsale.colors_
-
-
 Dependencies
 ------------
 
 * Django 1.2 (may work with 1.1.) with included contributions
+* `fiëé colorée`_ for color picker widget
 * django-registration_ (or compatible; beware: use the source version, the one in PyPI is broken!)
 * Templates and widgets use `YUI grids css`_, jQuery_ and `jQuery UI`_
 * django-mptt_ (current github version, not the old one from googlecode) for dorsale.mptt_
@@ -79,15 +82,15 @@ Known Issues
 Ideas
 -----
 
-* Use Django 1.3’s class based views
+* Use Django_ 1.3’s class based views
 * Try to extract base model stuff to a mixin to ease inheritance, have a look at https://github.com/bmihelac/ (django-site-permissions and django-sites-ext)
-* Add Sphinx docs and setup.py
+* Add Sphinx_ docs and setup.py
 
 
 License
 -------
 
-BSD, like Django itself, see LICENSE_
+BSD, like Django_ itself, see LICENSE_
 (may not entirely be allowed, must still check licenses of used code)
 
 
@@ -96,16 +99,18 @@ Author(s)
 
 * fiëé visuëlle, Henning Hraban Ramm, <hraban@fiee.net>, http://www.fiee.net
 * contains code from django-mptt_ by Jonathan Buchanan et.al.
-* contains code from the Django project and other sources (as indicated in the code)
+* contains JSON helpers by `Felipe Prenholato`_
+* contains code from the Django_ project and other sources (as indicated in the code)
 
 
 .. _LICENSE: ./fiee-dorsale/raw/master/LICENSE
 .. _dorsale.models.DorsaleBaseModel: ./fiee-dorsale/blob/master/dorsale/models/models.py
 .. _dorsale.models.managers.DorsaleSiteManager: ./fiee-dorsale/blob/master/dorsale/models/managers.py
 .. _dorsale.models.managers.DorsaleGroupSiteManager: ./fiee-dorsale/blob/master/dorsale/models/managers.py
-.. _dorsale.colors: ./fiee-dorsale/tree/master/dorsale/colors/
 .. _dorsale.mptt: ./fiee-dorsale/tree/master/dorsale/mptt/
 .. _siteprofile: ./fiee-dorsale/tree/master/siteprofile/
+.. _`fiëé colorée`: https://github.com/fiee/fiee-coloree
+.. _Django: http://djangoproject.com
 .. _user.message_set.create: http://docs.djangoproject.com/en/1.2/topics/auth/#messages
 .. _messages framework: http://docs.djangoproject.com/en/1.2/ref/contrib/messages/
 .. _django-registration: https://bitbucket.org/ubernostrum/django-registration/
@@ -113,3 +118,4 @@ Author(s)
 .. _YUI grids css: http://developer.yahoo.com/yui/grids/
 .. _jQuery: http://docs.jquery.com/
 .. _jQuery UI: http://jqueryui.com/demos/
+.. _Felipe Prenholato: http://chronosbox.org/blog/jsonresponse-in-django?lang=en
