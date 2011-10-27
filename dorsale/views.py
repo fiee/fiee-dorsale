@@ -19,8 +19,8 @@ def get_model(app_name, model_name):
     """
     Find a Model or ModelForm (not a view).
     
-    :app_name: name of the application, e.g. 'edition' for dorsale.edition
-    :model_name: name of the model, e.g. 'Issue' for dorsale.edition.models.Issue
+    :app_name: name of the application, e.g. 'edition' for `dorsale.edition`
+    :model_name: name of the model, e.g. 'Issue' for `dorsale.edition.models.Issue`
     """
     return ContentType.objects.get(app_label=app_name.lower(), model=model_name.lower()).model_class()
 
