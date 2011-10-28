@@ -18,6 +18,18 @@ I’d like to give back to the open source community, but of course nothing
 customer-specific and no embarassing secrets from the git history, so it’s
 time to pull the generic stuff out of my projects.
 
+I’m planning to make this a cosmos of loosely coupled data bits – 
+attachable sticky notes (`fiëé adhésive`_), events (`fiëé témporâle`_),
+geodata (`fiëé locâle`, coming soon), categorized with tagging – 
+and some useful apps on top of that:
+a collaboration tool with to-do list and doodle-like functions 
+(`fiëé preposale`, not yet public), a party/banquet planner (`fiëé festîve`,
+not yet public), tools for publishers (`fiëé édition`, not public)
+and maybe more.
+Probably too much for one man’s hobby.
+I was also projecting some club-and-congress management app (usable e.g. for
+associations and churches), perhaps also LETS...
+
 
 What and how
 ------------
@@ -64,7 +76,7 @@ Dependencies
 * `fiëé colorée`_ for color picker widget
 * django-registration_ (or compatible; beware: use the source version, the one in PyPI is broken!)
 * Templates and widgets use `YUI grids css`_, jQuery_ and `jQuery UI`_
-* django-mptt_ (current github version, not the old one from googlecode) for dorsale.mptt_
+* django-mptt_ for dorsale.mptt_ (beware, dorsale.mptt is not tested with current dajngo-mptt!)
 
 
 Known Issues
@@ -84,7 +96,7 @@ Ideas
 
 * Use Django_ 1.3’s class based views
 * Try to extract base model stuff to a mixin to ease inheritance, have a look at https://github.com/bmihelac/ (django-site-permissions and django-sites-ext)
-* Add Sphinx_ docs and setup.py
+* Add Sphinx_ docs and enhance setup.py
 
 
 License
@@ -98,7 +110,7 @@ Author(s)
 ---------
 
 * fiëé visuëlle, Henning Hraban Ramm, <hraban@fiee.net>, http://www.fiee.net
-* contains code from django-mptt_ by Jonathan Buchanan et.al.
+* contains code from django-mptt_ by Jonathan Buchanan, Craig de Stigter et.al.
 * contains JSON helpers by `Felipe Prenholato`_
 * contains code from the Django_ project and other sources (as indicated in the code)
 
@@ -110,6 +122,8 @@ Author(s)
 .. _dorsale.mptt: ./fiee-dorsale/tree/master/dorsale/mptt/
 .. _siteprofile: ./fiee-dorsale/tree/master/siteprofile/
 .. _`fiëé colorée`: https://github.com/fiee/fiee-coloree
+.. _`fiëé adhésive`: https://github.com/fiee/fiee-adhesive
+.. _`fiëé témporâle`: https://github.com/fiee/fiee-temporale
 .. _Django: http://djangoproject.com
 .. _user.message_set.create: http://docs.djangoproject.com/en/1.2/topics/auth/#messages
 .. _messages framework: http://docs.djangoproject.com/en/1.2/ref/contrib/messages/
