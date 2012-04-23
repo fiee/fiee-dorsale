@@ -5,8 +5,12 @@ from django.contrib.auth.models import Group
 from django.contrib.sites.models import Site
 from django.db import models
 from django.forms import ModelForm
-from coloree.fields import HtmlColorCodeField
-from coloree.widgets import ColorPickerWidget
+try:
+    from coloree.fields import HtmlColorCodeField
+    from coloree.widgets import ColorPickerWidget
+    coloree_active = True
+except ImportError:
+    coloree_active = False
 from widgets import DatePickerWidget
 
 class DorsaleBaseModelForm(ModelForm):
@@ -58,7 +62,7 @@ def ModelFormFactory(some_model, *args, **kwargs):
         for field in some_model._meta.local_fields:
             if type(field) is models.DateField:
                 widdict[field.name] = DatePickerWidget()
-            elif type(field) is HtmlColorCodeField:
+            elif coloree_active and type(field) is HtmlColorCodeField:
                 widdict[field.name] = ColorPickerWidget()
     try:
         del kwargs['disabled']
