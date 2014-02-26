@@ -6,10 +6,10 @@ by Felipe Prenholato, from http://chronosbox.org/blog/jsonresponse-in-django?lan
 """
 from django.db.models.base import ModelBase
 from django.http import HttpResponseForbidden, HttpResponse
-from django.utils import simplejson
+import json  # with Python 2.7 it should be safe to use json from the standard library
 from django.utils.encoding import force_unicode
 
-class LazyJSONEncoder(simplejson.JSONEncoder):
+class LazyJSONEncoder(json.JSONEncoder):
     """
     A JSONEncoder subclass that handle querysets and models objects.
     
@@ -32,21 +32,21 @@ class LazyJSONEncoder(simplejson.JSONEncoder):
         else:
             return force_unicode(o)
  
-        return super(LazyJSONEncoder,self).default(obj)
+        return super(LazyJSONEncoder, self).default(o)
  
 def serialize_to_json(obj, *args, **kwargs):
     """
-    Wrap simplejson.dumps with defaults as:
+    A wrapper for json.dumps with defaults as:
  
     :ensure_ascii: False
     :cls: LazyJSONEncoder
  
     All arguments can be added via kwargs.
     """
-    kwargs['ensure_ascii'] = kwargs.get('ensure_ascii',False)
-    kwargs['cls'] = kwargs.get('cls',LazyJSONEncoder)
+    kwargs['ensure_ascii'] = kwargs.get('ensure_ascii', False)
+    kwargs['cls'] = kwargs.get('cls', LazyJSONEncoder)
  
-    return simplejson.dumps(obj,*args,**kwargs)
+    return json.dumps(obj, *args, **kwargs)
  
 class JSONResponse(HttpResponse):
     """
@@ -55,7 +55,7 @@ class JSONResponse(HttpResponse):
     def __init__(self, content='', json_opts={}, mimetype="application/json", *args, **kwargs):
         """
         Return an response object with JSON content 
-        using `serialize_to_json`, that is a wrapper to `simplejson.dumps`
+        using `serialize_to_json`, that is a wrapper to `json.dumps`
         method using a custom class to handle models and querysets.
 
         Put your options to `serialize_to_json` in `json_opts`, 
@@ -65,4 +65,4 @@ class JSONResponse(HttpResponse):
             content = serialize_to_json(content, **json_opts)
         else:
             content = serialize_to_json([], **json_opts)
-        super(JSONResponse,self).__init__(content, mimetype, *args, **kwargs)
+        super(JSONResponse, self).__init__(content, mimetype, *args, **kwargs)

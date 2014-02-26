@@ -72,7 +72,7 @@ See the code for more information!
 Dependencies
 ------------
 
-* Django 1.2 (may work with 1.1.) with included contributions
+* Django 1.6 with included contributions
 * `fiëé colorée`_ for color picker widget
 * django-registration_ (or compatible; beware: use the source version, the one in PyPI is broken!)
 * Templates and widgets use `YUI grids css`_, jQuery_ and `jQuery UI`_
@@ -94,7 +94,7 @@ Known Issues
 Ideas
 -----
 
-* Use Django_ 1.3’s class based views
+* Use Django_ 1.3+’s class based views
 * Try to extract base model stuff to a mixin to ease inheritance, have a look at https://github.com/bmihelac/ (django-site-permissions and django-sites-ext)
 * Add Sphinx_ docs and enhance setup.py
 
