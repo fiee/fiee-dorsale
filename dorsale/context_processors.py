@@ -9,12 +9,10 @@ def info(request):
     :site: site ID of current site
     :site_profile: `dorsale.siteprofile.models.SiteProfile` of current site
     :MEDIA_URL: `settings.MEDIA_URL`
-    :admin_media_prefix: `settings.ADMIN_MEDIA_PREFIX`
     """
     site = Site.objects.get_current()
     return {
         'site': site,
         'site_profile' : SiteProfile.objects.get(pk=site),
         'MEDIA_URL': settings.MEDIA_URL,
-        'admin_media_prefix': settings.ADMIN_MEDIA_PREFIX,
     }
