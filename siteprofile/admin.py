@@ -8,7 +8,7 @@ class ModuleAdmin(admin.ModelAdmin):
 
 class SiteProfileAdmin(admin.ModelAdmin):
     list_display = ('site', 'code', 'baselanguage', 'admingroup', 'ownstyle', 'homeurl',)
-    list_filter = ('baselanguage','admingroup','ownstyle')
+    list_filter = ('baselanguage', 'admingroup', 'ownstyle')
     ordering = ('code',)
     search_fields = ('code',)
 

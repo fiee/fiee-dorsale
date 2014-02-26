@@ -19,7 +19,7 @@ class DorsaleBaseAdmin(admin.ModelAdmin):
             if hasattr(obj, 'createdby'): obj.createdby = request.user
             if hasattr(obj, 'createdon'): obj.createdon = datetime.datetime.now()
             if hasattr(obj, 'deleted'): obj.deleted = False
-        if hasattr(obj, 'site'): obj.site = Site.objects.get_current() # we could allow superusers to change the site
+        if hasattr(obj, 'site'): obj.site = Site.objects.get_current()  # we could allow superusers to change the site
         if hasattr(obj, 'lastchangedby'): obj.lastchangedby = request.user
         if hasattr(obj, 'lastchangedon'): obj.lastchangedon = datetime.datetime.now()
         obj.save()
@@ -40,7 +40,7 @@ class DorsaleBaseAdmin(admin.ModelAdmin):
     def has_change_permission(self, request, obj=None):
         if not self.has_class_permission(request, obj):
             return False
-        if obj is not None and not request.user.is_superuser and request.user.id != obj.createdby_id: # if hasattr(obj, 'createdby'): 
+        if obj is not None and not request.user.is_superuser and request.user.id != obj.createdby_id:  # if hasattr(obj, 'createdby'): 
             # TODO: Permissions!
             return False
         opts = self.opts
@@ -52,4 +52,4 @@ try:
     admin.site.unregister(RegistrationProfile)
 except:
     pass
-    #print "registration was activated before dorsale!"
+    # print "registration was activated before dorsale!"

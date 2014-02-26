@@ -82,12 +82,12 @@ class DorsaleGroupSiteManager(DorsaleSiteManager):
         """
         This filters by the user's group
         """
-        qs = super(DorsaleGroupSiteManager, self).mine(userid) #: queryset
+        qs = super(DorsaleGroupSiteManager, self).mine(userid)  # : queryset
         if not self.user:
             return qs
-        #user = User.objects.get(pk=userid)
+        # user = User.objects.get(pk=userid)
         # check the group field
-        if self.user.is_active and not self.user.is_superuser and qs.count()>0 and self.__group_field_name:
+        if self.user.is_active and not self.user.is_superuser and qs.count() > 0 and self.__group_field_name:
             if not self.__group_is_checked:
                 # We don't check if group_field exists to allow chains like 'product__group'
                 group_count = self.user.groups.count()
@@ -98,6 +98,6 @@ class DorsaleGroupSiteManager(DorsaleSiteManager):
                     logger.error(_(u"User %s doesn’t belong to any group!") % self.user.username)
                 self.__group_is_checked = True
             # filter on the user's groups
-            qs = qs.filter(**{self.__group_field_name+'__in':self.user.groups.all()})
+            qs = qs.filter(**{self.__group_field_name + '__in':self.user.groups.all()})
         return qs
 

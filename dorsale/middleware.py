@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib.sites.models import Site
-#from django.http import HttpResponsePermanentRedirect
+# from django.http import HttpResponsePermanentRedirect
 
 class MultiSiteMiddleware: 
     """
@@ -17,5 +17,5 @@ class MultiSiteMiddleware:
             settings.SITE_ID = site.id 
             return 
         except Site.DoesNotExist:
-            pass # default SITE_ID
-            #return HttpResponsePermanentRedirect(settings.NO_SITE_REDIRECT) 
+            pass  # default SITE_ID
+            # return HttpResponsePermanentRedirect(settings.NO_SITE_REDIRECT) 

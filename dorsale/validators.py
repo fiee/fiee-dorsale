@@ -6,7 +6,7 @@ def is_year(year):
     """Check that `year` is a year between 1900 and 2100, otherwise raise ValidationError."""
     try:
         year = int(year)
-        if not year in range(1900,2100):
+        if not year in range(1900, 2100):
             raise ValidationError(_(u'This is not a valid year (between 1900 and 2100).'))
     except (TypeError, ValueError), e:
         raise ValidationError, str(e)

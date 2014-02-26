@@ -16,7 +16,7 @@ from widgets import DatePickerWidget
 class DorsaleBaseModelForm(ModelForm):
     
     class Meta:
-        #exclude = ['createdon','createdby','lastchangedon','lastchangedby','site','deleted',]
+        # exclude = ['createdon','createdby','lastchangedon','lastchangedby','site','deleted',]
         pass
 
     def __init__(self, *args, **kwargs):
@@ -38,7 +38,7 @@ class DorsaleBaseModelForm(ModelForm):
         if hasattr(obj, 'lastchangedby'): obj.lastchangedby = self.user
         if hasattr(obj, 'lastchangedon'): obj.lastchangedon = datetime.datetime.now()
         if hasattr(obj, 'site'): obj.site = Site.objects.get_current()
-        if not obj.pk: # new dataset
+        if not obj.pk:  # new dataset
             if hasattr(obj, 'createdby'): obj.createdby = self.user
             if hasattr(obj, 'createdon'): obj.createdon = datetime.datetime.now()
             if hasattr(obj, 'deleted'): obj.deleted = False

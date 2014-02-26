@@ -21,4 +21,4 @@ class DatePickerWidget(forms.TextInput):
         rendered = super(DatePickerWidget, self).render(name, value, attrs)
         return rendered + mark_safe(u'''<script type="text/javascript">
         $(function(){$('#id_%s').datepicker({ dateFormat: 'yy-mm-dd' });});
-        </script>''' % (name)) # $.datepicker.regional['%s'] // , self.language
+        </script>''' % (name))  # $.datepicker.regional['%s'] // , self.language

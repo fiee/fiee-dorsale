@@ -12,11 +12,11 @@ from django.db.models import signals, sql
 from django.db.models.fields.related import RECURSIVE_RELATIONSHIP_CONSTANT
 from django.db.models.deletion import Collector
 from django.utils.translation import ugettext_lazy as _
-#from south.modelsinspector import add_introspection_rules
+# from south.modelsinspector import add_introspection_rules
 from dorsale.conf import settings
 from dorsale.managers import DorsaleSiteManager
 import logging
-logger = logging.getLogger(settings.PROJECT_NAME) #__name__)
+logger = logging.getLogger(settings.PROJECT_NAME)  # __name__)
 
 class AuthorMixin(models.Model):
     """
@@ -31,28 +31,28 @@ class AuthorMixin(models.Model):
     :lastchangedon: datetime
         date of last change
     """
-    createdby = models.ForeignKey(User, 
-                    verbose_name=_('created by'), 
-                    related_name="%(app_label)s_%(class)s_createdset", 
-                    editable=False, 
-                    default=settings.ANONYMOUS_USER_ID, 
+    createdby = models.ForeignKey(User,
+                    verbose_name=_('created by'),
+                    related_name="%(app_label)s_%(class)s_createdset",
+                    editable=False,
+                    default=settings.ANONYMOUS_USER_ID,
                     help_text=_(u'user that was logged in when this item was created')
                     )
     createdon = models.DateTimeField(
-                    verbose_name=_(u'created on'), 
-                    null=True, editable=False, 
+                    verbose_name=_(u'created on'),
+                    null=True, editable=False,
                     help_text=_(u'date and time when this item was created')
                     )
-    lastchangedby = models.ForeignKey(User, 
-                    verbose_name=_('last changed by'), 
-                    related_name="%(app_label)s_%(class)s_changedset", 
-                    editable=False, 
-                    default=settings.ANONYMOUS_USER_ID, 
+    lastchangedby = models.ForeignKey(User,
+                    verbose_name=_('last changed by'),
+                    related_name="%(app_label)s_%(class)s_changedset",
+                    editable=False,
+                    default=settings.ANONYMOUS_USER_ID,
                     help_text=_(u'user that was logged in when this item was changed last time')
                     )
     lastchangedon = models.DateTimeField(
-                    verbose_name=_(u'last changed on'), 
-                    null=True, editable=False, 
+                    verbose_name=_(u'last changed on'),
+                    null=True, editable=False,
                     help_text=_(u'date and time when this item was changed last time')
                     )
     
@@ -90,10 +90,10 @@ class SiteMixin(models.Model):
     Provide a `site` field (Site this objects belongs to).
     Override default manager `objects` with a `DorsaleSiteManager`.
     """
-    site = models.ForeignKey(Site, 
-                    verbose_name=_(u'tenant’s site'), 
-                    editable=False, 
-                    default=settings.SITE_ID, 
+    site = models.ForeignKey(Site,
+                    verbose_name=_(u'tenant’s site'),
+                    editable=False,
+                    default=settings.SITE_ID,
                     help_text=_(u'site of the related customer/project/team')
                     )
     objects = DorsaleSiteManager()
@@ -153,9 +153,9 @@ class FakeDeleteMixin(models.Model):
     Add a `deleted` field and prohibit real deletion.
     """
     deleted = models.BooleanField(
-                    verbose_name=_('deleted?'), 
-                    editable=False, 
-                    default=False, 
+                    verbose_name=_('deleted?'),
+                    editable=False,
+                    default=False,
                     help_text=_(u'Is this item marked as deleted?')
                     )
     
@@ -238,7 +238,7 @@ class FakeDeleteMixin(models.Model):
                 query.delete_batch(pk_list, collector.using)
             else:
                 for inst in instances:
-                    inst.delete() # expensive operation!
+                    inst.delete()  # expensive operation!
 
         # send post_delete signals
         for model, obj in collector.instances_with_model():
@@ -256,14 +256,14 @@ class FakeDeleteMixin(models.Model):
             for instance in instances:
                 setattr(instance, model._meta.pk.attname, None)
         
-        #for related in self._meta.get_all_related_objects():
+        # for related in self._meta.get_all_related_objects():
         #    for o in related.model.objects.all(): # ALL objects?? couldn't find appropriate filter
         #        o.delete()
 
 class FieldInfoMixin(models.Model):
     
-    items_per_page = int(getattr(settings, 'ITEMS_PER_PAGE', 10)) #: used in list views, overwrite in your models
-    list_display = [] #: for list views, ignore if empty
+    items_per_page = int(getattr(settings, 'ITEMS_PER_PAGE', 10))  # : used in list views, overwrite in your models
+    list_display = []  # : for list views, ignore if empty
     
     class Meta:
         abstract = True
@@ -330,7 +330,7 @@ class FieldInfoMixin(models.Model):
             if type(r) is types.MethodType:
                 r = r()
             yield r
-        #return (getattr(self, f) for f in self.fieldnames())
+        # return (getattr(self, f) for f in self.fieldnames())
     
     def classname(self):
         """
@@ -404,9 +404,9 @@ class DorsaleBaseModel(FakeDeleteMixin, AuthorSiteMixin, FieldInfoMixin):
     class Meta:
         abstract = True
         get_latest_by = 'createdon'
-        #permissions = [
+        # permissions = [
         #    ('view_item', _(u'Can view item')),
-        #]
+        # ]
     
     @models.permalink
     def get_absolute_url(self):

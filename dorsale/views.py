@@ -13,7 +13,7 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.utils.translation import ugettext_lazy as _
 from siteprofile.models import SiteProfile
 from dorsale.forms import ModelFormFactory
-#from adhesive.models import Note
+# from adhesive.models import Note
 
 def get_model(app_name, model_name):
     """
@@ -28,7 +28,7 @@ def render_404(request, params):
     """Return a 404 error with my own template."""
     params['path'] = request.get_full_path()
     response = render_to_response('404.html', params, context_instance=RequestContext(request))
-    response.status_code=404
+    response.status_code = 404
     return response   
 
 @login_required
@@ -104,13 +104,13 @@ def show_item(request, app_name='', model_name='', object_id=None, template='dor
         item_type = ContentType.objects.get_for_model(item)
         if hasattr(item, 'notes'):
             notes = item.notes.all()
-        #else:
+        # else:
         #    notes = Note.objects.filter(content_type__pk=item_type.id, object_id=object_id)
     except:
         return render_404(request, locals())
     form = ModelFormFactory(object_model, user=request.user, instance=item, disabled=True)
-    if not form.visible_fields() and _c<3:  # sometimes it works only in the second try, why?
-        return show_item(request, app_name, model_name, object_id, template, _c+1)
+    if not form.visible_fields() and _c < 3:  # sometimes it works only in the second try, why?
+        return show_item(request, app_name, model_name, object_id, template, _c + 1)
     return render_to_response(template, locals(), context_instance=RequestContext(request))
 
 
@@ -134,7 +134,7 @@ def edit_item(request, app_name='', model_name='', object_id=None, title='', tem
         item_type = ContentType.objects.get_for_model(item)
         if hasattr(item, 'notes'):
             notes = item.notes.all()
-        #else:
+        # else:
         #    notes = Note.objects.filter(content_type__pk=item_type.id, object_id=object_id)
         if request.method == 'POST':
             form = ModelFormFactory(object_model, request.POST, request.FILES, user=request.user, instance=item)
@@ -168,7 +168,7 @@ def delete_item(request, app_name='', model_name='', object_id=None, title='', t
         except ObjectDoesNotExist:
             return HttpResponse(status=404)
         if request.method == 'POST':
-            item.delete() # no big deal, since we only mark as deleted
+            item.delete()  # no big deal, since we only mark as deleted
             messages.success(request, _(u"%(model_name)s %(model_id)s deleted.") % {'model_name':object_model._meta.verbose_name, 'model_id':object_id})
             return HttpResponseRedirect('/%s/%s/' % (app_name, model_name))
         return render_to_response(template, locals(), context_instance=RequestContext(request))
@@ -195,7 +195,7 @@ def new_item(request, app_name='', model_name='', title='', unique_fields=[], po
     object_model = get_model(app_name, model_name)
     if not title:
         title = _(u'New %s') % object_model._meta.verbose_name
-    if request.method=='POST':
+    if request.method == 'POST':
         form = ModelFormFactory(object_model, request.POST, request.FILES, user=request.user)
         if form.is_valid():
             try:
@@ -216,7 +216,7 @@ def new_item(request, app_name='', model_name='', title='', unique_fields=[], po
                     postprocess(request.user.id, item.pk)
                 return HttpResponseRedirect('/%s/%s/%d/' % (app_name, model_name, item.id))
     else:
-        form = ModelFormFactory(object_model, user=request.user, )
+        form = ModelFormFactory(object_model, user=request.user,)
     del object_model
     del postprocess
     return render_to_response(template, locals(), context_instance=RequestContext(request))
