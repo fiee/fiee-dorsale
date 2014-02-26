@@ -7,9 +7,25 @@ import hashlib
 import unicodedata
 # from dorsale.conf import settings
 
+
+def get_instance_id_path(instance, source_filename, target_filename=''):
+    """Create the path for a file"""
+    if hasattr(instance, 'pk'):
+        iid = str(instance.pk)
+    else:
+        iid = instance.__hash__()
+    if not target_filename:
+        fn, ext = os.path.splitext(source_filename.lower())
+        target_filename = "%s_%s%s" % (instance.__class__.__name__, iid, ext)
+    path = os.path.join(instance.__class__.__module__.replace('.models', ''), instance.__class__.__name__, iid, target_filename)
+    return path
+
+# DEPRECATED
 def get_hash_path(instance, source_filename, target_filename=''):
     """
     Create a hashed path for a file - no real security, just hard to guess.
+    
+    @deprecated
     """
     if hasattr(instance, 'pk'):
         id = str(instance.pk)
