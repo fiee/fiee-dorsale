@@ -1,16 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# from django.utils.translation import ugettext_lazy as _
 _ = lambda s: s  # don’t import settings!
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+#SOME_SETTING = getattr(settings, '%s_SOME_SETTING' % settings.PROJECT_NAME.upper(), 'this')
 
-TIME_ZONE = 'Europe/Berlin'
-LANGUAGE_CODE = 'de'
-LANGUAGES = (('de', _(u'German')),
-             ('en', _(u'English')),
-             )
-
-USE_I18N = True
-USE_L10N = True
+#if API_KEY is None:
+#    raise ImproperlyConfigured("You haven't set '%s_API_KEY'." % settings.PROJECT_NAME.upper())
