@@ -4,6 +4,7 @@ JSON helpers
 
 by Felipe Prenholato, from http://chronosbox.org/blog/jsonresponse-in-django?lang=en
 """
+from __future__ import absolute_import
 from django.db.models.base import ModelBase
 from django.http import HttpResponseForbidden, HttpResponse
 import json  # with Python 2.7 it should be safe to use json from the standard library
