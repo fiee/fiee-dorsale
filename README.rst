@@ -74,9 +74,9 @@ Dependencies
 
 * Django 1.6 with included contributions
 * `fiëé colorée`_ for color picker widget
-* django-registration_ (or compatible; beware: use the source version, the one in PyPI is broken!)
+* django-registration_ (or compatible)
 * Templates and widgets use `YUI grids css`_, jQuery_ and `jQuery UI`_
-* django-mptt_ for dorsale.mptt_ (beware, dorsale.mptt is not tested with current dajngo-mptt!)
+* django-mptt_ for dorsale.mptt_ (beware, dorsale.mptt is not tested with current django-mptt!)
 
 
 Known Issues
@@ -84,6 +84,7 @@ Known Issues
 
 * uses the deprecated user.message_set.create_ instead of the `messages framework`_ 
   in situations where there’s no request object
+  TODO: use e.g. django-async-messages_
 * admin site doesn’t work completely
 * No proper permission checks (but user-group-ownership checks)
 * Still too much dependencies on internal asumptions and other non-public fiee projects (commented code)
@@ -127,6 +128,7 @@ Author(s)
 .. _Django: http://djangoproject.com
 .. _user.message_set.create: http://docs.djangoproject.com/en/1.2/topics/auth/#messages
 .. _messages framework: http://docs.djangoproject.com/en/1.2/ref/contrib/messages/
+.. _django-async-messages: https://github.com/fiee/django-async-messages/
 .. _django-registration: https://bitbucket.org/ubernostrum/django-registration/
 .. _django-mptt: https://github.com/django-mptt/django-mptt/
 .. _YUI grids css: http://developer.yahoo.com/yui/grids/
