@@ -18,7 +18,7 @@ from dorsale.managers import DorsaleSiteManager
 import logging
 logger = logging.getLogger(settings.PROJECT_NAME)  # __name__)
 
-class AuthorMixin(models.Model):
+class AuthorMixin(object):
     """
     Provide some automatic administration fields:
 
@@ -85,7 +85,7 @@ class AuthorMixin(models.Model):
         """
         super(AuthorMixin, self).save(*args, **kwargs)
 
-class SiteMixin(models.Model):
+class SiteMixin(object):
     """
     Provide a `site` field (Site this objects belongs to).
     Override default manager `objects` with a `DorsaleSiteManager`.
@@ -148,7 +148,7 @@ class AuthorSiteMixin(AuthorMixin, SiteMixin):
             self.site = Site.objects.get_current()
         super(AuthorSiteMixin, self).save(*args, **kwargs)
 
-class FakeDeleteMixin(models.Model):
+class FakeDeleteMixin(object):
     """
     Add a `deleted` field and prohibit real deletion.
     """
@@ -260,7 +260,7 @@ class FakeDeleteMixin(models.Model):
         #    for o in related.model.objects.all(): # ALL objects?? couldn't find appropriate filter
         #        o.delete()
 
-class FieldInfoMixin(models.Model):
+class FieldInfoMixin(object):
     
     items_per_page = int(getattr(settings, 'ITEMS_PER_PAGE', 10))  # : used in list views, overwrite in your models
     list_display = []  # : for list views, ignore if empty
@@ -345,7 +345,7 @@ class FieldInfoMixin(models.Model):
         return self._meta.verbose_name_plural
 
 
-class DorsaleBaseModel(FakeDeleteMixin, AuthorSiteMixin, FieldInfoMixin):
+class DorsaleBaseModel(FakeDeleteMixin, AuthorSiteMixin, FieldInfoMixin, models.Model):
     """
     Abstract base class for all fiee models.
     
