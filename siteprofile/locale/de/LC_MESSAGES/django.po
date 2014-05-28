@@ -1,0 +1,290 @@
+# fiëé dorsale.
+# Copyright (C) 2011 fiëé visuëlle
+# This file is distributed under the same license as the dorsale package.
+# Henning Hraban Ramm <hraban@fiee.net>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: fiëé dorsale / siteprofile\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-05-28 11:00+0600\n"
+"PO-Revision-Date: 2014-05-28 11:05+0600\n"
+"Last-Translator: Henning Hraban Ramm <hraban@fiee.net>\n"
+"Language-Team: fiëé visuëlle <hraban@fiee.net>\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.6.4\n"
+
+#: __init__.py:5 models.py:50
+msgid "Site Profile"
+msgstr "Site-Profil"
+
+#: __init__.py:6 models.py:51
+msgid "Site Profiles"
+msgstr "Site-Profile"
+
+#: models.py:10
+msgid "available"
+msgstr "verfügbar"
+
+#: models.py:11
+msgid "available, but customer specific"
+msgstr "verfügbar, aber kundenspezifisch"
+
+#: models.py:12
+msgid "available, but not yet integrated"
+msgstr "verfügbar, aber noch nicht integriert"
+
+#: models.py:13
+msgid "in development"
+msgstr "in Entwicklung"
+
+#: models.py:14
+msgid "in planning stage"
+msgstr "in Planung"
+
+#: models.py:15
+msgid "on demand"
+msgstr "auf Anfrage"
+
+#: models.py:19
+msgid "Name"
+msgstr "Name"
+
+#: models.py:19
+msgid "Name of module"
+msgstr "Name des Moduls"
+
+#: models.py:20 models.py:42
+msgid "Code"
+msgstr "Code"
+
+#: models.py:20
+msgid "Base url of module"
+msgstr "Basis-URL des Moduls"
+
+#: models.py:21 templates/siteprofile/list_modules.html:15
+msgid "Description"
+msgstr "Beschreibung"
+
+#: models.py:21
+msgid "Some words about this module"
+msgstr "Ein paar Worte über dieses Modul"
+
+#: models.py:22 templates/siteprofile/list_modules.html:16
+msgid "Availability"
+msgstr "Verfügbarkeit"
+
+#: models.py:22
+msgid "Is this module already available?"
+msgstr "Ist dieses Modul bereits verfügbar?"
+
+#: models.py:25 templates/siteprofile/list_modules.html:14
+msgid "Module"
+msgstr "Modul"
+
+#: models.py:26 models.py:47 templates/siteprofile/list_modules.html:4
+#: templates/siteprofile/list_modules.html:7
+msgid "Modules"
+msgstr "Module"
+
+#: models.py:41
+msgid "Site"
+msgstr "Site"
+
+#: models.py:41
+msgid "Tenant’s site"
+msgstr "Kunden-Site"
+
+#: models.py:42
+msgid ""
+"Server name of site (www for www.example.com). This is used as the template "
+"name of the menu, base page of CMS pages and perhaps additional CSS."
+msgstr ""
+"Servername der Site (www für www.example.com). Dies wird als Template-Name "
+"für das Menü, als Basis der CMS-Seiten und eventuell als Name für ein "
+"zusätzliches CSS verwendet."
+
+#: models.py:43
+msgid "Base Language"
+msgstr "Grundsprache"
+
+#: models.py:43
+msgid "Base language of this site"
+msgstr "Voreingestellte Sprache dieser Site"
+
+#: models.py:44
+msgid "Admin Group"
+msgstr "Admin-Gruppe"
+
+#: models.py:44
+msgid "Members of this group are admins of this site."
+msgstr "Mitglieder dieser Gruppe sind Administratoren dieser Site."
+
+#: models.py:45
+msgid "Use own style?"
+msgstr "Eigenen Stil verwenden?"
+
+#: models.py:45
+msgid ""
+"Should the look differ from the main site’s? Use an additional CSS? Name of "
+"the CSS must be the code!"
+msgstr ""
+"Soll das Aussehen von dem der Hauptseite abweichen? Soll ein zusätzliches "
+"CSS verwendet werden? Der Name des CSS muss dem Code entsprechen!"
+
+#: models.py:46
+msgid "Start URL"
+msgstr "Start-URL"
+
+#: models.py:46
+msgid "URL of base view of this site. Same as code if empty!"
+msgstr "URL der Startseite dieser Site. Entspricht dem Code, falls leer!"
+
+#: models.py:47
+msgid "The site has access to these modules."
+msgstr "Die Site hat Zugriff auf diese Module."
+
+#~ msgid "fiëé dorsale"
+#~ msgstr "fiëé dorsale"
+
+#~ msgid "German"
+#~ msgstr "Deutsch"
+
+#~ msgid "English"
+#~ msgstr "Englisch"
+
+#~ msgid "This is not a valid year (between 1900 and 2100)."
+#~ msgstr "Das ist kein gültiges Jahr (zwischen 1900 und 2100)."
+
+#~ msgid "This is not a valid page range (divisible by 4)."
+#~ msgstr "Das ist kein gültiger Seitenumfang (teilbar durch 4)."
+
+#~ msgid "Edit %s"
+#~ msgstr "%s bearbeiten"
+
+#~ msgid "%(model_name)s %(model_id)s saved."
+#~ msgstr "%(model_name)s %(model_id)s wurde gespeichert."
+
+#~ msgid "Delete %s"
+#~ msgstr "Lösche %s"
+
+#~ msgid "%(model_name)s %(model_id)s deleted."
+#~ msgstr "%(model_name)s %(model_id)s wurde gelöscht."
+
+#~ msgid "New %s"
+#~ msgstr "%s erzeugen"
+
+#~ msgid "This %s already exists!"
+#~ msgstr "%s existiert bereits!"
+
+#~ msgid "New %s saved."
+#~ msgstr "%s gespeichert."
+
+#~ msgid ""
+#~ "This is an invalid color code. It must be a html hex color code e.g. "
+#~ "#000000"
+#~ msgstr ""
+#~ "Dieser Farbcode ist ungültig. Zulässig sind nur hexadezimale HTML-"
+#~ "Farbcodes, z.B. #000000"
+
+#~ msgid ""
+#~ "This is not a valid CMYK color code. Please use percent values e.g. "
+#~ "0,100,100,0"
+#~ msgstr ""
+#~ "Dieser Farbcode ist ungültig. Bitte geben Sie CMYK-Prozentwerte ein, z.B. "
+#~ "0,100,100,0"
+
+#~ msgid ""
+#~ "You do not yet belong to any groups. Ask your administrator to add you to "
+#~ "one."
+#~ msgstr ""
+#~ "Sie gehören noch zu keiner Arbeitsgruppe. Bitten Sie Ihren Administrator, "
+#~ "Sie zu einer hinzuzufügen."
+
+#~ msgid "User %s doesn't belong to any group!"
+#~ msgstr "Benutzer %s gehört zu keiner Gruppe!"
+
+#~ msgid "created by"
+#~ msgstr "Angelegt von"
+
+#~ msgid "user that was logged in when this item was created"
+#~ msgstr "Der Benutzer, der beim Anlegen dieses Eintrags angemeldet war"
+
+#~ msgid "created on"
+#~ msgstr "Angelegt am"
+
+#~ msgid "date and time when this item was created"
+#~ msgstr "Datum und Uhrzeit, wann dieser Eintrag angelegt wurde"
+
+#~ msgid "last changed by"
+#~ msgstr "zuletzt geändert von"
+
+#~ msgid "user that was logged in when this item was changed last time"
+#~ msgstr ""
+#~ "Der Benutzer, der beider letzten Änderung dieses Eintrags angemeldet war"
+
+#~ msgid "deleted?"
+#~ msgstr "gelöscht?"
+
+#~ msgid "Is this item marked as deleted?"
+#~ msgstr "Ist dieser Eintrag als gelöscht markiert?"
+
+#~ msgid "last changed on"
+#~ msgstr "zuletzt geändert am"
+
+#~ msgid "date and time when this item was changed last time"
+#~ msgstr "Datum und Uhrzeit der letzten Änderung dieses Eintrags"
+
+#~ msgid "site of the related customer/project/team"
+#~ msgstr "Site des betreffenden Kunden/Projektes/Teams"
+
+#~ msgid "Error 404: Page Not Found"
+#~ msgstr "Fehler 404: Seite nicht gefunden"
+
+#~ msgid "Error 500: Server Error"
+#~ msgstr "Fehler 500: Server-Fehler"
+
+#~ msgid ""
+#~ "Sorry, this page is temporalily unavailable due to a server "
+#~ "misconfiguration."
+#~ msgstr ""
+#~ "Entschuldigung, diese Seite ist wegen eines Serverproblems vorübergehend "
+#~ "nicht erreichbar."
+
+#~ msgid "Do you really want to delete this item?"
+#~ msgstr "Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?"
+
+#~ msgid "Back"
+#~ msgstr "Zurück"
+
+#~ msgid "Delete"
+#~ msgstr "Löschen"
+
+#~ msgid "Save"
+#~ msgstr "Sichern"
+
+#~ msgid "You must not edit this item!"
+#~ msgstr "Sie dürfen diesen Eintrag nicht bearbeiten!"
+
+#~ msgid "Edit"
+#~ msgstr "Bearbeiten"
+
+#~ msgid "First"
+#~ msgstr "Anfang"
+
+#~ msgid "Previous"
+#~ msgstr "Zurück"
+
+#~ msgid "Next"
+#~ msgstr "Weiter"
+
+#~ msgid "Last"
+#~ msgstr "Ende"
+
+#~ msgid "New Item"
+#~ msgstr "Neuer Eintrag"

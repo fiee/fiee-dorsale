@@ -1,0 +1,288 @@
+# fiëé dorsale.
+# Copyright (C) 2011 fiëé visuëlle
+# This file is distributed under the same license as the dorsale package.
+# Henning Hraban Ramm <hraban@fiee.net>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: fiëé dorsale / siteprofile\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-05-28 11:00+0600\n"
+"PO-Revision-Date: 2014-05-28 11:06+0600\n"
+"Last-Translator: Henning Hraban Ramm <hraban@fiee.net>\n"
+"Language-Team: fiëé visuëlle <hraban@fiee.net>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.6.4\n"
+
+#: __init__.py:5 models.py:50
+msgid "Site Profile"
+msgstr "Site Profile"
+
+#: __init__.py:6 models.py:51
+msgid "Site Profiles"
+msgstr "Site Profiles"
+
+#: models.py:10
+msgid "available"
+msgstr "available"
+
+#: models.py:11
+msgid "available, but customer specific"
+msgstr "available, but customer specific"
+
+#: models.py:12
+msgid "available, but not yet integrated"
+msgstr "available, but not yet integrated"
+
+#: models.py:13
+msgid "in development"
+msgstr "in development"
+
+#: models.py:14
+msgid "in planning stage"
+msgstr "in planning stage"
+
+#: models.py:15
+msgid "on demand"
+msgstr "on demand"
+
+#: models.py:19
+msgid "Name"
+msgstr "Name"
+
+#: models.py:19
+msgid "Name of module"
+msgstr "Name of module"
+
+#: models.py:20 models.py:42
+msgid "Code"
+msgstr "Code"
+
+#: models.py:20
+msgid "Base url of module"
+msgstr "Base url of module"
+
+#: models.py:21 templates/siteprofile/list_modules.html:15
+msgid "Description"
+msgstr "Description"
+
+#: models.py:21
+msgid "Some words about this module"
+msgstr "Some words about this module"
+
+#: models.py:22 templates/siteprofile/list_modules.html:16
+msgid "Availability"
+msgstr "Availability"
+
+#: models.py:22
+msgid "Is this module already available?"
+msgstr "Is this module already available?"
+
+#: models.py:25 templates/siteprofile/list_modules.html:14
+msgid "Module"
+msgstr "Module"
+
+#: models.py:26 models.py:47 templates/siteprofile/list_modules.html:4
+#: templates/siteprofile/list_modules.html:7
+msgid "Modules"
+msgstr "Modules"
+
+#: models.py:41
+msgid "Site"
+msgstr "Site"
+
+#: models.py:41
+msgid "Tenant’s site"
+msgstr "Tenant’s site"
+
+#: models.py:42
+msgid ""
+"Server name of site (www for www.example.com). This is used as the template "
+"name of the menu, base page of CMS pages and perhaps additional CSS."
+msgstr ""
+"Server name of site (www for www.example.com). This is used as the template "
+"name of the menu, base page of CMS pages and perhaps additional CSS."
+
+#: models.py:43
+msgid "Base Language"
+msgstr "Base Language"
+
+#: models.py:43
+msgid "Base language of this site"
+msgstr "Base language of this site"
+
+#: models.py:44
+msgid "Admin Group"
+msgstr "Admin Group"
+
+#: models.py:44
+msgid "Members of this group are admins of this site."
+msgstr "Members of this group are admins of this site."
+
+#: models.py:45
+msgid "Use own style?"
+msgstr "Use own style?"
+
+#: models.py:45
+msgid ""
+"Should the look differ from the main site’s? Use an additional CSS? Name of "
+"the CSS must be the code!"
+msgstr ""
+"Should the look differ from the main site’s? Use an additional CSS? Name of "
+"the CSS must be the code!"
+
+#: models.py:46
+msgid "Start URL"
+msgstr "Start URL"
+
+#: models.py:46
+msgid "URL of base view of this site. Same as code if empty!"
+msgstr "URL of base view of this site. Same as code if empty!"
+
+#: models.py:47
+msgid "The site has access to these modules."
+msgstr "The site has access to these modules."
+
+#~ msgid "fiëé dorsale"
+#~ msgstr "fiëé dorsale"
+
+#~ msgid "German"
+#~ msgstr "German"
+
+#~ msgid "English"
+#~ msgstr "English"
+
+#~ msgid "This is not a valid year (between 1900 and 2100)."
+#~ msgstr "This is not a valid year (between 1900 and 2100)."
+
+#~ msgid "This is not a valid page range (divisible by 4)."
+#~ msgstr "This is not a valid page range (divisible by 4)."
+
+#~ msgid "Edit %s"
+#~ msgstr "Edit %s"
+
+#~ msgid "%(model_name)s %(model_id)s saved."
+#~ msgstr "%(model_name)s %(model_id)s saved."
+
+#~ msgid "Delete %s"
+#~ msgstr "Delete %s"
+
+#~ msgid "%(model_name)s %(model_id)s deleted."
+#~ msgstr "%(model_name)s %(model_id)s deleted."
+
+#~ msgid "New %s"
+#~ msgstr "New %s"
+
+#~ msgid "This %s already exists!"
+#~ msgstr "This %s already exists!"
+
+#~ msgid "New %s saved."
+#~ msgstr "New %s saved."
+
+#~ msgid ""
+#~ "This is an invalid color code. It must be a html hex color code e.g. "
+#~ "#000000"
+#~ msgstr ""
+#~ "This is an invalid color code. It must be a html hex color code e.g. "
+#~ "#000000"
+
+#~ msgid ""
+#~ "This is not a valid CMYK color code. Please use percent values e.g. "
+#~ "0,100,100,0"
+#~ msgstr ""
+#~ "This is not a valid CMYK color code. Please use percent values e.g. "
+#~ "0,100,100,0"
+
+#~ msgid ""
+#~ "You do not yet belong to any groups. Ask your administrator to add you to "
+#~ "one."
+#~ msgstr ""
+#~ "You do not yet belong to any groups. Ask your administrator to add you to "
+#~ "one."
+
+#~ msgid "User %s doesn't belong to any group!"
+#~ msgstr "User %s doesn't belong to any group!"
+
+#~ msgid "created by"
+#~ msgstr "created by"
+
+#~ msgid "user that was logged in when this item was created"
+#~ msgstr "user that was logged in when this item was created"
+
+#~ msgid "created on"
+#~ msgstr "created on"
+
+#~ msgid "date and time when this item was created"
+#~ msgstr "date and time when this item was created"
+
+#~ msgid "last changed by"
+#~ msgstr "last changed by"
+
+#~ msgid "user that was logged in when this item was changed last time"
+#~ msgstr "user that was logged in when this item was changed last time"
+
+#~ msgid "deleted?"
+#~ msgstr "deleted?"
+
+#~ msgid "Is this item marked as deleted?"
+#~ msgstr "Is this item marked as deleted?"
+
+#~ msgid "last changed on"
+#~ msgstr "last changed on"
+
+#~ msgid "date and time when this item was changed last time"
+#~ msgstr "date and time when this item was changed last time"
+
+#~ msgid "site of the related customer/project/team"
+#~ msgstr "site of the related customer/project/team"
+
+#~ msgid "Error 404: Page Not Found"
+#~ msgstr "Error 404: Page Not Found"
+
+#~ msgid "Error 500: Server Error"
+#~ msgstr "Error 500: Server Error"
+
+#~ msgid ""
+#~ "Sorry, this page is temporalily unavailable due to a server "
+#~ "misconfiguration."
+#~ msgstr ""
+#~ "Sorry, this page is temporalily unavailable due to a server "
+#~ "misconfiguration."
+
+#~ msgid "Do you really want to delete this item?"
+#~ msgstr "Do you really want to delete this item?"
+
+#~ msgid "Back"
+#~ msgstr "Back"
+
+#~ msgid "Delete"
+#~ msgstr "Delete"
+
+#~ msgid "Save"
+#~ msgstr "Save"
+
+#~ msgid "You must not edit this item!"
+#~ msgstr "You must not edit this item!"
+
+#~ msgid "Edit"
+#~ msgstr "Edit"
+
+#~ msgid "First"
+#~ msgstr "First"
+
+#~ msgid "Previous"
+#~ msgstr "Previous"
+
+#~ msgid "Next"
+#~ msgstr "Next"
+
+#~ msgid "Last"
+#~ msgstr "Last"
+
+#~ msgid "New Item"
+#~ msgstr "New Item"
