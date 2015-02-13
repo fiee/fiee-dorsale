@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% for field in form.visible_fields %}
-    <p class="field_wrapper">
+    <p class="field_wrapper" id="wrapper_{{ field.name }}">
       <span class="label">{% trans field.label %}:</span>
       {% if field.help_text %}<span class="field_help">{% trans field.help_text %}</span>{% endif %}
       <span class="field">{{ field }}</span>
