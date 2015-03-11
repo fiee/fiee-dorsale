@@ -13,7 +13,7 @@ setup(name='fiee-dorsale',
       url='https://github.com/fiee/fiee-dorsale',
       download_url='https://github.com/fiee/fiee-dorsale/tarball/master',
       package_dir={
-                   'dorsale': 'dorsale', 
+                   'dorsale': 'dorsale',
                    'siteprofile': 'siteprofile',
                    },
       packages=find_packages(),
