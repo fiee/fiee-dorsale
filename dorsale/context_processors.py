@@ -3,9 +3,10 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from siteprofile.models import SiteProfile
 
+
 def info(request):
     """Add some information to the context:
-    
+
     :site: site ID of current site
     :site_profile: `dorsale.siteprofile.models.SiteProfile` of current site
     :MEDIA_URL: `settings.MEDIA_URL`

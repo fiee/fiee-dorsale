@@ -17,7 +17,11 @@ def get_instance_id_path(instance, source_filename, target_filename=''):
     if not target_filename:
         fn, ext = os.path.splitext(source_filename.lower())
         target_filename = "%s_%s%s" % (instance.__class__.__name__, iid, ext)
-    path = os.path.join(instance.__class__.__module__.replace('.models', ''), instance.__class__.__name__, iid, target_filename)
+    path = os.path.join(
+        instance.__class__.__module__.replace('.models', ''),
+        instance.__class__.__name__,
+        iid,
+        target_filename)
     return path
 
 
@@ -35,7 +39,11 @@ def get_hash_path(instance, source_filename, target_filename=''):
     if not target_filename:
         fn, ext = os.path.splitext(source_filename.lower())
         target_filename = "%s_%s%s" % (instance.__class__.__name__, id, ext)
-    path = os.path.join(instance.__class__.__module__.replace('.models', ''), instance.__class__.__name__, hashlib.md5(id).hexdigest(), target_filename)
+    path = os.path.join(
+        instance.__class__.__module__.replace('.models', ''),
+        instance.__class__.__name__,
+        hashlib.md5(id).hexdigest(),
+        target_filename)
     return path
 
 
@@ -68,16 +76,20 @@ def slugify(text):
 
 def assert_on_exception(fn):
     """
-    This decorator cares that exceptions raised by the wrapped widget won’t get swallowed by Django.
+    This decorator cares that exceptions raised by the wrapped widget
+    won’t get swallowed by Django.
 
-    In custom Django widgets or admin list_display callable functions you have probably run into this:
-    Everything looks ok, except the place where your widget should be is just blank.
-    Nothing. No traceback or any clue as to what went wrong.
+    In custom Django widgets or admin list_display callable functions
+    you have probably run into this:
+    Everything looks ok, except the place where your widget should be
+    is just blank. Nothing. No traceback or any clue as to what went wrong.
 
     It seems that Django suppresses all the exceptions sent by widgets rendering
-    except for AssertionError and TypeError. Debugging under those conditions is tricky,
-    so I wrote a function decorator to help.
-    Just import this and put @assert_on_exception before your render method or admin list_display callable function.
+    except for AssertionError and TypeError.
+    Debugging under those conditions is tricky, so I wrote a function decorator
+    to help.
+    Just import this and put @assert_on_exception before your render method
+    or admin list_display callable function.
 
     by Ian Ward, http://excess.org/article/2010/12/django-hides-widget-exceptions/
     """

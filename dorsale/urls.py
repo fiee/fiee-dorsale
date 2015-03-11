@@ -6,21 +6,41 @@ from django.conf.urls import url, include, patterns
 from django.contrib.sites.models import Site
 import dorsale.views as dv
 
+
 def makepatterns(mymodule, mymodels, urlpatterns=None):
     if not urlpatterns:
-        urlpatterns = patterns('',)    
-    
+        urlpatterns = patterns('',)
+
     for mymodel in mymodels:
         name = mymodel.__name__.lower()
         eco = {
             'site': Site.objects.get_current,
             'object_example': mymodel(),
         }
-        urlpatterns.append(url(r'^' + name + r'/$', dv.list_items, {'app_name':mymodule, 'model_name':name}, name='%s-%s-list' % (mymodule, name)))
-        urlpatterns.append(url(r'^' + name + r'/(?P<object_id>\d+)/$', dv.show_item, {'app_name':mymodule, 'model_name':name}, name='%s-%s-display' % (mymodule, name)))
-        urlpatterns.append(url(r'^' + name + r'/(?P<object_id>\d+)/edit/$', dv.edit_item, {'app_name':mymodule, 'model_name':name}, name='%s-%s-edit' % (mymodule, name)))
-        urlpatterns.append(url(r'^' + name + r'/(?P<object_id>\d+)/delete/$', dv.delete_item, {'app_name':mymodule, 'model_name':name}, name='%s-%s-delete' % (mymodule, name)))
-        urlpatterns.append(url(r'^' + name + '/new/$', '%s.views.new_%s' % (mymodule, name), name='%s-%s-new' % (mymodule, name)))
+        urlpatterns.append(url(
+            r'^' + name + r'/$',
+            dv.list_items,
+            {'app_name': mymodule, 'model_name': name},
+            name='%s-%s-list' % (mymodule, name)))
+        urlpatterns.append(url(
+            r'^' + name + r'/(?P<object_id>\d+)/$',
+            dv.show_item,
+            {'app_name': mymodule, 'model_name': name},
+            name='%s-%s-display' % (mymodule, name)))
+        urlpatterns.append(url(
+            r'^' + name + r'/(?P<object_id>\d+)/edit/$',
+            dv.edit_item,
+            {'app_name': mymodule, 'model_name': name},
+            name='%s-%s-edit' % (mymodule, name)))
+        urlpatterns.append(url(
+            r'^' + name + r'/(?P<object_id>\d+)/delete/$',
+            dv.delete_item,
+            {'app_name': mymodule, 'model_name': name},
+            name='%s-%s-delete' % (mymodule, name)))
+        urlpatterns.append(url(
+            r'^' + name + '/new/$', '%s.views.new_%s' % (mymodule, name),
+            dv.new_item,
+            name='%s-%s-new' % (mymodule, name)))
 #        urlpatterns.append(url(r'^'+name+r'/$', list_detail.object_list, {
 #            'queryset': mymodel.objects.all(),
 #            'template_name': 'list_items.html',
@@ -37,6 +57,5 @@ def makepatterns(mymodule, mymodels, urlpatterns=None):
 #            'template_name': 'edit_item.html',
 #            'extra_context': eco,
 #            }, name='%s-%s-edit' % (mymodule, name)))
-        
-    return urlpatterns
 
+    return urlpatterns

@@ -3,25 +3,33 @@ import datetime
 from django.contrib import admin
 from django.contrib.sites.models import Site
 
+
 class DorsaleBaseAdmin(admin.ModelAdmin):
     """
-    ModelAdmin for DorsaleBaseModels, automaticalls sets createdby, 
+    ModelAdmin for DorsaleBaseModels, automaticalls sets createdby,
     createdon, lastchangedby, lastchangedon, site and deleted fields.
-    
+
     Beware, this overrides "queryset" and "has_change_permissions"!
-    
+
     TODO: Permissions
-    
+
     TODO: see http://www.stereoplex.com/blog/filtering-dropdown-lists-in-the-django-admin
     """
     def save_model(self, request, obj, form, change):
         if not change:
-            if hasattr(obj, 'createdby'): obj.createdby = request.user
-            if hasattr(obj, 'createdon'): obj.createdon = datetime.datetime.now()
-            if hasattr(obj, 'deleted'): obj.deleted = False
-        if hasattr(obj, 'site'): obj.site = Site.objects.get_current()  # we could allow superusers to change the site
-        if hasattr(obj, 'lastchangedby'): obj.lastchangedby = request.user
-        if hasattr(obj, 'lastchangedon'): obj.lastchangedon = datetime.datetime.now()
+            if hasattr(obj, 'createdby'):
+                obj.createdby = request.user
+            if hasattr(obj, 'createdon'):
+                obj.createdon = datetime.datetime.now()
+            if hasattr(obj, 'deleted'):
+                obj.deleted = False
+        if hasattr(obj, 'site'):
+            obj.site = Site.objects.get_current()
+            # we could allow superusers to change the site
+        if hasattr(obj, 'lastchangedby'):
+            obj.lastchangedby = request.user
+        if hasattr(obj, 'lastchangedon'):
+            obj.lastchangedon = datetime.datetime.now()
         obj.save()
 
     def queryset(self, request):
@@ -36,11 +44,13 @@ class DorsaleBaseAdmin(admin.ModelAdmin):
 
     def has_class_permission(self, request, obj=None):
         return super(DorsaleBaseAdmin, self).has_change_permission(request, obj)
-    
+
     def has_change_permission(self, request, obj=None):
         if not self.has_class_permission(request, obj):
             return False
-        if obj is not None and not request.user.is_superuser and request.user.id != obj.createdby_id:  # if hasattr(obj, 'createdby'): 
+        if obj is not None \
+                and not request.user.is_superuser \
+                and request.user.id != obj.createdby_id:
             # TODO: Permissions!
             return False
         opts = self.opts

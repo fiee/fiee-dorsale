@@ -15,21 +15,24 @@ from siteprofile.models import SiteProfile
 from dorsale.forms import ModelFormFactory
 # from adhesive.models import Note
 
+
 def get_model(app_name, model_name):
     """
     Find a Model or ModelForm (not a view).
-    
+
     :app_name: name of the application, e.g. 'edition' for `dorsale.edition`
     :model_name: name of the model, e.g. 'Issue' for `dorsale.edition.models.Issue`
     """
     return ContentType.objects.get(app_label=app_name.lower(), model=model_name.lower()).model_class()
+
 
 def render_404(request, params):
     """Return a 404 error with my own template."""
     params['path'] = request.get_full_path()
     response = render_to_response('404.html', params, context_instance=RequestContext(request))
     response.status_code = 404
-    return response   
+    return response
+
 
 @login_required
 def home(request, **kwargs):
@@ -39,14 +42,15 @@ def home(request, **kwargs):
     if profile and profile.homeurl and profile.homeurl != '/':
         return redirect(profile.homeurl)
     else:
-        return render_to_response('root.html', {}, context_instance=RequestContext(request)) 
+        return render_to_response('root.html', {}, context_instance=RequestContext(request))
+
 
 @login_required
 def list_items(request, app_name='', model_name='', template='dorsale/list_items.html'):
     """
     List all (allowed) items of `app_name.model_name` (e.g. edition.issue), with pagination.
     Render 404 if model doesn't exist. Allow customization by `template`.
-    
+
     Available variables in the template:
     :object_example: empty object of the requested type (e.g. for table titles)
     :paginator: Paginator object
@@ -72,24 +76,25 @@ def list_items(request, app_name='', model_name='', template='dorsale/list_items
             page = int(request.GET.get('page', '1'))
         except ValueError:
             page = 1
-            
+
         # check if the page exists, otherwise last
         try:
             page_obj = paginator.page(page)
         except (EmptyPage, InvalidPage):
-            page_obj = paginator.page(paginator.num_pages) 
-        
-        del object_model    
-        return render_to_response(template, locals(), context_instance=RequestContext(request))  
+            page_obj = paginator.page(paginator.num_pages)
+
+        del object_model
+        return render_to_response(template, locals(), context_instance=RequestContext(request))
     else:
         return render_404(request, locals())
+
 
 @login_required
 def show_item(request, app_name='', model_name='', object_id=None, template='dorsale/show_item.html', _c=0):
     """
     Display one object: `app_name.model_name(id=object_id)`.
     Render 404 if object is not available. Allow customization by `template`.
-    
+
     Available variables in the template:
     :item: the requested object
     :item_type: ContentType of the requested object
@@ -118,7 +123,7 @@ def show_item(request, app_name='', model_name='', object_id=None, template='dor
 def edit_item(request, app_name='', model_name='', object_id=None, title='', template='dorsale/edit_item.html'):
     """
     Allow to edit one object: `app_name.model_name(id=object_id)`.
-    
+
     Available variables in the template:
     :item: the requested object
     :item_type: ContentType of the requested object
@@ -146,14 +151,14 @@ def edit_item(request, app_name='', model_name='', object_id=None, title='', tem
             form = ModelFormFactory(object_model, user=request.user, instance=item)
         return render_to_response(template, locals(), context_instance=RequestContext(request))
     else:
-        return HttpResponse(status=404)  
+        return HttpResponse(status=404)
 
 
 @login_required
 def delete_item(request, app_name='', model_name='', object_id=None, title='', template='dorsale/delete_item.html'):
     """
     Allow to delete one object: `app_name.model_name(id=object_id)`.
-    
+
     Available variables in the template:
     :item: the requested object
     :form: ModelForm for this object
@@ -173,17 +178,18 @@ def delete_item(request, app_name='', model_name='', object_id=None, title='', t
             return HttpResponseRedirect('/%s/%s/' % (app_name, model_name))
         return render_to_response(template, locals(), context_instance=RequestContext(request))
     else:
-        return HttpResponse(status=404)  
+        return HttpResponse(status=404)
+
 
 @login_required
 def new_item(request, app_name='', model_name='', title='', unique_fields=[], postprocess=None, template='dorsale/edit_item.html'):
     """
     Generate a new object of app_name.model_name and redirect to its single view.
-    
+
     :title: (str) form title (defaults to "New model_name")
     :unique_fields: (list of str) check if an object with the same fields exists
     :postprocess: (callable with userid, itemid) call this after saving the new item
-    
+
     Available variables in the template:
     :form: ModelForm
     :action: calling URL
