@@ -20,11 +20,12 @@ def get_instance_id_path(instance, source_filename, target_filename=''):
     path = os.path.join(instance.__class__.__module__.replace('.models', ''), instance.__class__.__name__, iid, target_filename)
     return path
 
+
 # DEPRECATED
 def get_hash_path(instance, source_filename, target_filename=''):
     """
     Create a hashed path for a file - no real security, just hard to guess.
-    
+
     @deprecated
     """
     if hasattr(instance, 'pk'):
@@ -37,6 +38,25 @@ def get_hash_path(instance, source_filename, target_filename=''):
     path = os.path.join(instance.__class__.__module__.replace('.models', ''), instance.__class__.__name__, hashlib.md5(id).hexdigest(), target_filename)
     return path
 
+
+def move_file_to_instance_id_path(storage, instance, attribute):
+    """
+    Move a file object that was saved without instance ID to a proper path.
+    You must call instance.save() afterwards.
+
+    :storage: Django’s storage object (`FileStorage` or compatible)
+    :instance: model instance
+    :attribute: name of the instance’s file attribute
+    """
+    filo = instance.__dict__[attribute]
+    newpath = getIssueCoverPath(instance, filo.name)
+    openfile = storage.open(filo, 'rb')
+    newfile = storage.save(newpath, openfile)
+    openfile.close()
+    instance.__dict__[attribute] = newfile
+    return filo
+
+
 def slugify(text):
     """Convert `text` to a harmless, URL-ready, lowercase ASCII string."""
     if type(text) is str:
@@ -45,19 +65,20 @@ def slugify(text):
     text = re.sub(r'[^\w\d\-]+', '', text)
     return text.replace(' ', '_').replace('__', '_').replace('--', '-')
 
+
 def assert_on_exception(fn):
     """
     This decorator cares that exceptions raised by the wrapped widget won’t get swallowed by Django.
-    
-    In custom Django widgets or admin list_display callable functions you have probably run into this: 
-    Everything looks ok, except the place where your widget should be is just blank. 
+
+    In custom Django widgets or admin list_display callable functions you have probably run into this:
+    Everything looks ok, except the place where your widget should be is just blank.
     Nothing. No traceback or any clue as to what went wrong.
 
-    It seems that Django suppresses all the exceptions sent by widgets rendering 
-    except for AssertionError and TypeError. Debugging under those conditions is tricky, 
-    so I wrote a function decorator to help. 
+    It seems that Django suppresses all the exceptions sent by widgets rendering
+    except for AssertionError and TypeError. Debugging under those conditions is tricky,
+    so I wrote a function decorator to help.
     Just import this and put @assert_on_exception before your render method or admin list_display callable function.
-    
+
     by Ian Ward, http://excess.org/article/2010/12/django-hides-widget-exceptions/
     """
     import sys
