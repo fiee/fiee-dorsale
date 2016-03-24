@@ -4,7 +4,7 @@ from django.http import HttpResponse, Http404
 from django.conf import settings
 from django.core import serializers
 from django.db.models import Model
-from django.db.models.loading import get_model
+from django.apps import apps as django_apps
 from django.db.models.query import QuerySet
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext as _
@@ -203,7 +203,7 @@ def export(request, qs, **kwargs):
         raise Http404(err)
 
     if prm['app_label'] and prm['model_name']:
-        model = get_model(prm['app_label'], prm['model_name'])
+        model = django_apps.get_model(prm['app_label'], prm['model_name'])
     elif prm['model']:
         model = prm['model']
     else:
