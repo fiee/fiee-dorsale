@@ -34,7 +34,7 @@ class DorsaleBaseAdmin(admin.ModelAdmin):
 
     def queryset(self, request):
         # TODO: query (group) permissions
-        qs = self.model._default_manager.get_query_set()
+        qs = self.model._default_manager.get_queryset()
         ordering = self.ordering or ()
         if not request.user.is_superuser and hasattr(self.model, 'createdby'):
             qs = qs.filter(createdby=request.user)

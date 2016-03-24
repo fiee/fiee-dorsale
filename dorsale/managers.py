@@ -27,13 +27,13 @@ class DorsaleSiteManager(CurrentSiteManager):
     def __init__(self, site_field_name='site'):
         super(DorsaleSiteManager, self).__init__(site_field_name)
 
-    def get_query_set(self):
+    def get_queryset(self):
         """Return all objects that belong to the current site and are not deleted"""
-        return super(DorsaleSiteManager, self).get_query_set().filter(deleted=False)
+        return super(DorsaleSiteManager, self).get_queryset().filter(deleted=False)
 
     def get_deleted_query_set(self):
         """Return all objects that belong to the current site and *are* deleted"""
-        return super(DorsaleSiteManager, self).get_query_set().filter(deleted=True)
+        return super(DorsaleSiteManager, self).get_queryset().filter(deleted=True)
 
     def mine(self, userid):
         """
@@ -56,7 +56,7 @@ class DorsaleSiteManager(CurrentSiteManager):
             self.user = None
         if userid < 0 or not self.user or not self.user.is_active:
             return QuerySet(self.model).none()
-        return self.get_query_set()
+        return self.get_queryset()
 
 
 class DorsaleGroupSiteManager(DorsaleSiteManager):
