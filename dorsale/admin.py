@@ -2,6 +2,7 @@
 import datetime
 from django.contrib import admin
 from django.contrib.sites.models import Site
+from django.contrib.auth import get_permission_codename
 
 
 class DorsaleBaseAdmin(admin.ModelAdmin):
@@ -30,7 +31,7 @@ class DorsaleBaseAdmin(admin.ModelAdmin):
             obj.lastchangedby = request.user
         if hasattr(obj, 'lastchangedon'):
             obj.lastchangedon = datetime.datetime.now()
-        obj.save()
+        obj.save(user=request.user)
 
     def queryset(self, request):
         # TODO: query (group) permissions
@@ -54,7 +55,8 @@ class DorsaleBaseAdmin(admin.ModelAdmin):
             # TODO: Permissions!
             return False
         opts = self.opts
-        return request.user.has_perm(opts.app_label + '.' + opts.get_change_permission())
+        codename = get_permission_codename('change', opts)
+        return request.user.has_perm("%s.%s" % (opts.app_label, codename))
 
 try:
     from registration.models import RegistrationProfile

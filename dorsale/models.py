@@ -76,6 +76,7 @@ class AuthorMixin(models.Model):
         self.lastchangedon = datetime.datetime.now()
         if 'user' in kwargs:
             self.lastchangedby = kwargs['user']
+            del kwargs['user'] # not allowed in super
         super(AuthorMixin, self).save(*args, **kwargs)
 
     def original_save(self, *args, **kwargs):

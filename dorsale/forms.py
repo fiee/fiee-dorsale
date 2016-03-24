@@ -49,7 +49,7 @@ class DorsaleBaseModelForm(ModelForm):
             if hasattr(obj, 'deleted'):
                 obj.deleted = False
         if commit:
-            obj.save()
+            obj.save(user=self.user)
             self.save_m2m()
         return obj
 
@@ -80,5 +80,6 @@ def ModelFormFactory(some_model, *args, **kwargs):
         class Meta:
             model = some_model
             widgets = widdict
+            exclude = []
 
     return MyModelForm(*args, **kwargs)
