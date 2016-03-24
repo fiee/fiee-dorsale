@@ -38,8 +38,9 @@ def makepatterns(mymodule, mymodels, urlpatterns=None):
             {'app_name': mymodule, 'model_name': name},
             name='%s-%s-delete' % (mymodule, name)))
         urlpatterns.append(url(
-            r'^' + name + '/new/$', '%s.views.new_%s' % (mymodule, name),
+            r'^' + name + '/new/$',
             dv.new_item,
+            {'app_name': mymodule, 'model_name': name},
             name='%s-%s-new' % (mymodule, name)))
 #        urlpatterns.append(url(r'^'+name+r'/$', list_detail.object_list, {
 #            'queryset': mymodel.objects.all(),
