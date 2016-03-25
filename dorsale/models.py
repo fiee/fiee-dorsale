@@ -7,10 +7,14 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
-from django.db import models, router
+from django.db import models, router, transaction
 from django.db.models import signals, sql
 from django.db.models.fields.related import RECURSIVE_RELATIONSHIP_CONSTANT
+
 from django.db.models.deletion import Collector
+import six
+from collections import Counter, OrderedDict
+
 from django.utils.translation import ugettext_lazy as _
 # from south.modelsinspector import add_introspection_rules
 from dorsale.conf import settings
@@ -169,7 +173,7 @@ class FakeDeleteMixin(models.Model):
     class Meta:
         abstract = True
 
-    def delete(self, using=None, *args, **kwargs):
+    def delete(self, using=None, keep_parents=False, **kwargs):
         """
         Mark this instance as deleted and call `delete()` on all related objects.
 
@@ -177,18 +181,21 @@ class FakeDeleteMixin(models.Model):
         """
         logger.info('DELETE %s' % self)
         self.deleted = True
-        self.save(*args, **kwargs)
+        self.save(**kwargs)
 
         # the following is copied from django.db.models.base.Model
 
         using = using or router.db_for_write(self.__class__, instance=self)
-        assert self._get_pk_val() is not None, \
-            "%s object can't be deleted because its %s attribute is set to None." \
-            % (self._meta.object_name, self._meta.pk.attname)
+        assert self._get_pk_val() is not None, (
+            "%s object can't be deleted because its %s attribute is set to None." %
+            (self._meta.object_name, self._meta.pk.attname)
+        )
 
-        # Find all the related objects than need to be deleted.
+        # Find all the related objects that need to be deleted.
         collector = Collector(using=using)
-        collector.collect([self])
+        collector.collect([self], keep_parents=keep_parents)
+        #return collector.delete()
+
         # remove self from deletion collection
         myself_and_friends = collector.data[type(self)].remove(self)
         if myself_and_friends:
@@ -198,72 +205,73 @@ class FakeDeleteMixin(models.Model):
 
         # Problem: collector.delete() doesn’t call object’s delete method, but deletes!
 
-        # The following is copied from collector.delete()
-
+        # The following is copied from collector.delete() (db.models.deletion)
+        
         # sort instance collections
         for model, instances in collector.data.items():
             collector.data[model] = sorted(instances, key=attrgetter("pk"))
 
         # if possible, bring the models in an order suitable for databases that
-        # don't support transactions or cannot defer contraint checks until the
+        # don't support transactions or cannot defer constraint checks until the
         # end of a transaction.
         collector.sort()
+        # number of objects deleted for each model label
+        deleted_counter = Counter()
 
-        # send pre_delete signals
-        for model, obj in collector.instances_with_model():
-            if not model._meta.auto_created:
-                signals.pre_delete.send(
-                    sender=model, instance=obj, using=collector.using
-                )
+        with transaction.atomic(using=collector.using, savepoint=False):
+            # send pre_delete signals
+            for model, obj in collector.instances_with_model():
+                if not model._meta.auto_created:
+                    signals.pre_delete.send(
+                        sender=model, instance=obj, using=collector.using
+                    )
 
-        # update fields
-        for model, instances_for_fieldvalues in collector.field_updates.iteritems():
-            query = sql.UpdateQuery(model)
-            for (field, value), instances in instances_for_fieldvalues.iteritems():
-                query.update_batch([obj.pk for obj in instances],
-                                   {field.name: value}, collector.using)
+            ## fast deletes
+            #for qs in collector.fast_deletes:
+            #    count = qs._raw_delete(using=collector.using)
+            #    deleted_counter[qs.model._meta.label] += count
 
-        # reverse instance collections
-        for instances in collector.data.itervalues():
-            instances.reverse()
+            # update fields
+            for model, instances_for_fieldvalues in six.iteritems(collector.field_updates):
+                query = sql.UpdateQuery(model)
+                for (field, value), instances in six.iteritems(instances_for_fieldvalues):
+                    query.update_batch([obj.pk for obj in instances],
+                                       {field.name: value}, collector.using)
 
-        # delete batches
-        for model, batches in collector.batches.iteritems():
-            if not issubclass(model, CerebraleBaseModel):
+            # reverse instance collections
+            for instances in six.itervalues(collector.data):
+                instances.reverse()
+
+            # delete instances
+            for model, instances in six.iteritems(collector.data):
+                if not issubclass(model, CerebraleBaseModel):
                 # handle non-cerebrale models as usual
-                query = sql.DeleteQuery(model)
-                for field, instances in batches.iteritems():
-                    query.delete_batch([obj.pk for obj in instances], collector.using, field)
-            else:
-                # don’t know what to do
-                pass
+                    query = sql.DeleteQuery(model)
+                    pk_list = [obj.pk for obj in instances]
+                    count = query.delete_batch(pk_list, collector.using)
+                    deleted_counter[model._meta.label] += count
+                else:
+                    for inst in instances:
+                        inst.delete()  # expensive operation!
 
-        # delete instances
-        for model, instances in collector.data.iteritems():
-            if not issubclass(model, CerebraleBaseModel):
-                # handle non-cerebrale models as usual
-                query = sql.DeleteQuery(model)
-                pk_list = [obj.pk for obj in instances]
-                query.delete_batch(pk_list, collector.using)
-            else:
-                for inst in instances:
-                    inst.delete()  # expensive operation!
-
-        # send post_delete signals
-        for model, obj in collector.instances_with_model():
-            if not model._meta.auto_created:
-                signals.post_delete.send(
-                    sender=model, instance=obj, using=collector.using
-                )
+                if not model._meta.auto_created:
+                    for obj in instances:
+                        signals.post_delete.send(
+                            sender=model, instance=obj, using=collector.using
+                        )
 
         # update collected instances
-        for model, instances_for_fieldvalues in collector.field_updates.iteritems():
-            for (field, value), instances in instances_for_fieldvalues.iteritems():
+        for model, instances_for_fieldvalues in six.iteritems(collector.field_updates):
+            for (field, value), instances in six.iteritems(instances_for_fieldvalues):
                 for obj in instances:
                     setattr(obj, field.attname, value)
-        for model, instances in collector.data.iteritems():
+        for model, instances in six.iteritems(collector.data):
             for instance in instances:
                 setattr(instance, model._meta.pk.attname, None)
+        return sum(deleted_counter.values()), dict(deleted_counter)
+        ###
+
+        
 
         # for related in self._meta.get_all_related_objects():
         #    for o in related.model.objects.all(): # ALL objects?? couldn't find appropriate filter
