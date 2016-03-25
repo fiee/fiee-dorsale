@@ -1,4 +1,4 @@
-{% load i18n %}
+{% csrf_token %}{% load i18n %}
 
 {% for field in form.visible_fields %}
     <p class="field_wrapper" id="wrapper_{{ field.name }}">
