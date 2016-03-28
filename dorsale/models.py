@@ -269,13 +269,6 @@ class FakeDeleteMixin(models.Model):
             for instance in instances:
                 setattr(instance, model._meta.pk.attname, None)
         return sum(deleted_counter.values()), dict(deleted_counter)
-        ###
-
-        
-
-        # for related in self._meta.get_all_related_objects():
-        #    for o in related.model.objects.all(): # ALL objects?? couldn't find appropriate filter
-        #        o.delete()
 
 
 class FieldInfoMixin(models.Model):
