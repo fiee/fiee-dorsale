@@ -57,7 +57,7 @@ def move_file_to_instance_id_path(storage, instance, attribute):
     :attribute: name of the instance’s file attribute
     """
     filo = instance.__dict__[attribute]
-    newpath = getIssueCoverPath(instance, filo.name)
+    newpath = get_instance_id_path(instance, filo.name)
     openfile = storage.open(filo, 'rb')
     newfile = storage.save(newpath, openfile)
     openfile.close()
