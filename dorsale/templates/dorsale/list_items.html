@@ -1,6 +1,7 @@
 {% extends "root.html" %}
 {% load i18n %}
 {% load cache %}
+{% load order_tags %}
 
 {% if app_name in site_profile.modlist %}
 
@@ -20,7 +21,7 @@
     <thead>
       <tr>
         {% for fn in item.fields %}
-          <th title="{{ fn.help_text }}"><a href="?page={{ page_obj.number }}&orderby={{ fn.name }}">{% trans fn.verbose_name %}</a></th>
+          <th title="{{ fn.help_text }}"><a href="?page={{ page_obj.number }}&orderby={% orderby fn.name orderby %}">{% trans fn.verbose_name %}</a></th>
         {% endfor %}
       </tr>
     </thead>
