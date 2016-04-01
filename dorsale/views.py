@@ -14,6 +14,8 @@ from django.utils.translation import ugettext_lazy as _
 from siteprofile.models import SiteProfile
 from dorsale.forms import ModelFormFactory
 # from adhesive.models import Note
+#import logging
+#logger = logging.getLogger(settings.PROJECT_NAME)
 
 
 def get_model(app_name, model_name):
@@ -61,13 +63,16 @@ def list_items(request, app_name='', model_name='', template='dorsale/list_items
     if object_model:
         object_example = object_model()
 
-        # set order (works also with several fields like "country,city", even if that's nut supported by the UI)
         qs = object_model.objects.mine(request.user.id)
         try:
             # if the model has a default ordering defined, use it
             default_orderby = object_example.default_orderby
         except AttributeError:
-            default_orderby = 'id'
+            try:
+                default_orderby = object_example.orderby
+            except AttributeError:
+                default_orderby = 'id'
+        # set order (works also with several fields like "country,city", even if that's not supported by the UI)
         orderby = request.GET.get('orderby', default_orderby)
         l_orderby = orderby.split(',')
         try:
