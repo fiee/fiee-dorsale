@@ -74,6 +74,7 @@ def list_items(request, app_name='', model_name='', template='dorsale/list_items
                 default_orderby = 'id'
         # set order (works also with several fields like "country,city", even if that's not supported by the UI)
         orderby = request.GET.get('orderby', default_orderby)
+        del default_orderby  # don’t bloat locals()
         l_orderby = orderby.split(',')
         try:
             qs = qs.order_by(*l_orderby)
