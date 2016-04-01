@@ -1,4 +1,6 @@
-{% load i18n %}
+{% load i18n %}{% get_current_language as LANGUAGE_CODE %}
+{% load cache %}
+{% cache 600 languageselect LANGUAGE_CODE %}
 <div id="#languageselect">
   <form action="/i18n/setlang/" method="post">
     {% csrf_token %}
@@ -11,3 +13,4 @@
     <input type="submit" value="{% trans "Change language" %}" />
   </form>
 </div>
+{% endcache %}

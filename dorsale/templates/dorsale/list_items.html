@@ -1,5 +1,6 @@
 {% extends "root.html" %}
 {% load i18n %}
+{% load cache %}
 
 {% if app_name in site_profile.modlist %}
 
@@ -12,6 +13,7 @@
 
 {% include "dorsale/snippets/pagination.html" %}
 
+{% cache 30 list_items request.GET %}
 <table class="itemtable">
 {% for item in page_obj.object_list %}
   {% if forloop.counter0 == 0 %}
@@ -36,6 +38,7 @@
 {% endfor %}
   </tbody>
 </table>
+{% endcache %}
 
 {% include "dorsale/snippets/pagination.html" %}
 
