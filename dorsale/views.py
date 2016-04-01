@@ -66,12 +66,9 @@ def list_items(request, app_name='', model_name='', template='dorsale/list_items
         qs = object_model.objects.mine(request.user.id)
         try:
             # if the model has a default ordering defined, use it
-            default_orderby = object_example.default_orderby
+            default_orderby = object_example.ordering
         except AttributeError:
-            try:
-                default_orderby = object_example.orderby
-            except AttributeError:
-                default_orderby = 'id'
+            default_orderby = 'id'
         # set order (works also with several fields like "country,city", even if that's not supported by the UI)
         orderby = request.GET.get('orderby', default_orderby)
         del default_orderby  # don’t bloat locals()
