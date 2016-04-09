@@ -4,8 +4,8 @@ for DIR in dorsale siteprofile
 do
   cd $DIR
   echo $DIR
-  python ../manage.py makemessages -a -e html,py,tex,txt
-  python ../manage.py makemessages -a -d djangojs
-  open locale/de/LC_MESSAGES/*.po
+  django-admin makemessages -a -e html,py,tex,txt
+  django-admin makemessages -a -e js -d djangojs
+  open locale/*/LC_MESSAGES/*.po
   cd ..
 done
