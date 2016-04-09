@@ -1,0 +1,17 @@
+Django>=1.6
+django-mptt
+
+django-registration # hg clone http://bitbucket.org/ubernostrum/django-registration
+django-guardian
+celery
+django-celery
+librabbitmq
+
+#xlwt
+#odfpy
+#git+http://github.com/fiee/django-userpreferences.git # broken
+git+http://github.com/fiee/django-async-messages.git
+#git+http://github.com/fiee/fiee-dorsale.git>=0.0.9
+#git+http://github.com/fiee/fiee-adhesive.git>=0.0.7
+#git+http://github.com/fiee/fiee-temporale.git>=0.0.5
+git+http://github.com/fiee/fiee-coloree.git

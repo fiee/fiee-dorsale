@@ -72,11 +72,14 @@ See the code for more information!
 Dependencies
 ------------
 
+* Python 2.7
 * Django 1.6 with included contributions
-* `fiëé colorée`_ for color picker widget
 * django-registration_ (or compatible)
-* Templates and widgets use `YUI grids css`_, jQuery_ and `jQuery UI`_
+* Templates and widgets use jQuery_ and `jQuery UI`_ (TODO: remove YUI CSS)
 * django-mptt_ for dorsale.mptt_ (beware, dorsale.mptt is not tested with current django-mptt!)
+* Optional `fiëé colorée`_ for color picker widget
+* Optional xlwt_ and odfpy_ if you want to export data to XLS and/or ODS
+* far too much other stuff that you only need under special circumstances
 
 
 Known Issues
@@ -95,8 +98,8 @@ Known Issues
 Ideas
 -----
 
-* Use Django_ 1.3+’s class based views
-* Try to extract base model stuff to a mixin to ease inheritance, have a look at https://github.com/bmihelac/ (django-site-permissions and django-sites-ext)
+* Use class based views
+* Try to extract base model stuff to mixins to ease inheritance, have a look at https://github.com/bmihelac/ (django-site-permissions and django-sites-ext)
 * Add Sphinx_ docs and enhance setup.py
 
 
@@ -135,3 +138,7 @@ Author(s)
 .. _jQuery: http://docs.jquery.com/
 .. _jQuery UI: http://jqueryui.com/demos/
 .. _Felipe Prenholato: http://chronosbox.org/blog/jsonresponse-in-django?lang=en
+.. _xlwt: http://www.python-excel.org
+.. _odfpy: https://github.com/eea/odfpy
+
+

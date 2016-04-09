@@ -11,10 +11,20 @@ from django.utils.translation import ugettext as _
 from datetime import date
 import decimal, datetime
 import csv
-import xlwt  # XLS Writer, see pypi
-import odf, odf.opendocument, odf.table
+try:
+    import xlwt  # XLS Writer, see pypi
+    xl_active = True
+except ImportError:
+    xl_active = False
+try:
+    import odf, odf.opendocument, odf.table  # odfpy, see pypi
+    odf_active = True
+except ImportError:
+    odf_active = False
+    
 import logging
 logger = logging.getLogger(settings.PROJECT_NAME)
+
 
 DEFAULT_PARAMS = {
     'app_label': '',
@@ -27,108 +37,6 @@ DEFAULT_PARAMS = {
     'filename': '',
     'sheet_title': _(u'Export'),
 }
-
-
-class xlswriter(object):
-    """
-    XLS creator as drop-in replacement for csv.writer
-    """
-    # style0 = xlwt.easyxf('font: name Arial, color-index red, bold on', num_format_str='#,##0.00')
-    # style1 = xlwt.easyxf(num_format_str='D-MMM-YY')
-
-    def __init__(self, targetfile, **kwargs):
-        self.params = DEFAULT_PARAMS
-        self.params.update(kwargs)
-
-        self.stream = targetfile
-        self.xlwb = xlwt.Workbook(encoding=self.params['charset'])
-        self.xlws = self.xlwb.add_sheet(self.params['sheet_title'])
-        self.rowcounter = 0
-
-    def write_value(self, x, y, val, style):
-        self.xlws.write(y, x, val, style)
-
-    def write_formula(self, x, y, formula, style):
-        self.xlws.write(y, x, xlwt.Formula(formula), style)
-
-    def set_row_style(self, rownumber, style):
-        return self.xlws.row(rownumber).set_style(style)
-
-    def save(self, filename=None):
-        if not filename:
-            filename = self.stream
-        self.xlwb.save(filename)
-        self.rowcounter = 0
-
-    def writerow(self, fields, style=None):
-        if not style:
-            style = xlwt.Style.default_style
-        y = self.rowcounter
-        for x in range(len(fields)):
-            val = fields[x]
-            if hasattr(val, 'startswith') and val.startswith('='):
-                val = val.strip('=')  # otherwise parsing error
-                self.write_formula(x, y, val, style)
-            else:
-                self.write_value(x, y, val, style)
-        self.set_row_style(y, style)
-        self.rowcounter += 1
-
-    def writerows(self, rows):
-        for row in rows:
-            self.writerow(row)
-
-
-class odswriter(object):
-    """
-    ODS creator as drop-in replacement for csv.writer
-    """
-
-    def __init__(self, targetfile, **kwargs):
-        self.params = DEFAULT_PARAMS
-        self.params.update(kwargs)
-
-        self.stream = targetfile
-        self.ods = odf.opendocument.OpenDocumentSpreadsheet()
-        self.odtable = odf.table.Table(name=self.params['sheet_title'])
-        self.ods.spreadsheet.addElement(self.odtable)
-        self.rowcounter = 0
-
-    def save(self, filename=None):
-        if not filename:
-            self.ods.write(self.stream)
-        else:
-            self.ods.save(filename)
-        self.rowcounter = 0
-
-    def writerow(self, fields, style=None):
-        row = odf.table.TableRow()
-        for x in range(len(fields)):
-            val = fields[x]
-            args = {'value':val}
-            if hasattr(val, 'startswith') and val.startswith('='):
-                args = {'formula': val}
-            elif type(val) in (str, unicode):
-                args = {'stringvalue': val, 'valuetype': 'string'}
-            elif type(val) in (decimal.Decimal,):
-                args = {'currency': 'EUR', 'valuetype': 'currency'}
-            elif type(val) in (int, float):
-                args['valuetype'] = 'float'
-            elif type(val) in (datetime.datetime, datetime.date):
-                args = {'datevalue': val, 'valuetype': 'date'}
-            elif type(val) in (datetime.time,):
-                args = {'timevalue': val, 'valuetype': 'time'}
-            elif type(val) in (bool,):
-                args = {'booleanvalue': val, 'valuetype': 'boolean'}
-            if style:
-                args['stylename'] = style
-            row.addElement(odf.table.TableCell(attributes=args))
-        self.odtable.addElement(row)
-        self.rowcounter += 1
-
-    def writerows(self, rows):
-        for row in rows:
-            self.writerow(row)
 
 
 ALLOWED_EXPORT_TYPES = {
@@ -153,16 +61,124 @@ ALLOWED_EXPORT_TYPES = {
         'mimetype': 'application/python',
         'serializer': 'python',
     },
-    'xls': {
-        'mimetype': 'application/vnd.ms-excel',
-        'writer': xlswriter
-    },
-    'ods': {
-        'mimetype': 'application/vnd.oasis.opendocument.spreadsheet',
-        'writer': odswriter
-    },
 }
 
+
+if xl_active:
+
+    ALLOWED_EXPORT_TYPES['xls'] = {
+        'mimetype': 'application/vnd.ms-excel',
+        'writer': xlswriter
+    }
+    
+    class xlswriter(object):
+        """
+        XLS creator as drop-in replacement for csv.writer
+        """
+        # style0 = xlwt.easyxf('font: name Arial, color-index red, bold on', num_format_str='#,##0.00')
+        # style1 = xlwt.easyxf(num_format_str='D-MMM-YY')
+    
+        def __init__(self, targetfile, **kwargs):
+            self.params = DEFAULT_PARAMS
+            self.params.update(kwargs)
+    
+            self.stream = targetfile
+            self.xlwb = xlwt.Workbook(encoding=self.params['charset'])
+            self.xlws = self.xlwb.add_sheet(self.params['sheet_title'])
+            self.rowcounter = 0
+    
+        def write_value(self, x, y, val, style):
+            self.xlws.write(y, x, val, style)
+    
+        def write_formula(self, x, y, formula, style):
+            self.xlws.write(y, x, xlwt.Formula(formula), style)
+    
+        def set_row_style(self, rownumber, style):
+            return self.xlws.row(rownumber).set_style(style)
+    
+        def save(self, filename=None):
+            if not filename:
+                filename = self.stream
+            self.xlwb.save(filename)
+            self.rowcounter = 0
+    
+        def writerow(self, fields, style=None):
+            if not style:
+                style = xlwt.Style.default_style
+            y = self.rowcounter
+            for x in range(len(fields)):
+                val = fields[x]
+                if hasattr(val, 'startswith') and val.startswith('='):
+                    val = val.strip('=')  # otherwise parsing error
+                    self.write_formula(x, y, val, style)
+                else:
+                    self.write_value(x, y, val, style)
+            self.set_row_style(y, style)
+            self.rowcounter += 1
+    
+        def writerows(self, rows):
+            for row in rows:
+                self.writerow(row)
+    
+
+if odf_active:
+    
+    ALLOWED_EXPORT_TYPES['ods'] = {
+        'mimetype': 'application/vnd.oasis.opendocument.spreadsheet',
+        'writer': odswriter
+    }
+    
+    class odswriter(object):
+        """
+        ODS creator as drop-in replacement for csv.writer
+        """
+    
+        def __init__(self, targetfile, **kwargs):
+            self.params = DEFAULT_PARAMS
+            self.params.update(kwargs)
+    
+            self.stream = targetfile
+            self.ods = odf.opendocument.OpenDocumentSpreadsheet()
+            self.odtable = odf.table.Table(name=self.params['sheet_title'])
+            self.ods.spreadsheet.addElement(self.odtable)
+            self.rowcounter = 0
+    
+        def save(self, filename=None):
+            if not filename:
+                self.ods.write(self.stream)
+            else:
+                self.ods.save(filename)
+            self.rowcounter = 0
+    
+        def writerow(self, fields, style=None):
+            row = odf.table.TableRow()
+            for x in range(len(fields)):
+                val = fields[x]
+                args = {'value':val}
+                if hasattr(val, 'startswith') and val.startswith('='):
+                    args = {'formula': val}
+                elif type(val) in (str, unicode):
+                    args = {'stringvalue': val, 'valuetype': 'string'}
+                elif type(val) in (decimal.Decimal,):
+                    args = {'currency': 'EUR', 'valuetype': 'currency'}
+                elif type(val) in (int, float):
+                    args['valuetype'] = 'float'
+                elif type(val) in (datetime.datetime, datetime.date):
+                    args = {'datevalue': val, 'valuetype': 'date'}
+                elif type(val) in (datetime.time,):
+                    args = {'timevalue': val, 'valuetype': 'time'}
+                elif type(val) in (bool,):
+                    args = {'booleanvalue': val, 'valuetype': 'boolean'}
+                if style:
+                    args['stylename'] = style
+                row.addElement(odf.table.TableCell(attributes=args))
+            self.odtable.addElement(row)
+            self.rowcounter += 1
+    
+        def writerows(self, rows):
+            for row in rows:
+                self.writerow(row)
+    
 
 def export(request, qs, **kwargs):
     """
