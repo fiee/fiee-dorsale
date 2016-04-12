@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from django.db import models
 from django.contrib import messages
 from django.contrib.sites.managers import CurrentSiteManager
 from django.contrib.auth.models import User
@@ -7,6 +8,15 @@ from django.db.models.query import QuerySet
 from django.utils.translation import ugettext_lazy as _
 import logging
 logger = logging.getLogger(__name__)
+
+
+class DorsaleFakeManager(models.Manager):
+    """
+    Drop-in replacement for DorsaleSiteManager and DorsaleGroupSiteManager
+    that takes arbitrary arguments and ignores them.
+    """
+    def __init__(self, *args, **kwargs):
+        super(DorsaleFakeManager, self).__init__()
 
 
 class DorsaleSiteManager(CurrentSiteManager):
