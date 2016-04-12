@@ -72,10 +72,10 @@ See the code for more information!
 Dependencies
 ------------
 
-* Python 2.7
-* Django 1.6 with included contributions
+* Python_ 2.7
+* Django_ 1.6+ with included contributions (1.9 suggested)
 * django-registration_ (or compatible)
-* Templates and widgets use jQuery_ and `jQuery UI`_ (TODO: remove YUI CSS)
+* Templates and widgets use jQuery_ and `jQuery UI`_
 * django-mptt_ for dorsale.mptt_ (beware, dorsale.mptt is not tested with current django-mptt!)
 * Optional `fiëé colorée`_ for color picker widget
 * Optional xlwt_ and odfpy_ if you want to export data to XLS and/or ODS
@@ -106,7 +106,7 @@ Ideas
 License
 -------
 
-BSD, like Django_ itself, see LICENSE_
+BSD, see LICENSE_
 (may not entirely be allowed, must still check licenses of used code)
 
 
@@ -128,13 +128,14 @@ Author(s)
 .. _`fiëé colorée`: https://github.com/fiee/fiee-coloree
 .. _`fiëé adhésive`: https://github.com/fiee/fiee-adhesive
 .. _`fiëé témporâle`: https://github.com/fiee/fiee-temporale
+
+.. _Python: http://www.python.org
 .. _Django: http://djangoproject.com
 .. _user.message_set.create: http://docs.djangoproject.com/en/1.2/topics/auth/#messages
 .. _messages framework: http://docs.djangoproject.com/en/1.2/ref/contrib/messages/
 .. _django-async-messages: https://github.com/fiee/django-async-messages/
 .. _django-registration: https://bitbucket.org/ubernostrum/django-registration/
 .. _django-mptt: https://github.com/django-mptt/django-mptt/
-.. _YUI grids css: http://developer.yahoo.com/yui/grids/
 .. _jQuery: http://docs.jquery.com/
 .. _jQuery UI: http://jqueryui.com/demos/
 .. _Felipe Prenholato: http://chronosbox.org/blog/jsonresponse-in-django?lang=en
