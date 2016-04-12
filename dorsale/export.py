@@ -65,11 +65,6 @@ ALLOWED_EXPORT_TYPES = {
 
 
 if xl_active:
-
-    ALLOWED_EXPORT_TYPES['xls'] = {
-        'mimetype': 'application/vnd.ms-excel',
-        'writer': xlswriter
-    }
     
     class xlswriter(object):
         """
@@ -119,14 +114,14 @@ if xl_active:
         def writerows(self, rows):
             for row in rows:
                 self.writerow(row)
+
+    ALLOWED_EXPORT_TYPES['xls'] = {
+        'mimetype': 'application/vnd.ms-excel',
+        'writer': xlswriter
+    }
     
 
 if odf_active:
-    
-    ALLOWED_EXPORT_TYPES['ods'] = {
-        'mimetype': 'application/vnd.oasis.opendocument.spreadsheet',
-        'writer': odswriter
-    }
     
     class odswriter(object):
         """
@@ -178,6 +173,11 @@ if odf_active:
         def writerows(self, rows):
             for row in rows:
                 self.writerow(row)
+
+    ALLOWED_EXPORT_TYPES['ods'] = {
+        'mimetype': 'application/vnd.oasis.opendocument.spreadsheet',
+        'writer': odswriter
+    }
     
 
 def export(request, qs, **kwargs):
