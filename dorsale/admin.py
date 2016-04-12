@@ -4,6 +4,9 @@ from django.contrib import admin
 from django.contrib.sites.models import Site
 from django.contrib.auth import get_permission_codename
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 class DorsaleBaseAdmin(admin.ModelAdmin):
     """
@@ -31,7 +34,11 @@ class DorsaleBaseAdmin(admin.ModelAdmin):
             obj.lastchangedby = request.user
         if hasattr(obj, 'lastchangedon'):
             obj.lastchangedon = datetime.datetime.now()
-        obj.save(user=request.user)
+        try:
+            obj.save(user=request.user)
+        except TypeError, ex:
+            logger.info('Object.save doesn’t accept user parameter.')
+            obj.save()
 
     def queryset(self, request):
         # TODO: query (group) permissions
