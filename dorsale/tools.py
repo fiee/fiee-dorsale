@@ -5,6 +5,7 @@ import os
 import re
 import hashlib
 import unicodedata
+import importlib
 # from dorsale.conf import settings
 
 
@@ -106,3 +107,12 @@ def assert_on_exception(fn):
     wrap.__doc__ = fn.__doc__
     wrap.__module__ = fn.__module__
     return wrap
+
+
+def class_from_name(name):
+    """
+    Take a class name like `django.db.models.Model` and return the class
+    """
+    parts = name.split('.')
+    mod = importlib.import_module('.'.join(parts[:-1]))
+    return getattr(mod, parts[-1])
