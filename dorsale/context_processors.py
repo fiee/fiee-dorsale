@@ -12,8 +12,12 @@ def info(request):
     :MEDIA_URL: `settings.MEDIA_URL`
     """
     site = Site.objects.get_current()
+    try:
+        siteprofile = SiteProfile.objects.get(pk=site)
+    except SiteProfile.DoesNotExist:
+        siteprofile = SiteProfile.objects.create(site_id=-1, admingroup_id=-1)
     return {
         'site': site,
-        'site_profile' : SiteProfile.objects.get(pk=site),
+        'site_profile' : siteprofile,
         'MEDIA_URL': settings.MEDIA_URL,
     }
