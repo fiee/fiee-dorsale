@@ -10,7 +10,10 @@ import importlib
 
 
 def get_instance_id_path(instance, source_filename, target_filename=''):
-    """Create the path for a file"""
+    """
+    Create the path for a file (don’t make directories, just a string).
+    This works as callable for `upload_to`.
+    """
     if hasattr(instance, 'pk'):
         iid = str(instance.pk)
     else:
@@ -30,6 +33,7 @@ def get_instance_id_path(instance, source_filename, target_filename=''):
 def get_hash_path(instance, source_filename, target_filename=''):
     """
     Create a hashed path for a file - no real security, just hard to guess.
+    This works as callable for `upload_to`.
 
     @deprecated
     """
