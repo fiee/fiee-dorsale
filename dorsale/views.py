@@ -7,15 +7,13 @@ from django.template import RequestContext
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.sites.models import Site
 from django.core.exceptions import FieldError, ObjectDoesNotExist
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.utils.translation import ugettext_lazy as _
-from siteprofile.models import SiteProfile
 from dorsale.forms import ModelFormFactory
 # from adhesive.models import Note
-#import logging
-#logger = logging.getLogger(settings.PROJECT_NAME)
+import logging
+logger = logging.getLogger(settings.PROJECT_NAME)
 
 
 def get_model(app_name, model_name):
@@ -39,12 +37,19 @@ def render_404(request, params):
 @login_required
 def home(request, **kwargs):
     """Render an index view with the root.html template."""
-    site = Site.objects.get_current()
-    profile = SiteProfile.objects.get(pk=site)
-    if profile and profile.homeurl and profile.homeurl != '/':
-        return redirect(profile.homeurl)
-    else:
-        return render_to_response('root.html', {}, context_instance=RequestContext(request))
+    try:
+        from django.contrib.sites.models import Site
+        site = Site.objects.get_current()
+    except ImportError:
+        logger.warn(_('Module django.contrib.sites is not installed'))
+    try:
+        from siteprofile.models import SiteProfile
+        profile = SiteProfile.objects.get(pk=site)
+        if profile and profile.homeurl and profile.homeurl != '/':
+            return redirect(profile.homeurl)
+    except ImportError:
+        logger.warn(_('Module siteprofile is not installed'))
+    return render_to_response('root.html', {}, context_instance=RequestContext(request))
 
 
 @login_required

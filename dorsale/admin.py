@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
 from django.contrib import admin
-from django.contrib.sites.models import Site
 from django.contrib.auth import get_permission_codename
 
 import logging
@@ -28,6 +27,7 @@ class DorsaleBaseAdmin(admin.ModelAdmin):
             if hasattr(obj, 'deleted'):
                 obj.deleted = False
         if hasattr(obj, 'site'):
+            from django.contrib.sites.models import Site
             obj.site = Site.objects.get_current()
             # we could allow superusers to change the site
         if hasattr(obj, 'lastchangedby'):

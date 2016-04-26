@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import datetime
 from django.contrib.auth.models import Group
-from django.contrib.sites.models import Site
 from django.db import models
 from django.forms import ModelForm
 try:
@@ -40,7 +39,9 @@ class DorsaleBaseModelForm(ModelForm):
             obj.lastchangedby = self.user
         if hasattr(obj, 'lastchangedon'):
             obj.lastchangedon = datetime.datetime.now()
-        if hasattr(obj, 'site'): obj.site = Site.objects.get_current()
+        if hasattr(obj, 'site'):
+            from django.contrib.sites.models import Site
+            obj.site = Site.objects.get_current()
         if not obj.pk:  # new dataset
             if hasattr(obj, 'createdby'):
                 obj.createdby = self.user

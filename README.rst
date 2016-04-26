@@ -74,6 +74,7 @@ Dependencies
 
 * Python_ 2.7
 * Django_ 1.6+ with included contributions (1.9 suggested)
+* django.contrib.sites (only if you use site dependent models)
 * django-registration_ (or compatible)
 * Templates and widgets use jQuery_ and `jQuery UI`_
 * django-mptt_ for dorsale.mptt_ (beware, dorsale.mptt is not tested with current django-mptt!)

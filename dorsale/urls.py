@@ -3,7 +3,6 @@ from django.conf.urls import url, include, patterns
 # from django.conf.urls import * # * needed for 404 handler
 # from django.views.generic import create_update #, list_detail
 # from django.contrib import admin
-from django.contrib.sites.models import Site
 import dorsale.views as dv
 
 
@@ -13,10 +12,12 @@ def makepatterns(mymodule, mymodels, urlpatterns=None):
 
     for mymodel in mymodels:
         name = mymodel.__name__.lower()
-        eco = {
-            'site': Site.objects.get_current,
-            'object_example': mymodel(),
-        }
+#         eco = {
+#             'object_example': mymodel(),
+#         }
+#         if hasattr(mymodel, 'site'):
+#             from django.contrib.sites.models import Site
+#             eco['site'] = Site.objects.get_current
         urlpatterns.append(url(
             r'^' + name + r'/$',
             dv.list_items,
