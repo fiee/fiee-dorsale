@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 import os
 
 setup(name='fiee-dorsale',
-      version='0.1.0',
+      version='0.1.1',
       description=u'Django base classes to handle management data like site, creation & change date & user',
       keywords='site group owner changed created mine',
       author='Henning Hraban Ramm',
