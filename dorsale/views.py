@@ -69,14 +69,14 @@ def list_items(request, app_name='', model_name='', template='dorsale/list_items
         object_example = object_model()
 
         qs = object_model.objects.mine(request.user.id)
+        default_orderby = 'id'
         try:
             # if the model has a default ordering defined, use it
             default_orderby = object_example.ordering
         except AttributeError:
-            default_orderby = 'id'
+            pass
         # set order (works also with several fields like "country,city", even if that's not supported by the UI)
         orderby = request.GET.get('orderby', default_orderby)
-        del default_orderby  # don’t bloat locals()
         try:
             l_orderby = orderby.split(',')
         except AttributeError:
@@ -86,6 +86,7 @@ def list_items(request, app_name='', model_name='', template='dorsale/list_items
             qs = qs.order_by(*l_orderby)
         except FieldError, e:
             orderby = default_orderby
+        del default_orderby  # don’t bloat locals()
 
         paginator = Paginator(qs, int(getattr(object_model, 'items_per_page', getattr(settings, 'DORSALE_ITEMS_PER_PAGE', 10))), orphans=2)
         # check if a valid number was requested as page, otherwise 1
