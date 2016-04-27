@@ -13,10 +13,13 @@ def get_instance_id_path(instance, source_filename, target_filename=''):
     """
     Create the path for a file (don’t make directories, just a string).
     This works as callable for `upload_to`.
+    Unfortunately, while the instance isn’t yet saved, its ID is None;
+    you need to move it after saving.
     """
     if hasattr(instance, 'pk'):
         iid = str(instance.pk)
     else:
+        # this also doesn’t work while the instance is unsaved
         iid = instance.__hash__()
     if not target_filename:
         fn, ext = os.path.splitext(source_filename.lower())
