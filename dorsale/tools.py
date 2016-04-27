@@ -6,21 +6,34 @@ import re
 import hashlib
 import unicodedata
 import importlib
-# from dorsale.conf import settings
+# from django.conf import settings
+import logging
+logger = logging.getLogger(__name__)
 
 
-def get_instance_id_path(instance, source_filename, target_filename=''):
+def get_instance_id_path(instance, source_filename, target_filename='', id=None):
     """
     Create the path for a file (don’t make directories, just a string).
     This works as callable for `upload_to`.
     Unfortunately, while the instance isn’t yet saved, its ID is None;
     you need to move it after saving.
+    
+    :instance: Model instance
+    :source_filename: string
+        original file name
+    :target_filename: string
+        target file name; defaults to source_filename
+    :id: string, integer
+        define id to get a defined path
     """
-    if hasattr(instance, 'pk'):
-        iid = str(instance.pk)
+    if not id:
+        if hasattr(instance, 'pk'):
+            iid = str(instance.pk)
+        else:
+            # this also doesn’t work while the instance is unsaved
+            iid = instance.__hash__()
     else:
-        # this also doesn’t work while the instance is unsaved
-        iid = instance.__hash__()
+        iid = id
     if not target_filename:
         fn, ext = os.path.splitext(source_filename.lower())
         target_filename = "%s_%s%s" % (instance.__class__.__name__, iid, ext)
@@ -70,6 +83,14 @@ def move_file_to_instance_id_path(storage, instance, attribute):
     newfile = storage.save(newpath, openfile)
     openfile.close()
     instance.__dict__[attribute] = newfile
+    # now delete original file
+    if storage.exists(newpath):
+        try:
+            storage.delete(filo)
+        except Exception, ex:
+            logger.info('Couldn’t delete %s', filo)
+    else:
+        logger.info('Moving file %s failed.', filo)
     return filo
 
 
