@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import datetime
 import types
 from operator import attrgetter
 from django.conf import settings
@@ -21,6 +20,12 @@ from dorsale.conf import settings
 from dorsale.managers import DorsaleSiteManager
 import logging
 logger = logging.getLogger(settings.PROJECT_NAME)  # __name__)
+
+try:
+    from django.utils.timezone import now
+except ImportError:
+    from datetime import datetime
+    now = datetime.now
 
 
 class AuthorMixin(models.Model):
@@ -73,11 +78,11 @@ class AuthorMixin(models.Model):
 
         calls `super`
         """
-        if not self.id:
-            self.createdon = datetime.datetime.now()
+        if self.id:
+            self.createdon = now()
             if 'user' in kwargs:
                 self.createdby = kwargs['user']
-        self.lastchangedon = datetime.datetime.now()
+        self.lastchangedon = now()
         if 'user' in kwargs:
             self.lastchangedby = kwargs['user']
             del kwargs['user'] # not allowed in super

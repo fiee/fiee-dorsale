@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import datetime
 from django.contrib.auth.models import Group
 from django.db import models
 from django.forms import ModelForm
@@ -11,6 +10,12 @@ try:
 except ImportError:
     coloree_active = False
 from widgets import DatePickerWidget
+
+try:
+    from django.utils.timezone import now
+except ImportError:
+    from datetime import datetime
+    now = datetime.now
 
 
 class DorsaleBaseModelForm(ModelForm):
@@ -38,7 +43,7 @@ class DorsaleBaseModelForm(ModelForm):
         if hasattr(obj, 'lastchangedby'):
             obj.lastchangedby = self.user
         if hasattr(obj, 'lastchangedon'):
-            obj.lastchangedon = datetime.datetime.now()
+            obj.lastchangedon = now()
         if hasattr(obj, 'site'):
             from django.contrib.sites.models import Site
             obj.site = Site.objects.get_current()
@@ -46,7 +51,7 @@ class DorsaleBaseModelForm(ModelForm):
             if hasattr(obj, 'createdby'):
                 obj.createdby = self.user
             if hasattr(obj, 'createdon'):
-                obj.createdon = datetime.datetime.now()
+                obj.createdon = now()
             if hasattr(obj, 'deleted'):
                 obj.deleted = False
         if commit:

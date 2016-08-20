@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
-import datetime
 from django.contrib import admin
 from django.contrib.auth import get_permission_codename
 
 import logging
 logger = logging.getLogger(__name__)
+
+try:
+    from django.utils.timezone import now
+except ImportError:
+    from datetime import datetime
+    now = datetime.now
 
 
 class DorsaleBaseAdmin(admin.ModelAdmin):
@@ -23,7 +28,7 @@ class DorsaleBaseAdmin(admin.ModelAdmin):
             if hasattr(obj, 'createdby'):
                 obj.createdby = request.user
             if hasattr(obj, 'createdon'):
-                obj.createdon = datetime.datetime.now()
+                obj.createdon = now()
             if hasattr(obj, 'deleted'):
                 obj.deleted = False
         if hasattr(obj, 'site'):
@@ -33,7 +38,7 @@ class DorsaleBaseAdmin(admin.ModelAdmin):
         if hasattr(obj, 'lastchangedby'):
             obj.lastchangedby = request.user
         if hasattr(obj, 'lastchangedon'):
-            obj.lastchangedon = datetime.datetime.now()
+            obj.lastchangedon = now()
         try:
             obj.save(user=request.user)
         except TypeError, ex:
