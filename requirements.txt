@@ -1,7 +1,7 @@
 Django>=1.6
 django-mptt
 
-django-registration # hg clone http://bitbucket.org/ubernostrum/django-registration
+django-registration>=2 # hg clone http://bitbucket.org/ubernostrum/django-registration
 django-guardian
 celery
 django-celery

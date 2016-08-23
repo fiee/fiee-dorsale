@@ -1,11 +1,12 @@
-#!/usr/bin/env python
 # -*- coding:utf-8 -*-
+from __future__ import absolute_import
+from __future__ import unicode_literals
 from setuptools import setup, find_packages
 import os
 
 setup(name='fiee-dorsale',
-      version='0.1.1',
-      description=u'Django base classes to handle management data like site, creation & change date & user',
+      version='0.2.0',
+      description='Django base classes to handle management data like site, creation & change date & user',
       keywords='site group owner changed created mine',
       author='Henning Hraban Ramm',
       author_email='hraban@fiee.net',
