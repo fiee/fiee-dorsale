@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
+from __future__ import unicode_literals
 from dorsale.models import DorsaleBaseModel
+
 
 class DorsaleMPTTBaseModel(DorsaleBaseModel): 
     """
@@ -10,7 +13,7 @@ class DorsaleMPTTBaseModel(DorsaleBaseModel):
         from mptt.models import MPTTModel
 
         class MyModel(MPTTModel, DorsaleBaseModel):
-            name = models.CharField(verbose_name=_(u'Name'), max_length=63, unique=True)
+            name = models.CharField(verbose_name=_('Name'), max_length=63, unique=True)
             parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
             tree = DorsaleMPTTSiteManager()
         

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 # based on http://djangosnippets.org/snippets/1792/ by monokrome
+from __future__ import absolute_import
+from __future__ import unicode_literals
 from django.http import HttpResponse, Http404
 from django.conf import settings
 from django.core import serializers
@@ -35,7 +37,7 @@ DEFAULT_PARAMS = {
     'headers': [],
     'charset': 'utf-8',
     'filename': '',
-    'sheet_title': _(u'Export'),
+    'sheet_title': _('Export'),
 }
 
 
@@ -236,7 +238,7 @@ def export(request, qs, **kwargs):
         if not prm['headers']:
             try:
                 prm['headers'] = [getattr(model, f).verbose_name for f in prm['fields']]
-            except Exception, e:
+            except Exception as e:
                 logger.error(e)
                 prm['headers'] = prm['fields']
 
@@ -257,13 +259,13 @@ def export(request, qs, **kwargs):
                 if callable(val):
                     val = val()
                 if isinstance(val, QuerySet):
-                    val = u', '.join(x.__unicode__() for x in val.all())
+                    val = ', '.join(x.__unicode__() for x in val.all())
                 elif isinstance(val, Model):
                     val = val.__unicode__()
                 elif isinstance(val, bool):
-                    val = {True:_(u'Yes'), False:_(u'No')}[val]
+                    val = {True:_('Yes'), False:_('No')}[val]
                 elif val == None:
-                    val = _(u'Unknown')
+                    val = _('Unknown')
                 if type(val) is unicode and prm['format'] != 'ods':
                     val = val.encode(prm['charset'])
                 row.append(val)
@@ -279,7 +281,7 @@ def export(request, qs, **kwargs):
             ensure_ascii=False,
             stream=response)
     else:
-        err = _(u'Export type for %s must have value for writer or serializer') % exformat
+        err = _('Export type for %s must have value for writer or serializer') % exformat
         logger.error(err)
         raise Http404(err)
 

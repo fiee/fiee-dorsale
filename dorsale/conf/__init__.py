@@ -1,5 +1,6 @@
+from __future__ import absolute_import
 from django.conf import settings
-import dorsale_settings
+from dorsale.conf import dorsale_settings
 
 for setting in dir(dorsale_settings):
     if setting == setting.upper():

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 _ = lambda s: s  # don’t import settings!
 

@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
+from __future__ import unicode_literals
 from django.contrib import admin
 from django.contrib.auth import get_permission_codename
 
@@ -23,6 +25,8 @@ class DorsaleBaseAdmin(admin.ModelAdmin):
 
     TODO: see http://www.stereoplex.com/blog/filtering-dropdown-lists-in-the-django-admin
     """
+    view_on_site = False
+    
     def save_model(self, request, obj, form, change):
         if not change:
             if hasattr(obj, 'createdby'):
@@ -41,7 +45,7 @@ class DorsaleBaseAdmin(admin.ModelAdmin):
             obj.lastchangedon = now()
         try:
             obj.save(user=request.user)
-        except TypeError, ex:
+        except TypeError as ex:
             logger.info('Object.save doesn’t accept user parameter.')
             obj.save()
 

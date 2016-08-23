@@ -1,5 +1,6 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
+from __future__ import unicode_literals
 from conf import settings
 from django.shortcuts import render_to_response, redirect
 from django.http import HttpResponse, HttpResponseRedirect
@@ -84,7 +85,7 @@ def list_items(request, app_name='', model_name='', template='dorsale/list_items
             l_orderby = orderby
         try:
             qs = qs.order_by(*l_orderby)
-        except FieldError, e:
+        except FieldError as e:
             orderby = default_orderby
         del default_orderby  # don’t bloat locals()
 
@@ -151,7 +152,7 @@ def edit_item(request, app_name='', model_name='', object_id=None, title='', tem
     action = request.META['PATH_INFO']
     object_model = get_model(app_name, model_name)
     if not title:
-        title = _(u'Edit %s') % object_model._meta.verbose_name
+        title = _('Edit %s') % object_model._meta.verbose_name
     if object_id:
         item = object_model.objects.get(pk=object_id)
         item_type = ContentType.objects.get_for_model(item)
@@ -184,7 +185,7 @@ def delete_item(request, app_name='', model_name='', object_id=None, title='', t
     action = request.META['PATH_INFO']
     object_model = get_model(app_name, model_name)
     if not title:
-        title = _(u'Delete %s') % object_model._meta.verbose_name
+        title = _('Delete %s') % object_model._meta.verbose_name
     if object_id:
         try:
             item = object_model.objects.get(pk=object_id)
@@ -218,7 +219,7 @@ def new_item(request, app_name='', model_name='', title='', unique_fields=[], po
     action = request.META['PATH_INFO']
     object_model = get_model(app_name, model_name)
     if not title:
-        title = _(u'New %s') % object_model._meta.verbose_name
+        title = _('New %s') % object_model._meta.verbose_name
     if request.method == 'POST':
         form = ModelFormFactory(object_model, request.POST, request.FILES, user=request.user)
         if form.is_valid():
@@ -229,7 +230,7 @@ def new_item(request, app_name='', model_name='', title='', unique_fields=[], po
                     for pn in unique_fields:
                         params[pn] = form.cleaned_data[pn]
                     item = object_model.objects.get(**params)
-                    messages.error(request, _(u'This %s already exists!') % object_model._meta.verbose_name)
+                    messages.error(request, _('This %s already exists!') % object_model._meta.verbose_name)
                 else:
                     raise ObjectDoesNotExist()
                 del params

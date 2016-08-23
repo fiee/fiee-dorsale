@@ -1,5 +1,6 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
+from __future__ import unicode_literals
 # from django.utils.translation import ugettext_lazy as _
 import os
 import re
@@ -87,7 +88,7 @@ def move_file_to_instance_id_path(storage, instance, attribute):
     if storage.exists(newpath):
         try:
             storage.delete(filo)
-        except Exception, ex:
+        except Exception as ex:
             logger.info('Couldn’t delete %s', filo)
     else:
         logger.info('Moving file %s failed.', filo)
