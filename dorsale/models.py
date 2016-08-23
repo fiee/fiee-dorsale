@@ -1,23 +1,22 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
+from __future__ import unicode_literals
+import six
 import types
 from operator import attrgetter
-from django.conf import settings
+# from django.conf import settings
+from collections import Counter, OrderedDict
 from django.contrib.auth.models import User
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.sites.models import Site
+# from django.contrib.contenttypes.models import ContentType
+# from django.contrib.sites.models import Site
 from django.db import models, router, transaction
 from django.db.models import signals, sql
 from django.db.models.fields.related import RECURSIVE_RELATIONSHIP_CONSTANT
-
 from django.db.models.deletion import Collector
-import six
-from collections import Counter, OrderedDict
-
 from django.utils.translation import ugettext_lazy as _
 # from south.modelsinspector import add_introspection_rules
 from dorsale.conf import settings
-from dorsale.managers import DorsaleSiteManager
+# from managers import DorsaleSiteManager
 import logging
 logger = logging.getLogger(settings.PROJECT_NAME)  # __name__)
 
@@ -46,24 +45,24 @@ class AuthorMixin(models.Model):
         related_name="%(app_label)s_%(class)s_createdset",
         editable=False,
         default=settings.ANONYMOUS_USER_ID,
-        help_text=_(u'user that was logged in when this item was created')
+        help_text=_('user that was logged in when this item was created')
         )
     createdon = models.DateTimeField(
-        verbose_name=_(u'created on'),
+        verbose_name=_('created on'),
         null=True, editable=False,
-        help_text=_(u'date and time when this item was created')
+        help_text=_('date and time when this item was created')
         )
     lastchangedby = models.ForeignKey(User,
         verbose_name=_('last changed by'),
         related_name="%(app_label)s_%(class)s_changedset",
         editable=False,
         default=settings.ANONYMOUS_USER_ID,
-        help_text=_(u'user that was logged in when this item was changed last time')
+        help_text=_('user that was logged in when this item was changed last time')
         )
     lastchangedon = models.DateTimeField(
-        verbose_name=_(u'last changed on'),
+        verbose_name=_('last changed on'),
         null=True, editable=False,
-        help_text=_(u'date and time when this item was changed last time')
+        help_text=_('date and time when this item was changed last time')
         )
 
     class Meta:
@@ -98,72 +97,6 @@ class AuthorMixin(models.Model):
         super(AuthorMixin, self).save(*args, **kwargs)
 
 
-class SiteMixin(models.Model):
-    """
-    Provide a `site` field (Site this objects belongs to).
-    Override default manager `objects` with a `DorsaleSiteManager`.
-    """
-    site = models.ForeignKey(Site,
-        verbose_name=_(u'tenant’s site'),
-        editable=False,
-        default=settings.SITE_ID,
-        help_text=_(u'site of the related customer/project/team')
-        )
-    objects = DorsaleSiteManager()
-
-    class Meta:
-        abstract = True
-
-    def original_save(self, *args, **kwargs):
-        """
-        original save method, for cases where there’s no current Site,
-        like in celery tasks
-
-        just calls `super`
-        """
-        super(SiteMixin, self).save(*args, **kwargs)
-
-    def save(self, *args, **kwargs):
-        """
-        Set object’s `site` to kwargs['site'] or current site.
-
-        calls `super`
-        """
-        if 'site' in kwargs:
-            self.site = kwargs['site']
-            del kwargs['site']
-        else:
-            self.site = Site.objects.get_current()
-        super(SiteMixin, self).save(*args, **kwargs)
-
-
-class AuthorSiteMixin(AuthorMixin, SiteMixin):
-    """
-    Combine `AuthorMixin` and `SiteMixin`.
-    """
-
-    class Meta:
-        abstract = True
-        get_latest_by = 'createdon'
-
-    def save(self, *args, **kwargs):
-        """
-        Automatically save time of creation and change;
-        user only if in kwargs, otherwise you must do that in your view
-        (or use dorsale’s generic views)
-
-        calls `super`
-        """
-        # we inherit from AuthorMixin first, so its save method gets called,
-        # but not SiteMixin's
-        if 'site' in kwargs:
-            self.site = kwargs['site']
-            del kwargs['site']
-        else:
-            self.site = Site.objects.get_current()
-        super(AuthorSiteMixin, self).save(*args, **kwargs)
-
-
 class FakeDeleteMixin(models.Model):
     """
     Add a `deleted` field and prohibit real deletion.
@@ -172,7 +105,7 @@ class FakeDeleteMixin(models.Model):
         verbose_name=_('deleted?'),
         editable=False,
         default=False,
-        help_text=_(u'Is this item marked as deleted?')
+        help_text=_('Is this item marked as deleted?')
         )
 
     class Meta:
@@ -366,85 +299,3 @@ class FieldInfoMixin(models.Model):
         verbose (translated) plural name of this model
         """
         return self._meta.verbose_name_plural
-
-
-class DorsaleBaseModel(FakeDeleteMixin, AuthorSiteMixin, FieldInfoMixin):
-    """
-    Abstract base class for all fiee models.
-
-    Provide ...
-
-    1) automatic administrations fields:
-
-       :createdby: auth.User
-            user that created the object
-       :lastchangedby:  auth.User
-            last user that changed the object
-       :createdon: datetime
-            date of creation
-       :lastchangedon: datetime
-            date of last change
-       :deleted: bool
-            you can't delete our objects any more,
-            they just get marked as deleted
-       :site:
-            Site this object belongs to
-
-    2) additional meta info methods/properties for generic view:
-
-       :field_info: dict
-            dict of fields, independent of `list_display`
-            and thus without methods
-       :fields(): generator
-            list of fields, influenced by `list_display`
-       :fieldnames_verbose(): generator
-            list of translated names of editable fields,
-            influenced by `list_display`
-       :fieldnames(): list
-            list of raw names of editable fields or `list_display`
-       :fieldvalues(): generator
-            list of field values, influenced by `list_display`
-       :classname(): unicode
-            translated class name
-       :classname_plural(): unicode
-            translated plural class name
-       :get_absolute_url(): str
-            '/module/model/id/' (doesn't work?)
-       :items_per_page: int (r/w)
-            number of items on one list view page
-            (default: 10 or `settings.ITEMS_PER_PAGE`)
-       :list_display: list
-            list of field names that should be used for generic list views
-            (default: empty and thus ignored)
-            used by fields(), fieldnames(), fieldnames_verbose() and fieldvalues()
-
-    3) changed/additional manager methods:
-
-       :objects: `DorsaleSiteManager`
-            returning only not-deleted objects of the current site
-       :really_all_objects: `models.Manager`
-            former default manager, returning all objects
-    """
-    really_all_objects = models.Manager()
-    # `objects = models.Manager()`
-    # must come before any other manager, if admin should see *all* objects
-    objects = DorsaleSiteManager()
-
-    class Meta:
-        abstract = True
-        get_latest_by = 'createdon'
-        # permissions = [
-        #    ('view_item', _(u'Can view item')),
-        # ]
-
-    @models.permalink
-    def get_absolute_url(self):
-        """
-        link to dorsale’s generic `show_item` view
-        """
-        mo = ContentType.model_class(self)
-        return ('dorsale.views.show_item', (), {
-            'app_name'  : mo.app_label,
-            'model_name': mo.model,
-            'object_id' : self.id,
-        })
