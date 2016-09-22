@@ -10,7 +10,7 @@ try:
     coloree_active = True
 except ImportError:
     coloree_active = False
-from widgets import DatePickerWidget
+from dorsale.widgets import DatePickerWidget
 
 try:
     from django.utils.timezone import now
