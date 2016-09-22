@@ -1,8 +1,9 @@
 from django.conf.urls import url
+from siteprofile.views import list_modules
 
 urlpatterns = [
     url(
         r'^$|^(.*)/$',
-        'siteprofile.views.list_modules',
+        list_modules,
         name='siteprofiles-modules-list')
 ]
