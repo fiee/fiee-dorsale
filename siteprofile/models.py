@@ -2,6 +2,7 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
 from django.utils.translation import ugettext as _
+from django.utils.encoding import python_2_unicode_compatible
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import Group
@@ -22,6 +23,7 @@ AVAILABILITY = (
 )
 
 
+@python_2_unicode_compatible
 class Module(models.Model):
     name = models.CharField(
         verbose_name=_('Name'),
@@ -45,7 +47,7 @@ class Module(models.Model):
         verbose_name = _('Module')
         verbose_name_plural = _('Modules')
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s (%s)' % (self.name, self.code)
 
     def get_absolute_url(self):
@@ -58,6 +60,7 @@ class Module(models.Model):
         return dict(AVAILABILITY)[self.available]
 
 
+@python_2_unicode_compatible
 class SiteProfile(models.Model):
     site = models.OneToOneField(
         Site,
@@ -95,7 +98,7 @@ class SiteProfile(models.Model):
         verbose_name = _('Site Profile')
         verbose_name_plural = _('Site Profiles')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.code
 
     def get_absolute_url(self):
