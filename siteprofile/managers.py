@@ -2,13 +2,19 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
 from django.db import models
-from django.contrib import messages
+from django.contrib.messages import constants
 from django.contrib.sites.managers import CurrentSiteManager
 from django.contrib.auth.models import User
 from django.db.models.query import QuerySet
 from django.utils.translation import ugettext_lazy as _
 import logging
 logger = logging.getLogger(__name__)
+try:
+    from async_messages import message_user
+    ASYNC_MESSAGES = True
+except ImportError:
+    ASYNC_MESSAGES = False
+    logger.warn('django-async-messages is not installed (suggested for DorsaleGroupSiteManager)')
 
 
 class DorsaleSiteManager(CurrentSiteManager):
@@ -101,13 +107,10 @@ class DorsaleGroupSiteManager(DorsaleSiteManager):
             if not self.__group_is_checked:
                 # We don't check if group_field exists to allow chains like 'product__group'
                 group_count = self.user.groups.count()
-                if group_count == 0 and hasattr(self.user, 'message_set'):
-                    # This is deprecated, but we can't use the messages
-                    # framework, since we don't have a request object
-                    # TODO: use django-async-messages
-                    self.user.message_set.create(
-                        message=_(u"You do not yet belong to any groups. Ask your administrator to add you to one."))
-                    logger.error(_(u"User %s doesn’t belong to any group!") % self.user.username)
+                if group_count == 0:
+                    logger.error(_("User %s doesn’t belong to any group!") % self.user.username)
+                    if ASYNC_MESSAGES:
+                        message_user(self.user, _("You do not yet belong to any groups. Ask your administrator to add you to one."), constants.ERROR)
                 self.__group_is_checked = True
             # filter on the user's groups
             qs = qs.filter(**{self.__group_field_name + '__in':self.user.groups.all()})

@@ -9,23 +9,23 @@ In most of my projects I need some of the same features of Django_ models,
 e.g. management data like owner and change date. You don’t want to handle
 that for every model in every view again.
 
-For my modular editorial and office automation system "fiëé cérébrale"
-everything must be site dependent - most reusable apps out there don’t
-care about site dependency, even if everyone has django.contrib.sites
+In the previous version of my modular editorial and office automation system
+"fiëé cérébrale" everything was site dependent - most reusable apps out there
+don’t care about site dependency, even if everyone has `django.contrib.sites`
 installed.
 
 I’d like to give back to the open source community, but of course nothing
 customer-specific and no embarassing secrets from the git history, so it’s
 time to pull the generic stuff out of my projects.
 
-I’m planning to make this a cosmos of loosely coupled data bits – 
+I’m making this a cosmos of loosely coupled data bits – 
 attachable sticky notes (`fiëé adhésive`_), events (`fiëé témporâle`_),
 geodata (`fiëé locâle`, coming soon), categorized with tagging – 
 and some useful apps on top of that:
 a collaboration tool with to-do list and doodle-like functions 
 (`fiëé preposale`, not yet public), a party/banquet planner (`fiëé festîve`,
-not yet public), tools for publishers (`fiëé édition`, not public)
-and maybe more.
+abandoned, was never public), tools for publishers (`fiëé édition`,
+in use, but not public) and maybe more.
 Probably too much for one man’s hobby.
 I was also projecting some club-and-congress management app (usable e.g. for
 associations and churches), perhaps also LETS...
@@ -44,7 +44,8 @@ What and how
     (see dorsale.models.managers.DorsaleSiteManager_)
   * some metadata methods for your templates
   
-  Functionality of DorsaleBaseModel comes from mixins that you can also use on their own:
+  Functionality of DorsaleBaseModel comes from mixins
+  that you can also use on their own:
   
   * AuthorMixin: created and last changed information
   * SiteMixin: site ID
@@ -73,22 +74,20 @@ Dependencies
 ------------
 
 * Python_ 2.7
-* Django_ 1.6+ with included contributions (1.9 suggested)
+* Django_ 1.9+ with included contributions
 * django.contrib.sites (only if you use site dependent models)
 * django-registration_ (or compatible)
 * Templates and widgets use jQuery_ and `jQuery UI`_
 * django-mptt_ for dorsale.mptt_ (beware, dorsale.mptt is not tested with current django-mptt!)
 * Optional `fiëé colorée`_ for color picker widget
 * Optional xlwt_ and odfpy_ if you want to export data to XLS and/or ODS
+* django-async-messages_: only if you use `DorsaleGroupSiteManager` to notify users if they are not in a group
 * far too much other stuff that you only need under special circumstances
 
 
 Known Issues
 ------------
 
-* uses the deprecated user.message_set.create_ instead of the `messages framework`_ 
-  in situations where there’s no request object
-  TODO: use e.g. django-async-messages_
 * admin site doesn’t work completely
 * No proper permission checks (but user-group-ownership checks)
 * Still too much dependencies on internal asumptions and other non-public fiee projects (commented code)
@@ -100,7 +99,7 @@ Ideas
 -----
 
 * Use class based views
-* Try to extract base model stuff to mixins to ease inheritance, have a look at https://github.com/bmihelac/ (django-site-permissions and django-sites-ext)
+* Have a look at https://github.com/bmihelac/ (django-site-permissions and django-sites-ext)
 * Add Sphinx_ docs and enhance setup.py
 
 
