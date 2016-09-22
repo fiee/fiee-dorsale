@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
 from __future__ import unicode_literals
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from django.template import RequestContext
+# from django.template import RequestContext
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
@@ -30,9 +30,7 @@ def get_model(app_name, model_name):
 def render_404(request, params):
     """Return a 404 error with my own template."""
     params['path'] = request.get_full_path()
-    response = render_to_response('404.html', params, context_instance=RequestContext(request))
-    response.status_code = 404
-    return response
+    return render(request, '404.html', params, status=404)
 
 
 @login_required
@@ -50,7 +48,7 @@ def home(request, **kwargs):
             return redirect(profile.homeurl)
     except ImportError:
         logger.warn(_('Module siteprofile is not installed'))
-    return render_to_response('root.html', {}, context_instance=RequestContext(request))
+    return render(request, 'root.html')
 
 
 @login_required
@@ -103,7 +101,7 @@ def list_items(request, app_name='', model_name='', template='dorsale/list_items
             page_obj = paginator.page(paginator.num_pages)
 
         del object_model
-        return render_to_response(template, locals(), context_instance=RequestContext(request))
+        return render(request, template, locals())
     else:
         return render_404(request, locals())
 
@@ -135,7 +133,7 @@ def show_item(request, app_name='', model_name='', object_id=None, template='dor
     form = ModelFormFactory(object_model, user=request.user, instance=item, disabled=True)
     if not form.visible_fields() and _c < 3:  # sometimes it works only in the second try, why?
         return show_item(request, app_name, model_name, object_id, template, _c + 1)
-    return render_to_response(template, locals(), context_instance=RequestContext(request))
+    return render(request, template, locals())
 
 
 @login_required
@@ -168,7 +166,7 @@ def edit_item(request, app_name='', model_name='', object_id=None, title='', tem
                 return HttpResponseRedirect(request.path)
         else:
             form = ModelFormFactory(object_model, user=request.user, instance=item)
-        return render_to_response(template, locals(), context_instance=RequestContext(request))
+        return render(request, template, locals())
     else:
         return HttpResponse(status=404)
 
@@ -195,7 +193,7 @@ def delete_item(request, app_name='', model_name='', object_id=None, title='', t
             item.delete()  # no big deal, since we only mark as deleted
             messages.success(request, _(u"%(model_name)s %(model_id)s deleted.") % {'model_name':object_model._meta.verbose_name, 'model_id':object_id})
             return HttpResponseRedirect('/%s/%s/' % (app_name, model_name))
-        return render_to_response(template, locals(), context_instance=RequestContext(request))
+        return render(request, template, locals())
     else:
         return HttpResponse(status=404)
 
@@ -244,4 +242,4 @@ def new_item(request, app_name='', model_name='', title='', unique_fields=[], po
         form = ModelFormFactory(object_model, user=request.user,)
     del object_model
     del postprocess
-    return render_to_response(template, locals(), context_instance=RequestContext(request))
+    return render(request, template, locals())

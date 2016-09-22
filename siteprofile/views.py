@@ -3,8 +3,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 from siteprofile.models import Module
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 
 
 def list_modules(request, *args):
@@ -28,7 +27,4 @@ def list_modules(request, *args):
         page_obj = paginator.page(page)
     except (EmptyPage, InvalidPage):
         page_obj = paginator.page(paginator.num_pages)
-    return render_to_response(
-        'siteprofile/list_modules.html',
-        locals(),
-        context_instance=RequestContext(request))
+    return render(request, 'siteprofile/list_modules.html', locals())
