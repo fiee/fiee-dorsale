@@ -182,7 +182,7 @@ class FakeDeleteMixin(models.Model):
 
             # delete instances
             for model, instances in six.iteritems(collector.data):
-                if not issubclass(model, DorsaleBaseModel):
+                if not issubclass(model, FakeDeleteMixin):
                 # handle non-cerebrale models as usual
                     query = sql.DeleteQuery(model)
                     pk_list = [obj.pk for obj in instances]
