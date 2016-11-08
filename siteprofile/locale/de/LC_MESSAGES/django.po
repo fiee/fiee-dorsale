@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fiëé dorsale / siteprofile\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-28 11:00+0600\n"
-"PO-Revision-Date: 2014-05-28 11:05+0600\n"
+"POT-Creation-Date: 2016-11-08 09:03+0100\n"
+"PO-Revision-Date: 2016-11-08 09:04+0100\n"
 "Last-Translator: Henning Hraban Ramm <hraban@fiee.net>\n"
 "Language-Team: fiëé visuëlle <hraban@fiee.net>\n"
 "Language: de_DE\n"
@@ -17,90 +17,108 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.8.7\n"
 
-#: __init__.py:5 models.py:50
+#: __init__.py:6 models.py:98
 msgid "Site Profile"
 msgstr "Site-Profil"
 
-#: __init__.py:6 models.py:51
+#: __init__.py:7 models.py:99
 msgid "Site Profiles"
 msgstr "Site-Profile"
 
-#: models.py:10
+#: managers.py:63
+#, python-format
+msgid "User #%d doesn’t exist!"
+msgstr "Benutzer Nr.%d existiert nicht!"
+
+#: managers.py:111
+#, python-format
+msgid "User %s doesn’t belong to any group!"
+msgstr "Benutzer %s gehört zu keiner Gruppe!"
+
+#: managers.py:113
+msgid ""
+"You do not yet belong to any groups. Ask your administrator to add you to "
+"one."
+msgstr ""
+"Sie gehören noch zu keiner Arbeitsgruppe. Bitten Sie Ihren Administrator, "
+"Sie zu einer hinzuzufügen."
+
+#: models.py:17
 msgid "available"
 msgstr "verfügbar"
 
-#: models.py:11
+#: models.py:18
 msgid "available, but customer specific"
 msgstr "verfügbar, aber kundenspezifisch"
 
-#: models.py:12
+#: models.py:19
 msgid "available, but not yet integrated"
 msgstr "verfügbar, aber noch nicht integriert"
 
-#: models.py:13
+#: models.py:20
 msgid "in development"
 msgstr "in Entwicklung"
 
-#: models.py:14
+#: models.py:21
 msgid "in planning stage"
 msgstr "in Planung"
 
-#: models.py:15
+#: models.py:22
 msgid "on demand"
 msgstr "auf Anfrage"
 
-#: models.py:19
+#: models.py:29
 msgid "Name"
 msgstr "Name"
 
-#: models.py:19
+#: models.py:31
 msgid "Name of module"
 msgstr "Name des Moduls"
 
-#: models.py:20 models.py:42
+#: models.py:33 models.py:71
 msgid "Code"
 msgstr "Code"
 
-#: models.py:20
+#: models.py:35
 msgid "Base url of module"
 msgstr "Basis-URL des Moduls"
 
-#: models.py:21 templates/siteprofile/list_modules.html:15
+#: models.py:37 templates/siteprofile/list_modules.html:15
 msgid "Description"
 msgstr "Beschreibung"
 
-#: models.py:21
+#: models.py:39
 msgid "Some words about this module"
 msgstr "Ein paar Worte über dieses Modul"
 
-#: models.py:22 templates/siteprofile/list_modules.html:16
+#: models.py:41 templates/siteprofile/list_modules.html:16
 msgid "Availability"
 msgstr "Verfügbarkeit"
 
-#: models.py:22
+#: models.py:44
 msgid "Is this module already available?"
 msgstr "Ist dieses Modul bereits verfügbar?"
 
-#: models.py:25 templates/siteprofile/list_modules.html:14
+#: models.py:47 templates/siteprofile/list_modules.html:14
 msgid "Module"
 msgstr "Modul"
 
-#: models.py:26 models.py:47 templates/siteprofile/list_modules.html:4
+#: models.py:48 models.py:94 templates/siteprofile/list_modules.html:4
 #: templates/siteprofile/list_modules.html:7
 msgid "Modules"
 msgstr "Module"
 
-#: models.py:41
+#: models.py:68
 msgid "Site"
 msgstr "Site"
 
-#: models.py:41
+#: models.py:69
 msgid "Tenant’s site"
 msgstr "Kunden-Site"
 
-#: models.py:42
+#: models.py:73
 msgid ""
 "Server name of site (www for www.example.com). This is used as the template "
 "name of the menu, base page of CMS pages and perhaps additional CSS."
@@ -109,27 +127,27 @@ msgstr ""
 "für das Menü, als Basis der CMS-Seiten und eventuell als Name für ein "
 "zusätzliches CSS verwendet."
 
-#: models.py:43
+#: models.py:75
 msgid "Base Language"
 msgstr "Grundsprache"
 
-#: models.py:43
+#: models.py:79
 msgid "Base language of this site"
 msgstr "Voreingestellte Sprache dieser Site"
 
-#: models.py:44
+#: models.py:82
 msgid "Admin Group"
 msgstr "Admin-Gruppe"
 
-#: models.py:44
+#: models.py:83
 msgid "Members of this group are admins of this site."
 msgstr "Mitglieder dieser Gruppe sind Administratoren dieser Site."
 
-#: models.py:45
+#: models.py:85
 msgid "Use own style?"
 msgstr "Eigenen Stil verwenden?"
 
-#: models.py:45
+#: models.py:87
 msgid ""
 "Should the look differ from the main site’s? Use an additional CSS? Name of "
 "the CSS must be the code!"
@@ -137,17 +155,25 @@ msgstr ""
 "Soll das Aussehen von dem der Hauptseite abweichen? Soll ein zusätzliches "
 "CSS verwendet werden? Der Name des CSS muss dem Code entsprechen!"
 
-#: models.py:46
+#: models.py:89
 msgid "Start URL"
 msgstr "Start-URL"
 
-#: models.py:46
+#: models.py:91
 msgid "URL of base view of this site. Same as code if empty!"
 msgstr "URL der Startseite dieser Site. Entspricht dem Code, falls leer!"
 
-#: models.py:47
+#: models.py:95
 msgid "The site has access to these modules."
 msgstr "Die Site hat Zugriff auf diese Module."
+
+#: models.py:141
+msgid "tenant’s site"
+msgstr "Kunden-Site"
+
+#: models.py:144
+msgid "site of the related customer/project/team"
+msgstr "Site des betreffenden Kunden/Projektes/Teams"
 
 #~ msgid "fiëé dorsale"
 #~ msgstr "fiëé dorsale"
@@ -199,16 +225,6 @@ msgstr "Die Site hat Zugriff auf diese Module."
 #~ "Dieser Farbcode ist ungültig. Bitte geben Sie CMYK-Prozentwerte ein, z.B. "
 #~ "0,100,100,0"
 
-#~ msgid ""
-#~ "You do not yet belong to any groups. Ask your administrator to add you to "
-#~ "one."
-#~ msgstr ""
-#~ "Sie gehören noch zu keiner Arbeitsgruppe. Bitten Sie Ihren Administrator, "
-#~ "Sie zu einer hinzuzufügen."
-
-#~ msgid "User %s doesn't belong to any group!"
-#~ msgstr "Benutzer %s gehört zu keiner Gruppe!"
-
 #~ msgid "created by"
 #~ msgstr "Angelegt von"
 
@@ -239,9 +255,6 @@ msgstr "Die Site hat Zugriff auf diese Module."
 
 #~ msgid "date and time when this item was changed last time"
 #~ msgstr "Datum und Uhrzeit der letzten Änderung dieses Eintrags"
-
-#~ msgid "site of the related customer/project/team"
-#~ msgstr "Site des betreffenden Kunden/Projektes/Teams"
 
 #~ msgid "Error 404: Page Not Found"
 #~ msgstr "Fehler 404: Seite nicht gefunden"
