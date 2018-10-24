@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 import os
 
 setup(name='fiee-dorsale',
-      version='0.2.2',
+      version='0.2.3',
       description='Django base classes to handle management data like site, creation & change date & user',
       keywords='site group owner changed created mine',
       author='Henning Hraban Ramm',
@@ -33,6 +33,6 @@ setup(name='fiee-dorsale',
                    'Topic :: Utilities',
                    'Natural Language :: English',
                    'Natural Language :: German',],
-      install_requires=['Django>=1.8', 'django-registration>=2', 'django-async-messages'],
+      install_requires=['Django>=1.8,<2', 'django-registration>=2,<3', 'django-async-messages'],
       zip_safe=False,
       )
